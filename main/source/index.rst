@@ -9,7 +9,9 @@ Welcome to Microservices Development Kit's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+
+   Getting Started <getting-started/index>	      
 
 
 
