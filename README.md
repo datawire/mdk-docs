@@ -13,3 +13,7 @@ Staging branch is `develop`.
 To setup the toolchain, run:
 
     make setup
+
+You can then build the docs by running:
+
+    make all
