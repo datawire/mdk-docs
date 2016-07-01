@@ -32,7 +32,13 @@
 extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.githubpages',
+    'sphinxcontrib.spelling',
 ]
+
+# Spelling check config:
+spelling_ignore_python_builtins = False
+spelling_ignore_importable_modules = False
+spelling_ignore_wiki_words = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

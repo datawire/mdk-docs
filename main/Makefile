@@ -54,6 +54,14 @@ html:
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
+.PHONY: spelling
+spelling:
+	@echo "Checking spelling; you can whitelist words by adding them to main/spelling_wordlist.txt."
+	@echo
+	$(SPHINXBUILD) -b spelling $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	@echo
+	@echo "Build finished."
+
 .PHONY: dirhtml
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
