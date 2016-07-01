@@ -56,7 +56,7 @@ html:
 
 .PHONY: spelling
 spelling:
-	@echo "Checking spelling; you can whitelist words by adding them to main/spelling_wordlist.txt."
+	@echo "Checking spelling; you can whitelist words by adding them to main/source/spelling_wordlist.txt."
 	@echo
 	$(SPHINXBUILD) -b spelling $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
