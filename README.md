@@ -1,4 +1,6 @@
 # Documentation for the Microservices Development Kit (MDK)
 
-Public live branch is `gh-pages`, development branch is `develop`.
+Currently public source version of docs is on `master`, with resulting artifacts in `gh-pages`.
+
+Staging branch is `develop`.
 
