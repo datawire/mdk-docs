@@ -19,18 +19,53 @@ example.
 Installation
 ============
 
-To get started with the |mdk|, run the following command on Linux or
-Mac OS X:
+To get started with the |mdk|, install the MDK on Linux or Mac OS X::
 
-    curl -# -L
-    https://raw.githubusercontent.com/datawire/mdk/develop/install.sh
-    | bash -s
+    curl -# -L https://raw.githubusercontent.com/datawire/mdk/develop/install.sh | bash -s
 
-A Simple Microservice
-=====================
+Quick Start
+===========
 
-The following examples use Python. Other languages examples are in ``.
+Setup
+-----
 
+We'll use Datawire Mission Control, Datawire's free cloud-based
+service discovery and dashboard service, for these examples to
+simplify setup.
+
+If you haven't already created an account on Mission Control, create
+an account at https://app.datawire.io. Then, click on the "Copy Token"
+link on the left hand navbar and paste it into your terminal. This
+will set the security token for your session.
+
+Registering a service
+---------------------
+
+We're going to use Python as our example language here; the other
+languages supported by the MDK (Java, Ruby, JavaScript) are very
+similar.
+
+Let's start by initializing the MDK. In your terminal, enter your
+Python environment by typing `python`). Then, type the following:
+
+.. code-block:: none
+
+    import mdk
+    m = mdk.init()
+
+In a microservices environment, microservices are constantly being
+created and destroyed: new versions may be rolled out, new instances
+spun up or spun down based on load, and so forth. So having a robust,
+real-time service registration and discovery mechanism is
+essential. So let's register a service:
+
+.. code-block:: none
+
+    m.register("My First Service", "1.0", "http://127.0.0.1")
+    m.start()
+
+In the Mission Control dashboard, you'll see a service appear named
+"My First Service" with a version of 1.0.
 
     
     
