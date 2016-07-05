@@ -25,7 +25,7 @@ venv:
 	virtualenv venv
 	mkdir node_modules
 
-apidocs: setup
+apidocs:
 	~/.quark/bin/quark compile "https://raw.githubusercontent.com/datawire/mdk/develop/quark/mdk-2.0.q"  # not on master yet
 	javadoc -sourcepath $$(echo output/java/*/src/main/java | sed "s/ /:/g") -subpackages mdk -d dist/latest/java
 	source venv/bin/activate && ~/.quark/bin/quark install --python "https://raw.githubusercontent.com/datawire/mdk/develop/quark/mdk-2.0.q"
