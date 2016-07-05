@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started &mdash; Microservices Development Kit 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Microservices Development Kit 1.0 documentation" href="../index.html" />
+    <link rel="prev" title="Welcome to Microservices Development Kit’s documentation!" href="../index.html" />
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="../index.html">
+                <img class="dw-logo" src="../_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="../search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="../index.html"
+            title="Welcome to Microservices Development Kit’s documentation!"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Microservices Development Kit 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>Adopting microservices means that your architecture has moved from a
+single entity for your business logic to many entities that talk to
+each other over the network. The Datawire Microservices Development Kit gives you the APIs you
+need to code and debug microservices, so that you don&#8217;t need to worry
+about coding basic infrastructure.</p>
+<p>The Microservices Development Kit is designed to be very lightweight and interoperate with
+your existing framework and infrastructure. The MDK supports natively
+writing microservices in Ruby, Python, Java, and JavaScript today. It
+is also framework agnostic: you can use Rails or Flask or NodeJS, for
+example.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>To get started with the Microservices Development Kit, install the MDK on Linux or Mac OS X:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="c1"># -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;ll use Datawire Mission Control, Datawire&#8217;s free cloud-based
+service discovery and dashboard service, for these examples to
+simplify setup.</p>
+<p>If you haven&#8217;t already created an account on Mission Control, create
+an account at <a class="reference external" href="https://app.datawire.io">https://app.datawire.io</a>. Then, click on the &#8220;Copy Token&#8221;
+link on the left hand navbar and paste it into your terminal. This
+will set the security token for your session.</p>
+</div>
+<div class="section" id="registering-a-service">
+<h3>Registering a service<a class="headerlink" href="#registering-a-service" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;re going to use Python as our example language here; the other
+languages supported by the MDK (Java, Ruby, JavaScript) are very
+similar.</p>
+<p>Let&#8217;s start by initializing the MDK. In your terminal, enter your
+Python environment by typing <cite>python</cite>). Then, type the following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>import mdk
+m = mdk.init()
+</pre></div>
+</div>
+<p>In a microservices environment, microservices are constantly being
+created and destroyed: new versions may be rolled out, new instances
+spun up or spun down based on load, and so forth. So having a robust,
+real-time service registration and discovery mechanism is
+essential. So let&#8217;s register a service:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>m.register(&quot;My First Service&quot;, &quot;1.0&quot;, &quot;http://127.0.0.1&quot;)
+m.start()
+</pre></div>
+</div>
+<p>In the Mission Control dashboard, you&#8217;ll see a service appear named
+&#8220;My First Service&#8221; with a version of 1.0.</p>
+</div>
+</div>
+<div class="section" id="outline">
+<h2>Outline<a class="headerlink" href="#outline" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Example</li>
+<li>API reference</li>
+<li>Deployment
+- AWS
+- Local</li>
+<li>Architecture</li>
+<li>Submit an issue</li>
+<li>Ask question on SO</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#registering-a-service">Registering a service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#outline">Outline</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Welcome to Microservices Development Kit&#8217;s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/getting-started/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="../index.html"
+            title="Welcome to Microservices Development Kit’s documentation!"
+            >
+              &larr;
+              previous
+              
+          </a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Microservices Development Kit 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2016, Datawire.io.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
+
+    
+
+    
+
+    <script src="../_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="../_static/js/main.js" ></script>
+  </body>
+</html>
