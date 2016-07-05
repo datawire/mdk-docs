@@ -7,6 +7,7 @@ all: clean-dist
 	mkdir dist/latest
 	# Static files
 	cp -r src/* dist
+	cp src/.??* dist
 	# Main prose documentation:
 	source venv/bin/activate && cd main && make spelling && make html
 	mv main/build/html dist/latest/main
