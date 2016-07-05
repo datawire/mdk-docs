@@ -1,10 +1,18 @@
-.PHONY: setup all
+.PHONY: setup all clean-dist
 
 SHELL=/bin/bash
 
-all:
+all: clean-dist
+	mkdir dist
+	mkdir dist/latest
+	# Static files
+	cp -r src/* dist
+	# Main prose documentation:
 	source venv/bin/activate && cd main && make spelling && make html
-	echo "\n\n\nNew docs available for preview: main/build/html/index.html"
+	mv main/build/html dist/latest/main
+
+clean-dist:
+	rm -rf dist
 
 setup: venv requirements.txt
 	venv/bin/pip install -U -r requirements.txt
