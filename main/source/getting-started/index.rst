@@ -21,7 +21,7 @@ Installation
 
 To get started with the |mdk|, install the MDK on Linux or Mac OS X::
 
-    curl -# -L https://raw.githubusercontent.com/datawire/mdk/develop/install.sh | bash -s
+    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s
 
 Quick Start
 ===========
