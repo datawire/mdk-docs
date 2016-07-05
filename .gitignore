@@ -90,3 +90,7 @@ ENV/
 
 # Emacs
 *~
+
+# mdk-docs
+node_modules
+output
