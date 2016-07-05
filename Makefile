@@ -1,4 +1,4 @@
-.PHONY: setup all clean-dist
+.PHONY: setup all clean-dist clean-venv
 
 SHELL=/bin/bash
 
@@ -11,11 +11,14 @@ all: clean-dist
 	source venv/bin/activate && cd main && make spelling && make html
 	mv main/build/html dist/latest/main
 
-clean-dist:
-	rm -rf dist
-
 setup: venv requirements.txt
 	venv/bin/pip install -U -r requirements.txt
 
 venv:
 	virtualenv venv
+
+clean-dist:
+	rm -rf dist
+
+clean-venv:
+	rm -rf venv
