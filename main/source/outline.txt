@@ -1,0 +1,25 @@
+Outline
+=======
+
+- Getting Started
+  - Installation
+  - MDK Example
+    Goals
+      * user learns how to write a working microservice & client
+      * user sees how easy it is
+    - Show Hello, World Flask example
+    - Show the code needed to convert it to a microservice
+      - including a logging example
+    - Start up 2 instances of Flask example
+    - Use interpreter to run resolve() multiple times to show load balancing
+  - Next steps
+    - Set up a Mission Control account to see request logging
+    - View deployment Guide
+    - API reference
+- Deployment Guide
+  - How to run in AWS, GCP, etc.
+- Contributors Guide
+  - Architecture
+  - Submitting an issue
+- API Reference
+
