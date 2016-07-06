@@ -19,7 +19,7 @@ mainsetup: venv requirements.txt
 	venv/bin/pip install -U -r requirements.txt
 
 apisetup:
-	npm install documentation
+	npm install documentation@4.0.0-beta5
 	curl -L "https://raw.githubusercontent.com/datawire/quark/develop/install.sh" | bash -s -- ${QUARKINSTALLARGS} ${QUARKBRANCH}
 
 maindocs:
