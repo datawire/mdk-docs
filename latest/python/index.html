@@ -44,8 +44,253 @@
 <ul class="simple">
 </ul>
 </div>
-<div class="section" id="mdk">
-<h2>mdk<a class="headerlink" href="#mdk" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mdk">
+<span id="mdk"></span><h2>mdk<a class="headerlink" href="#module-mdk" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mdk.MDK">
+<em class="property">class </em><code class="descclassname">mdk.</code><code class="descname">MDK</code><a class="headerlink" href="#mdk.MDK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Microservices Development Kit</p>
+<dl class="method">
+<dt id="mdk.MDK.context">
+<code class="descname">context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve our existing context.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.critical">
+<code class="descname">critical</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.critical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a log entry at the CRITICAL logging level.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a log entry at the DEBUG logging level.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a log entry at the ERROR logging level.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.fail">
+<code class="descname">fail</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.fail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record an interaction failure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.finish_interaction">
+<code class="descname">finish_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.finish_interaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finish an interaction.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a log entry at the INFO logging level.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.init_context">
+<code class="descname">init_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.init_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize our context.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.interact">
+<code class="descname">interact</code><span class="sig-paren">(</span><em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.interact" title="Permalink to this definition">¶</a></dt>
+<dd><p>start_interaction(); callable(mdk); finish_interaction();</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.join_context">
+<code class="descname">join_context</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.join_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join an existing context.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.join_encoded_context">
+<code class="descname">join_encoded_context</code><span class="sig-paren">(</span><em>encodedContext</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.join_encoded_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mdk.MDK.mdk_MDK_ref">
+<code class="descname">mdk_MDK_ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.MDK.mdk_MDK_ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.register">
+<code class="descname">register</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>address</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make our service known to discovery.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.resolve">
+<code class="descname">resolve</code><span class="sig-paren">(</span><em>service</em>, <em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.resolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Look up a service name with a specific version via discovery.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.resolve_until">
+<code class="descname">resolve_until</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.resolve_until" title="Permalink to this definition">¶</a></dt>
+<dd><p>Look up a service name with a specific version via discovery, with timeout.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the uplink.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.start_interaction">
+<code class="descname">start_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.start_interaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start an interaction.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the uplink.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDK.warn">
+<code class="descname">warn</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a log entry at the WARN logging level.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mdk.MDKImpl">
+<em class="property">class </em><code class="descclassname">mdk.</code><code class="descname">MDKImpl</code><a class="headerlink" href="#mdk.MDKImpl" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="mdk.MDKImpl.context">
+<code class="descname">context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.critical">
+<code class="descname">critical</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.critical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.debug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.fail">
+<code class="descname">fail</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.fail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.finish_interaction">
+<code class="descname">finish_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.finish_interaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.init_context">
+<code class="descname">init_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.init_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.interact">
+<code class="descname">interact</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.interact" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.join_context">
+<code class="descname">join_context</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.join_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join an existing context.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.join_encoded_context">
+<code class="descname">join_encoded_context</code><span class="sig-paren">(</span><em>encodedContext</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.join_encoded_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mdk.MDKImpl.logger">
+<code class="descname">logger</code><em class="property"> = &lt;quark_runtime_logging.Logger object&gt;</em><a class="headerlink" href="#mdk.MDKImpl.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mdk.MDKImpl.mdk_MDKImpl_ref">
+<code class="descname">mdk_MDKImpl_ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.MDKImpl.mdk_MDKImpl_ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mdk.MDKImpl.quark_List_mdk_discovery_Node__ref">
+<code class="descname">quark_List_mdk_discovery_Node__ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.MDKImpl.quark_List_mdk_discovery_Node__ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mdk.MDKImpl.quark_List_quark_String__ref">
+<code class="descname">quark_List_quark_String__ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.MDKImpl.quark_List_quark_String__ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.register">
+<code class="descname">register</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>address</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.resolve">
+<code class="descname">resolve</code><span class="sig-paren">(</span><em>service</em>, <em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.resolve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.resolve_async">
+<code class="descname">resolve_async</code><span class="sig-paren">(</span><em>service</em>, <em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.resolve_async" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.resolve_until">
+<code class="descname">resolve_until</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.resolve_until" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.start_interaction">
+<code class="descname">start_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.start_interaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.warn">
+<code class="descname">warn</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.warn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mdk.init">
+<code class="descclassname">mdk.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the MDK</p>
+</dd></dl>
+
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -66,7 +311,7 @@
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">datawire_mdk 2.0.0</a><ul>
-<li><a class="reference internal" href="#mdk">mdk</a></li>
+<li><a class="reference internal" href="#module-mdk">mdk</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
