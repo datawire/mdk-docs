@@ -86,14 +86,3 @@ In the Mission Control dashboard, you'll see a service appear named
 
     
     
-Outline
-=======
-
-- Example
-- API reference
-- Deployment
-  - AWS
-  - Local
-- Architecture
-- Submit an issue
-- Ask question on SO
