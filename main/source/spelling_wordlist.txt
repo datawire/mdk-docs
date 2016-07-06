@@ -1,9 +1,11 @@
 datawire
 datawire.io
 indices
+interoperate
+java
+JavaScript
 microservice
 microservices
-JavaScript
-NodeJS
-interoperate
 navbar
+NodeJS
+

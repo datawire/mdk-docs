@@ -19,9 +19,26 @@ example.
 Installation
 ============
 
-To get started with the |mdk|, install the MDK on Linux or Mac OS X::
+To get started with the |mdk|, install the MDK on Linux or Mac OS X.
+The MDK supports multiple languages.
 
-    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s
+Python::
+
+    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s -- --python
+
+Java::
+
+    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s -- --java
+
+Ruby::
+
+    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s -- --ruby
+
+
+Javascript::
+
+    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s -- --javascript
+
 
 Quick Start
 ===========
