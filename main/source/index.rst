@@ -15,5 +15,3 @@ Contents:
    Python API Docs <<https://datawire.github.io/mdk-docs/latest/python/>
    Java API Docs <<https://datawire.github.io/mdk-docs/latest/java/>
    Javascript API Docs <<https://datawire.github.io/mdk-docs/latest/javascript/>
-   Ruby API Docs <https://datawire.github.io/mdk-docs/latest/ruby/>
-
