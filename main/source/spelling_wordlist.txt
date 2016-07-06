@@ -3,6 +3,7 @@ datawire.io
 indices
 interoperate
 java
+javascript
 JavaScript
 microservice
 microservices
