@@ -1,0 +1,21 @@
+
+.. datawire_mdk documentation master file, created by Quark
+
+datawire_mdk 2.0.0
+==================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+.. automodule:: datawire_mdk
+   :members:
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
