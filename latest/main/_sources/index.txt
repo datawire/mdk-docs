@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 1
 
    Getting Started <getting-started/index>
-   Python API Docs <<https://datawire.github.io/mdk-docs/latest/python/>
-   Java API Docs <<https://datawire.github.io/mdk-docs/latest/java/>
+   Python API Docs <https://datawire.github.io/mdk-docs/latest/python/>
+   Java API Docs <https://datawire.github.io/mdk-docs/latest/java/>
+   Ruby API Docs <https://datawire.github.io/mdk-docs/latest/ruby/>
 

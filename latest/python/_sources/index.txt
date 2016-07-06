@@ -4,13 +4,16 @@
 datawire_mdk 2.0.0
 ==================
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: datawire_mdk
+
+mdk
+---
+
+.. automodule:: mdk
    :members:
+   :undoc-members:
 
 
 Indices and tables
