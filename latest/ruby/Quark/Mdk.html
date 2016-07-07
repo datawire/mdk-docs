@@ -67,9 +67,15 @@
     
     <li ><a href="#method-c-MDKImpl">::MDKImpl</a>
     
+    <li ><a href="#method-c-Session">::Session</a>
+    
+    <li ><a href="#method-c-SessionImpl">::SessionImpl</a>
+    
     <li ><a href="#method-c-_get">::_get</a>
     
     <li ><a href="#method-c-init">::init</a>
+    
+    <li ><a href="#method-c-start">::start</a>
     
   </ul>
 </div>
@@ -124,7 +130,7 @@
 
           
           <div class="method-source-code" id="MDK-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 37</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-constant">MDK</span>; <span class="ruby-constant">MDK</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -155,8 +161,70 @@
 
           
           <div class="method-source-code" id="MDKImpl-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 232</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 270</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-constant">MDKImpl</span>; <span class="ruby-constant">MDKImpl</span>; <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-Session" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">Session</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="Session-source">
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-constant">Session</span>; <span class="ruby-constant">Session</span>; <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-SessionImpl" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">SessionImpl</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="SessionImpl-source">
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 403</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-constant">SessionImpl</span>; <span class="ruby-constant">SessionImpl</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -217,7 +285,7 @@
 
         <div class="method-description">
           
-          <p>Initialize the <a href="Mdk/MDK.html">MDK</a></p>
+          <p>Create an <a href="Mdk/MDK.html">MDK</a> instance.</p>
           
           
 
@@ -227,6 +295,45 @@
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">init</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">new</span>()
+
+
+    <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-start" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return a started <a href="Mdk/MDK.html">MDK</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">start</span>()
+    
+    <span class="ruby-identifier">m</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">new</span>()
+    <span class="ruby-identifier">m</span>.<span class="ruby-identifier">start</span>()
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">m</span>
 
 
     <span class="ruby-keyword">nil</span>

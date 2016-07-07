@@ -37,6 +37,12 @@
   <li class="class">
     <a href="Quark/Mdk/MDKImpl.html">Quark::Mdk::MDKImpl</a>
   </li>
+  <li class="class">
+    <a href="Quark/Mdk/Session.html">Quark::Mdk::Session</a>
+  </li>
+  <li class="class">
+    <a href="Quark/Mdk/SessionImpl.html">Quark::Mdk::SessionImpl</a>
+  </li>
 </ul>
 
 <h2 id="methods">Methods</h2>
@@ -49,6 +55,16 @@
 
   <li class="method">
     <a href="Quark/Mdk.html#method-c-MDKImpl">::MDKImpl</a>
+    &mdash;
+    <span class="container">Quark::Mdk</span>
+
+  <li class="method">
+    <a href="Quark/Mdk.html#method-c-Session">::Session</a>
+    &mdash;
+    <span class="container">Quark::Mdk</span>
+
+  <li class="method">
+    <a href="Quark/Mdk.html#method-c-SessionImpl">::SessionImpl</a>
     &mdash;
     <span class="container">Quark::Mdk</span>
 
@@ -73,9 +89,24 @@
     <span class="container">Quark::Mdk::MDK</span>
 
   <li class="method">
+    <a href="Quark/Mdk/Session.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
     <a href="Quark/Mdk/MDKImpl.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Quark::Mdk::MDKImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk.html#method-c-start">::start</a>
+    &mdash;
+    <span class="container">Quark::Mdk</span>
 
   <li class="method">
     <a href="Quark/Mdk/MDK.html#method-i-__init_fields__">#__init_fields__</a>
@@ -83,9 +114,19 @@
     <span class="container">Quark::Mdk::MDK</span>
 
   <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-__init_fields__">#__init_fields__</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
     <a href="Quark/Mdk/MDKImpl.html#method-i-__init_fields__">#__init_fields__</a>
     &mdash;
     <span class="container">Quark::Mdk::MDKImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-__init_fields__">#__init_fields__</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
 
   <li class="method">
     <a href="Quark/Mdk/MDKImpl.html#method-i-_getClass">#_getClass</a>
@@ -93,29 +134,34 @@
     <span class="container">Quark::Mdk::MDKImpl</span>
 
   <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-_getClass">#_getClass</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
     <a href="Quark/Mdk/MDKImpl.html#method-i-_getField">#_getField</a>
     &mdash;
     <span class="container">Quark::Mdk::MDKImpl</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-_log">#_log</a>
+    <a href="Quark/Mdk/SessionImpl.html#method-i-_getField">#_getField</a>
     &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
+    <span class="container">Quark::Mdk::SessionImpl</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-_resolve">#_resolve</a>
+    <a href="Quark/Mdk/SessionImpl.html#method-i-_log">#_log</a>
     &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
+    <span class="container">Quark::Mdk::SessionImpl</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-_resolve">#_resolve</a>
+    <a href="Quark/Mdk/SessionImpl.html#method-i-_resolve">#_resolve</a>
     &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
+    <span class="container">Quark::Mdk::SessionImpl</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-_resolvedCallback">#_resolvedCallback</a>
+    <a href="Quark/Mdk/SessionImpl.html#method-i-_resolvedCallback">#_resolvedCallback</a>
     &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
+    <span class="container">Quark::Mdk::SessionImpl</span>
 
   <li class="method">
     <a href="Quark/Mdk/MDKImpl.html#method-i-_setField">#_setField</a>
@@ -123,117 +169,102 @@
     <span class="container">Quark::Mdk::MDKImpl</span>
 
   <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-_setField">#_setField</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
     <a href="Quark/Mdk/MDKImpl.html#method-i-_timeout">#_timeout</a>
     &mdash;
     <span class="container">Quark::Mdk::MDKImpl</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-context">#context</a>
+    <a href="Quark/Mdk/Session.html#method-i-critical">#critical</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-critical">#critical</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-debug">#debug</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-debug">#debug</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-error">#error</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-error">#error</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-fail">#fail</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-fail">#fail</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-finish_interaction">#finish_interaction</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-finish_interaction">#finish_interaction</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-info">#info</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-info">#info</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-inject">#inject</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-inject">#inject</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-interact">#interact</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-interact">#interact</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/MDK.html#method-i-join">#join</a>
     &mdash;
     <span class="container">Quark::Mdk::MDK</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-context">#context</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-critical">#critical</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-critical">#critical</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-debug">#debug</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-debug">#debug</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-error">#error</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-error">#error</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-fail">#fail</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-fail">#fail</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-finish_interaction">#finish_interaction</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-finish_interaction">#finish_interaction</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-info">#info</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-info">#info</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-init_context">#init_context</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-init_context">#init_context</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-interact">#interact</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-interact">#interact</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-join_context">#join_context</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-join_context">#join_context</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-join_encoded_context">#join_encoded_context</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-join_encoded_context">#join_encoded_context</a>
+    <a href="Quark/Mdk/MDKImpl.html#method-i-join">#join</a>
     &mdash;
     <span class="container">Quark::Mdk::MDKImpl</span>
 
@@ -248,27 +279,42 @@
     <span class="container">Quark::Mdk::MDKImpl</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-resolve">#resolve</a>
+    <a href="Quark/Mdk/Session.html#method-i-resolve">#resolve</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-resolve">#resolve</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-resolve_async">#resolve_async</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-resolve_async">#resolve_async</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/Session.html#method-i-resolve_until">#resolve_until</a>
+    &mdash;
+    <span class="container">Quark::Mdk::Session</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/SessionImpl.html#method-i-resolve_until">#resolve_until</a>
+    &mdash;
+    <span class="container">Quark::Mdk::SessionImpl</span>
+
+  <li class="method">
+    <a href="Quark/Mdk/MDK.html#method-i-session">#session</a>
     &mdash;
     <span class="container">Quark::Mdk::MDK</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-resolve">#resolve</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-resolve_async">#resolve_async</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-resolve_until">#resolve_until</a>
-    &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
-
-  <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-resolve_until">#resolve_until</a>
+    <a href="Quark/Mdk/MDKImpl.html#method-i-session">#session</a>
     &mdash;
     <span class="container">Quark::Mdk::MDKImpl</span>
 
@@ -283,14 +329,14 @@
     <span class="container">Quark::Mdk::MDKImpl</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-start_interaction">#start_interaction</a>
+    <a href="Quark/Mdk/Session.html#method-i-start_interaction">#start_interaction</a>
     &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
+    <span class="container">Quark::Mdk::Session</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-start_interaction">#start_interaction</a>
+    <a href="Quark/Mdk/SessionImpl.html#method-i-start_interaction">#start_interaction</a>
     &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
+    <span class="container">Quark::Mdk::SessionImpl</span>
 
   <li class="method">
     <a href="Quark/Mdk/MDK.html#method-i-stop">#stop</a>
@@ -303,14 +349,14 @@
     <span class="container">Quark::Mdk::MDKImpl</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDK.html#method-i-warn">#warn</a>
+    <a href="Quark/Mdk/Session.html#method-i-warn">#warn</a>
     &mdash;
-    <span class="container">Quark::Mdk::MDK</span>
+    <span class="container">Quark::Mdk::Session</span>
 
   <li class="method">
-    <a href="Quark/Mdk/MDKImpl.html#method-i-warn">#warn</a>
+    <a href="Quark/Mdk/SessionImpl.html#method-i-warn">#warn</a>
     &mdash;
-    <span class="container">Quark::Mdk::MDKImpl</span>
+    <span class="container">Quark::Mdk::SessionImpl</span>
 </ul>
 </main>
 

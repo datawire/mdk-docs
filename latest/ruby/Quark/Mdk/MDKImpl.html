@@ -89,53 +89,19 @@
     
     <li ><a href="#method-i-_getField">#_getField</a>
     
-    <li ><a href="#method-i-_log">#_log</a>
-    
-    <li ><a href="#method-i-_resolve">#_resolve</a>
-    
-    <li ><a href="#method-i-_resolvedCallback">#_resolvedCallback</a>
-    
     <li ><a href="#method-i-_setField">#_setField</a>
     
     <li ><a href="#method-i-_timeout">#_timeout</a>
     
-    <li ><a href="#method-i-context">#context</a>
-    
-    <li ><a href="#method-i-critical">#critical</a>
-    
-    <li ><a href="#method-i-debug">#debug</a>
-    
-    <li ><a href="#method-i-error">#error</a>
-    
-    <li ><a href="#method-i-fail">#fail</a>
-    
-    <li ><a href="#method-i-finish_interaction">#finish_interaction</a>
-    
-    <li ><a href="#method-i-info">#info</a>
-    
-    <li ><a href="#method-i-init_context">#init_context</a>
-    
-    <li ><a href="#method-i-interact">#interact</a>
-    
-    <li ><a href="#method-i-join_context">#join_context</a>
-    
-    <li ><a href="#method-i-join_encoded_context">#join_encoded_context</a>
+    <li ><a href="#method-i-join">#join</a>
     
     <li ><a href="#method-i-register">#register</a>
     
-    <li ><a href="#method-i-resolve">#resolve</a>
-    
-    <li ><a href="#method-i-resolve_async">#resolve_async</a>
-    
-    <li ><a href="#method-i-resolve_until">#resolve_until</a>
+    <li ><a href="#method-i-session">#session</a>
     
     <li ><a href="#method-i-start">#start</a>
     
-    <li ><a href="#method-i-start_interaction">#start_interaction</a>
-    
     <li ><a href="#method-i-stop">#stop</a>
-    
-    <li ><a href="#method-i-warn">#warn</a>
     
   </ul>
 </div>
@@ -172,19 +138,6 @@
       <div id="attribute-i-_disco" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">_disco</span><span
-            class="attribute-access-type">[RW]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-      <div id="attribute-i-_resolved" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">_resolved</span><span
             class="attribute-access-type">[RW]</span>
         </div>
 
@@ -250,13 +203,13 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 244</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 280</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>()
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__init_fields__</span>
-    (<span class="ruby-ivar">@_disco</span>).<span class="ruby-identifier">url</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-identifier">_get</span>(<span class="ruby-string">&quot;MDK_DISCOVERY_URL&quot;</span>, <span class="ruby-string">&quot;wss://discovery-develop.datawire.io/&quot;</span>)
+    (<span class="ruby-ivar">@_disco</span>).<span class="ruby-identifier">url</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-identifier">_get</span>(<span class="ruby-string">&quot;MDK_DISCOVERY_URL&quot;</span>, <span class="ruby-string">&quot;wss://discovery.datawire.io/&quot;</span>)
     (<span class="ruby-ivar">@_disco</span>).<span class="ruby-identifier">token</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_introspection</span>.<span class="ruby-constant">DatawireToken</span>.<span class="ruby-identifier">getToken</span>()
-    <span class="ruby-identifier">tracingURL</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-identifier">_get</span>(<span class="ruby-string">&quot;MDK_TRACING_URL&quot;</span>, <span class="ruby-string">&quot;wss://tracing-develop.datawire.io/ws&quot;</span>)
+    <span class="ruby-identifier">tracingURL</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-identifier">_get</span>(<span class="ruby-string">&quot;MDK_TRACING_URL&quot;</span>, <span class="ruby-string">&quot;wss://tracing.datawire.io/ws&quot;</span>)
     <span class="ruby-ivar">@_tracer</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_tracing</span>.<span class="ruby-constant">Tracer</span>.<span class="ruby-identifier">withURLsAndToken</span>(<span class="ruby-identifier">tracingURL</span>, <span class="ruby-string">&quot;&quot;</span>, (<span class="ruby-ivar">@_disco</span>).<span class="ruby-identifier">token</span>)
     <span class="ruby-ivar">@_tracer</span>.<span class="ruby-identifier">initContext</span>()
 
@@ -299,12 +252,11 @@
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 505</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 390</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_disco</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_discovery</span>.<span class="ruby-constant">Discovery</span>.<span class="ruby-identifier">new</span>()
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_tracer</span> = <span class="ruby-keyword">nil</span>
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_resolved</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>([])
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">procUUID</span> = <span class="ruby-string">&quot;xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx&quot;</span>
 
     <span class="ruby-keyword">nil</span>
@@ -338,7 +290,7 @@
 
           
           <div class="method-source-code" id="_getClass-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 455</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 343</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_getClass</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;mdk.MDKImpl&quot;</span>
@@ -374,9 +326,12 @@
 
           
           <div class="method-source-code" id="_getField-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 462</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 350</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_getField</span>(<span class="ruby-identifier">name</span>)
     
+    <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;CONTEXT_HEADER&quot;</span>))
+        <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDK</span>.<span class="ruby-constant">CONTEXT_HEADER</span>
+    <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;logger&quot;</span>))
         <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>
     <span class="ruby-keyword">end</span>
@@ -386,122 +341,10 @@
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_tracer&quot;</span>))
         <span class="ruby-keyword">return</span> (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_tracer</span>
     <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_resolved&quot;</span>))
-        <span class="ruby-keyword">return</span> (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_resolved</span>
-    <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;procUUID&quot;</span>))
         <span class="ruby-keyword">return</span> (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">procUUID</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-_log" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">_log</span><span
-            class="method-args">(level, category, text)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="_log-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 293</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">_log</span>(<span class="ruby-identifier">level</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-    
-    <span class="ruby-ivar">@_tracer</span>.<span class="ruby-identifier">log</span>((<span class="ruby-keyword">self</span>).<span class="ruby-identifier">procUUID</span>, <span class="ruby-identifier">level</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-_resolve" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">_resolve</span><span
-            class="method-args">(service, version)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="_resolve-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 348</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">_resolve</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>)
-    
-    <span class="ruby-keyword">return</span> <span class="ruby-ivar">@_disco</span>.<span class="ruby-identifier">_resolve</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>).<span class="ruby-identifier">andThen</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">quark</span>.<span class="ruby-identifier">_BoundMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-string">&quot;_resolvedCallback&quot;</span>, <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>([])))
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-_resolvedCallback" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">_resolvedCallback</span><span
-            class="method-args">(result)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="_resolvedCallback-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 340</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">_resolvedCallback</span>(<span class="ruby-identifier">result</span>)
-    
-    (<span class="ruby-ivar">@_resolved</span>) <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">result</span>)
-    <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -534,7 +377,7 @@
 
           
           <div class="method-source-code" id="_setField-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 484</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 372</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_setField</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)
     
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;logger&quot;</span>))
@@ -545,9 +388,6 @@
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_tracer&quot;</span>))
         (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_tracer</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>(<span class="ruby-identifier">value</span>) { <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_tracing</span>.<span class="ruby-constant">Tracer</span> }
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_resolved&quot;</span>))
-        (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_resolved</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>(<span class="ruby-identifier">value</span>) { <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span> }
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;procUUID&quot;</span>))
         (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">procUUID</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>(<span class="ruby-identifier">value</span>) { <span class="ruby-operator">::</span><span class="ruby-constant">String</span> }
@@ -584,7 +424,7 @@
 
           
           <div class="method-source-code" id="_timeout-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 259</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 295</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_timeout</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-value">10.0</span>
@@ -601,394 +441,10 @@
       </div>
 
     
-      <div id="method-i-context" class="method-detail ">
+      <div id="method-i-join" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">context</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="context-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 383</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">context</span>()
-    
-    <span class="ruby-keyword">return</span> <span class="ruby-ivar">@_tracer</span>.<span class="ruby-identifier">getContext</span>()
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-critical" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">critical</span><span
-            class="method-args">(category, text)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="critical-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 300</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">critical</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-    
-    <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;CRITICAL&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-debug" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">debug</span><span
-            class="method-args">(category, text)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="debug-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 332</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">debug</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-    
-    <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;DEBUG&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-error" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">error</span><span
-            class="method-args">(category, text)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="error-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 308</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">error</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-    
-    <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;ERROR&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-fail" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">fail</span><span
-            class="method-args">(message)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="fail-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 414</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">fail</span>(<span class="ruby-identifier">message</span>)
-    
-    <span class="ruby-identifier">suspects</span> = <span class="ruby-ivar">@_resolved</span>
-    <span class="ruby-ivar">@_resolved</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>([])
-    <span class="ruby-identifier">involved</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>([])
-    <span class="ruby-identifier">idx</span> = <span class="ruby-value">0</span>
-    <span class="ruby-keyword">while</span> ((<span class="ruby-identifier">idx</span>) <span class="ruby-operator">&lt;</span> ((<span class="ruby-identifier">suspects</span>).<span class="ruby-identifier">size</span>)) <span class="ruby-keyword">do</span>
-        <span class="ruby-identifier">node</span> = (<span class="ruby-identifier">suspects</span>)[<span class="ruby-identifier">idx</span>]
-        <span class="ruby-identifier">idx</span> = (<span class="ruby-identifier">idx</span>) <span class="ruby-operator">+</span> (<span class="ruby-value">1</span>)
-        (<span class="ruby-identifier">involved</span>) <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">node</span>.<span class="ruby-identifier">toString</span>())
-        <span class="ruby-identifier">node</span>.<span class="ruby-identifier">failure</span>()
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">text</span> = (((<span class="ruby-string">&quot;involved: &quot;</span>) <span class="ruby-operator">+</span> ((<span class="ruby-identifier">involved</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;, &quot;</span>))) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;\n\n&quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">message</span>)
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">error</span>(<span class="ruby-string">&quot;integration&quot;</span>, <span class="ruby-identifier">text</span>)
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-finish_interaction" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">finish_interaction</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="finish_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 432</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">finish_interaction</span>()
-    
-    <span class="ruby-identifier">nodes</span> = <span class="ruby-ivar">@_resolved</span>
-    <span class="ruby-ivar">@_resolved</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>([])
-    <span class="ruby-identifier">idx</span> = <span class="ruby-value">0</span>
-    <span class="ruby-keyword">while</span> ((<span class="ruby-identifier">idx</span>) <span class="ruby-operator">&lt;</span> ((<span class="ruby-identifier">nodes</span>).<span class="ruby-identifier">size</span>)) <span class="ruby-keyword">do</span>
-        <span class="ruby-identifier">node</span> = (<span class="ruby-identifier">nodes</span>)[<span class="ruby-identifier">idx</span>]
-        <span class="ruby-identifier">node</span>.<span class="ruby-identifier">success</span>()
-        <span class="ruby-identifier">idx</span> = (<span class="ruby-identifier">idx</span>) <span class="ruby-operator">+</span> (<span class="ruby-value">1</span>)
-    <span class="ruby-keyword">end</span>
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-info" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">info</span><span
-            class="method-args">(category, text)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="info-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 324</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">info</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-    
-    <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;INFO&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-init_context" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">init_context</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="init_context-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 390</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">init_context</span>()
-    
-    <span class="ruby-ivar">@_tracer</span>.<span class="ruby-identifier">initContext</span>()
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-interact" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">interact</span><span
-            class="method-args">(cmd)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="interact-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 446</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">interact</span>(<span class="ruby-identifier">cmd</span>)
-    
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">start_interaction</span>()
-    (<span class="ruby-identifier">cmd</span>).<span class="ruby-identifier">call</span>(<span class="ruby-keyword">self</span>)
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">finish_interaction</span>()
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-join_context" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">join_context</span><span
-            class="method-args">(context)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Join an existing context.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="join_context-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 400</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">join_context</span>(<span class="ruby-identifier">context</span>)
-    
-    <span class="ruby-ivar">@_tracer</span>.<span class="ruby-identifier">joinContext</span>(<span class="ruby-identifier">context</span>)
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-join_encoded_context" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">join_encoded_context</span><span
+          <span class="method-name">join</span><span
             class="method-args">(encodedContext)</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -1003,11 +459,11 @@
           
 
           
-          <div class="method-source-code" id="join_encoded_context-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 407</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">join_encoded_context</span>(<span class="ruby-identifier">encodedContext</span>)
+          <div class="method-source-code" id="join-source">
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 336</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">join</span>(<span class="ruby-identifier">encodedContext</span>)
     
-    <span class="ruby-ivar">@_tracer</span>.<span class="ruby-identifier">joinEncodedContext</span>(<span class="ruby-identifier">encodedContext</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">SessionImpl</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">encodedContext</span>)
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1040,7 +496,7 @@
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 273</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 317</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">address</span>)
     
     <span class="ruby-identifier">node</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_discovery</span>.<span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>()
@@ -1062,11 +518,11 @@
       </div>
 
     
-      <div id="method-i-resolve" class="method-detail ">
+      <div id="method-i-session" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">resolve</span><span
-            class="method-args">(service, version)</span>
+          <span class="method-name">session</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -1080,83 +536,11 @@
           
 
           
-          <div class="method-source-code" id="resolve-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 362</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>)
+          <div class="method-source-code" id="session-source">
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 329</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">session</span>()
     
-    <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">resolve_until</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_timeout</span>())
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-resolve_async" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">resolve_async</span><span
-            class="method-args">(service, version)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="resolve_async-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 355</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_async</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>)
-    
-    <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_util</span>.<span class="ruby-identifier">toNativePromise</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">_resolve</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>))
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-resolve_until" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">resolve_until</span><span
-            class="method-args">(service, version, timeout)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="resolve_until-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 369</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_until</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">timeout</span>)
-    
-    <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_util</span>.<span class="ruby-constant">WaitForPromise</span>.<span class="ruby-identifier">wait</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">_resolve</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>), <span class="ruby-identifier">timeout</span>, ((((<span class="ruby-string">&quot;service &quot;</span>) <span class="ruby-operator">+</span> (<span class="ruby-identifier">service</span>)) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;(&quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">version</span>)) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;)&quot;</span>))) { <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_discovery</span>.<span class="ruby-constant">Node</span> }
+    <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">SessionImpl</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-keyword">nil</span>)
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1189,46 +573,10 @@
 
           
           <div class="method-source-code" id="start-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 266</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 302</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>()
     
     <span class="ruby-ivar">@_disco</span>.<span class="ruby-identifier">start</span>()
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-start_interaction" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">start_interaction</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="start_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 376</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">start_interaction</span>()
-    
-    <span class="ruby-ivar">@_resolved</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>([])
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1261,48 +609,11 @@
 
           
           <div class="method-source-code" id="stop-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 285</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 309</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>()
     
     <span class="ruby-ivar">@_disco</span>.<span class="ruby-identifier">stop</span>()
     <span class="ruby-ivar">@_tracer</span>.<span class="ruby-identifier">stop</span>()
-
-    <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-warn" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">warn</span><span
-            class="method-args">(category, text)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="warn-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 316</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">warn</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
-    
-    <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;WARN&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>

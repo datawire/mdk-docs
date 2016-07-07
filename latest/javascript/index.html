@@ -35,6 +35,16 @@
               
                 
                 <li><a
+                  href='#start'
+                  class="">
+                  start
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#MDK'
                   class=" toggle-sibling">
                   MDK
@@ -66,87 +76,15 @@
                       </a></li>
                       
                       <li><a
-                        href='#MDK#resolve'
+                        href='#MDK#session'
                         class='regular pre-open'>
-                        #resolve
+                        #session
                       </a></li>
                       
                       <li><a
-                        href='#MDK#resolve_until'
+                        href='#MDK#join'
                         class='regular pre-open'>
-                        #resolve_until
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#init_context'
-                        class='regular pre-open'>
-                        #init_context
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#context'
-                        class='regular pre-open'>
-                        #context
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#join_context'
-                        class='regular pre-open'>
-                        #join_context
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#start_interaction'
-                        class='regular pre-open'>
-                        #start_interaction
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#fail'
-                        class='regular pre-open'>
-                        #fail
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#finish_interaction'
-                        class='regular pre-open'>
-                        #finish_interaction
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#interact'
-                        class='regular pre-open'>
-                        #interact
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#critical'
-                        class='regular pre-open'>
-                        #critical
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#error'
-                        class='regular pre-open'>
-                        #error
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#warn'
-                        class='regular pre-open'>
-                        #warn
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#info'
-                        class='regular pre-open'>
-                        #info
-                      </a></li>
-                      
-                      <li><a
-                        href='#MDK#debug'
-                        class='regular pre-open'>
-                        #debug
+                        #join
                       </a></li>
                       
                     </ul>
@@ -158,9 +96,129 @@
               
                 
                 <li><a
-                  href='##join_context'
+                  href='##inject'
                   class="">
-                  join_context
+                  inject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##critical'
+                  class="">
+                  critical
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##error'
+                  class="">
+                  error
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##warn'
+                  class="">
+                  warn
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##info'
+                  class="">
+                  info
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##debug'
+                  class="">
+                  debug
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##resolve'
+                  class="">
+                  resolve
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##resolve_until'
+                  class="">
+                  resolve_until
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##resolve_async'
+                  class="">
+                  resolve_async
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##start_interaction'
+                  class="">
+                  start_interaction
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##fail'
+                  class="">
+                  fail
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##finish_interaction'
+                  class="">
+                  finish_interaction
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='##interact'
+                  class="">
+                  interact
                   
                 </a>
                 
@@ -188,10 +246,54 @@
   </div>
   
 
-  <p>Initialize the MDK</p>
+  <p>Create an MDK instance.</p>
 
 
   <div class='pre p1 fill-light'>init()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='start'>
+      start
+    </h2>
+    
+  </div>
+  
+
+  <p>Return a started MDK.</p>
+
+
+  <div class='pre p1 fill-light'>start()</div>
 
   
 
@@ -232,7 +334,7 @@
   </div>
   
 
-  <p>Microservices Development Kit</p>
+  <p>\n         The MDK API consists of two interfaces: MDK and Session. The\n         MDK interface holds globally scoped APIs and state associated\n         with the microservice. The Session interface holds locally\n         scoped APIs and state. A Session must be used sequentially.\n\n         There will typically be one MDK instance for the entire\n         process, and one instance of the Session object per\n         thread/channel/request depending on how the MDK is integrated\n         and used within the application framework of choice.\n</p>
 
 
   <div class='pre p1 fill-light'>MDK()</div>
@@ -425,17 +527,488 @@
       </div>
     </div>
   
-    <div class='keyline-bottom' id='MDK#resolve'>
+    <div class='keyline-bottom' id='MDK#session'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="pad1y contain">
             <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>resolve</span>
-            <span class='quiet code space-right2'>(service, version)</span>
+            <span class='code strong strong truncate'>session</span>
+            <span class='quiet code space-right2'>()</span>
         </div>
       </div>
       <div class="clearfix hidden toggle-target">
         <section class='py2 clearfix'>
 
+  
+
+  <p>Create a new Session.</p>
+
+
+  <div class='pre p1 fill-light'>session()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='MDK#join'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>join</span>
+            <span class='quiet code space-right2'>(encodedContext)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>Create a new Session and join it to a distributed trace.</p>
+
+
+  <div class='pre p1 fill-light'>join(encodedContext: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>encodedContext</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#inject'>
+      inject
+    </h2>
+    
+  </div>
+  
+
+  <p>Grabs the encoded context.</p>
+
+
+  <div class='pre p1 fill-light'>inject()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#critical'>
+      critical
+    </h2>
+    
+  </div>
+  
+
+  <p>Record a log entry at the CRITICAL logging level.</p>
+
+
+  <div class='pre p1 fill-light'>critical(category: Any, text: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#error'>
+      error
+    </h2>
+    
+  </div>
+  
+
+  <p>Record a log entry at the ERROR logging level.</p>
+
+
+  <div class='pre p1 fill-light'>error(category: Any, text: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#warn'>
+      warn
+    </h2>
+    
+  </div>
+  
+
+  <p>Record a log entry at the WARN logging level.</p>
+
+
+  <div class='pre p1 fill-light'>warn(category: Any, text: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#info'>
+      info
+    </h2>
+    
+  </div>
+  
+
+  <p>Record a log entry at the INFO logging level.</p>
+
+
+  <div class='pre p1 fill-light'>info(category: Any, text: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#debug'>
+      debug
+    </h2>
+    
+  </div>
+  
+
+  <p>Record a log entry at the DEBUG logging level.</p>
+
+
+  <div class='pre p1 fill-light'>debug(category: Any, text: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#resolve'>
+      resolve
+    </h2>
+    
+  </div>
   
 
   <p>Look up a service name with a specific version via discovery.</p>
@@ -487,20 +1060,18 @@
   
 </section>
 
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#resolve_until'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>resolve_until</span>
-            <span class='quiet code space-right2'>(service, version, timeout)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
+            
+          
+            
+              <section class='py2 clearfix'>
 
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#resolve_until'>
+      resolve_until
+    </h2>
+    
+  </div>
   
 
   <p>Look up a service name with a specific version via discovery, with timeout.</p>
@@ -559,118 +1130,24 @@
   
 </section>
 
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#init_context'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>init_context</span>
-            <span class='quiet code space-right2'>()</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
+            
+          
+            
+              <section class='py2 clearfix'>
 
   
-
-  <p>Initialize our context.</p>
-
-
-  <div class='pre p1 fill-light'>init_context()</div>
-
+  <div class='clearfix'>
+    <h2 class='fl' id='#resolve_async'>
+      resolve_async
+    </h2>
+    
+  </div>
   
 
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#context'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>context</span>
-            <span class='quiet code space-right2'>()</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
-
-  
-
-  <p>Retrieve our existing context.</p>
+  <p>Asynchronously look up a service name/version via discovery. The result is returned as a promise.</p>
 
 
-  <div class='pre p1 fill-light'>context()</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#join_context'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>join_context</span>
-            <span class='quiet code space-right2'>(context)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
-
-  
-
-  <p>Join an existing context.</p>
-
-
-  <div class='pre p1 fill-light'>join_context(context: Any)</div>
+  <div class='pre p1 fill-light'>resolve_async(service: Any, version: Any)</div>
 
   
 
@@ -686,7 +1163,14 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>context</span> <code class='quiet'>(Any)</code> 
+            <span class='code bold'>service</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>version</span> <code class='quiet'>(Any)</code> 
           </div>
           
         </div>
@@ -709,20 +1193,18 @@
   
 </section>
 
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#start_interaction'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>start_interaction</span>
-            <span class='quiet code space-right2'>()</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
+            
+          
+            
+              <section class='py2 clearfix'>
 
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#start_interaction'>
+      start_interaction
+    </h2>
+    
+  </div>
   
 
   <p>Start an interaction.</p>
@@ -755,20 +1237,18 @@
   
 </section>
 
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#fail'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>fail</span>
-            <span class='quiet code space-right2'>(message)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
+            
+          
+            
+              <section class='py2 clearfix'>
 
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#fail'>
+      fail
+    </h2>
+    
+  </div>
   
 
   <p>Record an interaction failure.</p>
@@ -813,20 +1293,18 @@
   
 </section>
 
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#finish_interaction'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>finish_interaction</span>
-            <span class='quiet code space-right2'>()</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
+            
+          
+            
+              <section class='py2 clearfix'>
 
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#finish_interaction'>
+      finish_interaction
+    </h2>
+    
+  </div>
   
 
   <p>Finish an interaction.</p>
@@ -859,20 +1337,18 @@
   
 </section>
 
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#interact'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>interact</span>
-            <span class='quiet code space-right2'>(callable)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
+            
+          
+            
+              <section class='py2 clearfix'>
 
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#interact'>
+      interact
+    </h2>
+    
+  </div>
   
 
   <p>start_interaction(); callable(mdk); finish_interaction();</p>
@@ -895,397 +1371,6 @@
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>callable</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#critical'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>critical</span>
-            <span class='quiet code space-right2'>(category, text)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
-
-  
-
-  <p>Record a log entry at the CRITICAL logging level.</p>
-
-
-  <div class='pre p1 fill-light'>critical(category: Any, text: Any)</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#error'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>error</span>
-            <span class='quiet code space-right2'>(category, text)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
-
-  
-
-  <p>Record a log entry at the ERROR logging level.</p>
-
-
-  <div class='pre p1 fill-light'>error(category: Any, text: Any)</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#warn'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>warn</span>
-            <span class='quiet code space-right2'>(category, text)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
-
-  
-
-  <p>Record a log entry at the WARN logging level.</p>
-
-
-  <div class='pre p1 fill-light'>warn(category: Any, text: Any)</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#info'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>info</span>
-            <span class='quiet code space-right2'>(category, text)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
-
-  
-
-  <p>Record a log entry at the INFO logging level.</p>
-
-
-  <div class='pre p1 fill-light'>info(category: Any, text: Any)</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='keyline-bottom' id='MDK#debug'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="pad1y contain">
-            <a class='icon pin-right pad1y dark-link caret-right'></a>
-            <span class='code strong strong truncate'>debug</span>
-            <span class='quiet code space-right2'>(category, text)</span>
-        </div>
-      </div>
-      <div class="clearfix hidden toggle-target">
-        <section class='py2 clearfix'>
-
-  
-
-  <p>Record a log entry at the DEBUG logging level.</p>
-
-
-  <div class='pre p1 fill-light'>debug(category: Any, text: Any)</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>category</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-</div>
-
-  
-
-  
-</section>
-
-            
-          
-            
-              <section class='py2 clearfix'>
-
-  
-  <div class='clearfix'>
-    <h2 class='fl' id='#join_context'>
-      join_context
-    </h2>
-    
-  </div>
-  
-
-  <p>Join an existing context.</p>
-
-
-  <div class='pre p1 fill-light'>join_context(context: Any)</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>context</span> <code class='quiet'>(Any)</code> 
           </div>
           
         </div>
