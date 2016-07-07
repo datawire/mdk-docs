@@ -3,17 +3,25 @@ Outline
 
 - Getting Started
   - Installation
-  - MDK Example
+  - Quick start
+    0. Set up a Mission Control account to provide cloud service disco, etc.
+    1. Use Tutorial to learn the MDK.
+    2. Run microcosm to see distributed logging <-- this is where we will take users if they've already completed the wizard
+  - Slow start
     Goals
       * user learns how to write a working microservice & client
       * user sees how easy it is
+      * wire together multiple microservices
+    ONE MICROSERVICE
     - Show Hello, World Flask example
     - Show the code needed to convert it to a microservice
       - including a logging example
     - Start up 2 instances of Flask example
-    - Use interpreter to run resolve() multiple times to show load balancing
+    - show client
+    MULTIPLE MICROSERVICES
+    - convert  client into microservice
+    - then use curl to go to an edge microservice
   - Next steps
-    - Set up a Mission Control account to see request logging
     - View deployment Guide
     - API reference
 - Deployment Guide
