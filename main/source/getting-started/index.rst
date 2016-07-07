@@ -50,10 +50,9 @@ We'll use Datawire Mission Control, Datawire's free cloud-based
 service discovery and dashboard service, for these examples to
 simplify setup.
 
-If you haven't already created an account on Mission Control, create
-an account at https://app.datawire.io. Then, click on the "Copy Token"
-link on the left hand navbar and paste it into your terminal. This
-will set the security token for your session.
+If you haven't already created an account on Mission Control, create an account at https://app.datawire.io.
+Exit the wizard, click on the "Copy Token" link on the left hand navigation bar and then paste into your terminal.
+You should see something like ``export DATAWIRE_TOKEN=<long string here>``; this will set the security token for your session.
 
 Registering a service
 ---------------------
@@ -63,7 +62,7 @@ languages supported by the MDK (Java, Ruby, JavaScript) are very
 similar.
 
 Let's start by initializing the MDK. In your terminal, enter your
-Python environment by typing `python`). Then, type the following:
+Python environment by typing ``python``. Then, type the following:
 
 .. code-block:: none
 
@@ -84,16 +83,26 @@ essential. So let's register a service:
 In the Mission Control dashboard, you'll see a service appear named
 "My First Service" with a version of 1.0.
 
-    
-    
-Outline
-=======
+Finding a service
+-----------------
 
-- Example
-- API reference
-- Deployment
-  - AWS
-  - Local
-- Architecture
-- Submit an issue
-- Ask question on SO
+Once you've registered a service a client can look it up and find the address of the service.
+
+In a different terminal make sure you have the ``DATAWIRE_TOKEN`` environment variable set and then run ``python`` again.
+Then, type the following:
+
+.. code-block:: none
+
+    import mdk
+    m = mdk.init()
+    m.start()
+    print(m.resolve("My First Service", "1.0").address)
+
+You should see ``"http://127.0.0.1"`` printed - your client has found the address of the service it wants to talk to.
+
+Because the MDK uses a smart client, the resolution logic provides a number of useful features:
+
+* If multiple instances were registered the client would round robin between the different service addresses.
+* Updates to the known providers of a service are pushed to the client as they happen.
+* The client caches the known providers of a service.
+  If the client can't reach the discovery service for some reason it can still use the cached values to find servers.
