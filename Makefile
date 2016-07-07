@@ -33,9 +33,9 @@ maindocs:
 	mv main/build/html dist/latest/main
 
 apidocs:
-	quark compile "https://raw.githubusercontent.com/datawire/mdk/develop/quark/mdk-2.0.q"  # not on master yet
+	quark compile "https://raw.githubusercontent.com/datawire/mdk/master/quark/mdk-2.0.q"
 	javadoc -sourcepath $$(echo output/java/*/src/main/java | sed "s/ /:/g") -subpackages mdk -d dist/latest/java
-	source venv/bin/activate && quark install --python "https://raw.githubusercontent.com/datawire/mdk/develop/quark/mdk-2.0.q"
+	source venv/bin/activate && quark install --python "https://raw.githubusercontent.com/datawire/mdk/master/quark/mdk-2.0.q"
 	source venv/bin/activate && sphinx-build output/py/mdk-2.0/docs dist/latest/python
 	./node_modules/documentation/bin/documentation.js build --shallow --format html --output dist/latest/javascript output/js/mdk-2.0/mdk
 	rdoc --output dist/latest/ruby output/rb/mdk-2.0/lib/mdk.rb
