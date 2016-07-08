@@ -64,7 +64,7 @@ similar.
 Let's start by initializing the MDK. In your terminal, enter your
 Python environment by typing ``python``. Then, type the following:
 
-.. code-block:: none
+.. code-block:: python
 
     import mdk
     m = mdk.init()
@@ -75,7 +75,7 @@ spun up or spun down based on load, and so forth. So having a robust,
 real-time service registration and discovery mechanism is
 essential. So let's register a service:
 
-.. code-block:: none
+.. code-block:: python
 
     m.register("My First Service", "1.0", "http://127.0.0.1")
     m.start()
@@ -91,7 +91,7 @@ Once you've registered a service a client can look it up and find the address of
 In a different terminal make sure you have the ``DATAWIRE_TOKEN`` environment variable set and then run ``python`` again.
 Then, type the following:
 
-.. code-block:: none
+.. code-block:: python
 
     import mdk
     m = mdk.init()
@@ -106,3 +106,35 @@ Because the MDK uses a smart client, the resolution logic provides a number of u
 * Updates to the known providers of a service are pushed to the client as they happen.
 * The client caches the known providers of a service.
   If the client can't reach the discovery service for some reason it can still use the cached values to find servers.
+
+Running Sample Microservices
+----------------------------
+
+The `Microcosm <https://github.com/datawire/microcosm>`_ is a
+collection of sample Python microservices that you can
+quickly run within your environment in order to view them within `Datawire
+Mission Control <https://app.datawire.io>`_.
+
+To install the Microcosm, open a new terminal window, and make sure you have
+the ``DATAWIRE_TOKEN`` environment variable set. You should consider using
+a new `virtualenv` for this too.
+
+1. Download the Microcosm package::
+
+    git clone https://github.com/datawire/microcosm.git
+
+2. Install the required Python packages needed to run the Microcosm::
+
+    cd microcosm
+    pip install -r requirements.txt
+
+3. Launch the Microcosm::
+
+    python microcosmctl.py run scenarios/countdown.yml
+
+This particular scenario runs a number of microservices, with multiple instances
+and versions of each.
+
+Now log on to your account on Mission Control, and you should see each of
+the microservices listed as Active and Healthy. You should also see new tracing
+messages from each of the services in the Logs section.
