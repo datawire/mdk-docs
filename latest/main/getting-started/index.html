@@ -120,8 +120,8 @@ languages supported by the MDK (Java, Ruby, JavaScript) are very
 similar.</p>
 <p>Let&#8217;s start by initializing the MDK. In your terminal, enter your
 Python environment by typing <code class="docutils literal"><span class="pre">python</span></code>. Then, type the following:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>import mdk
-m = mdk.init()
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mdk</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>In a microservices environment, microservices are constantly being
@@ -129,8 +129,8 @@ created and destroyed: new versions may be rolled out, new instances
 spun up or spun down based on load, and so forth. So having a robust,
 real-time service registration and discovery mechanism is
 essential. So let&#8217;s register a service:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>m.register(&quot;My First Service&quot;, &quot;1.0&quot;, &quot;http://127.0.0.1&quot;)
-m.start()
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;My First Service&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span> <span class="s2">&quot;http://127.0.0.1&quot;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>In the Mission Control dashboard, you&#8217;ll see a service appear named
@@ -141,10 +141,10 @@ m.start()
 <p>Once you&#8217;ve registered a service a client can look it up and find the address of the service.</p>
 <p>In a different terminal make sure you have the <code class="docutils literal"><span class="pre">DATAWIRE_TOKEN</span></code> environment variable set and then run <code class="docutils literal"><span class="pre">python</span></code> again.
 Then, type the following:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>import mdk
-m = mdk.init()
-m.start()
-print(m.resolve(&quot;My First Service&quot;, &quot;1.0&quot;).address)
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mdk</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;My First Service&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You should see <code class="docutils literal"><span class="pre">&quot;http://127.0.0.1&quot;</span></code> printed - your client has found the address of the service it wants to talk to.</p>
@@ -155,6 +155,39 @@ print(m.resolve(&quot;My First Service&quot;, &quot;1.0&quot;).address)
 <li>The client caches the known providers of a service.
 If the client can&#8217;t reach the discovery service for some reason it can still use the cached values to find servers.</li>
 </ul>
+</div>
+<div class="section" id="running-sample-microservices">
+<h3>Running Sample Microservices<a class="headerlink" href="#running-sample-microservices" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://github.com/datawire/microcosm">Microcosm</a> is a
+collection of sample Python microservices that you can
+quickly run within your environment in order to view them within <a class="reference external" href="https://app.datawire.io">Datawire
+Mission Control</a>.</p>
+<p>To install the Microcosm, open a new terminal window, and make sure you have
+the <code class="docutils literal"><span class="pre">DATAWIRE_TOKEN</span></code> environment variable set. You should consider using
+a new <cite>virtualenv</cite> for this too.</p>
+<ol class="arabic">
+<li><p class="first">Download the Microcosm package:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">datawire</span><span class="o">/</span><span class="n">microcosm</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Install the required Python packages needed to run the Microcosm:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">microcosm</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Launch the Microcosm:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">microcosmctl</span><span class="o">.</span><span class="n">py</span> <span class="n">run</span> <span class="n">scenarios</span><span class="o">/</span><span class="n">countdown</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>This particular scenario runs a number of microservices, with multiple instances
+and versions of each.</p>
+<p>Now log on to your account on Mission Control, and you should see each of
+the microservices listed as Active and Healthy. You should also see new tracing
+messages from each of the services in the Logs section.</p>
 </div>
 </div>
 </div>
@@ -173,6 +206,7 @@ If the client can&#8217;t reach the discovery service for some reason it can sti
 <li><a class="reference internal" href="#setup">Setup</a></li>
 <li><a class="reference internal" href="#registering-a-service">Registering a service</a></li>
 <li><a class="reference internal" href="#finding-a-service">Finding a service</a></li>
+<li><a class="reference internal" href="#running-sample-microservices">Running Sample Microservices</a></li>
 </ul>
 </li>
 </ul>
