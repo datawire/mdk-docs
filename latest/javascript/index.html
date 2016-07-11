@@ -280,7 +280,8 @@
   </div>
   
 
-  <p>\n         Create a started instance of the MDK. This is equivalent to\n         callint init() followed by start() on the resulting instance.\n</p>
+  <p>Create a started instance of the MDK. This is equivalent to
+callint init() followed by start() on the resulting instance.</p>
 
 
   <div class='pre p1 fill-light'>start()</div>
@@ -324,7 +325,16 @@
   </div>
   
 
-  <p>\n         The MDK API consists of two interfaces: MDK and Session. The\n         MDK interface holds globally scoped APIs and state associated\n         with the microservice. The Session interface holds locally\n         scoped APIs and state. A Session must be used sequentially.\n\n         The MDK instance is responsible for communicating with\n         foundational services like discovery and tracing.\n\n         There will typically be one MDK instance for the entire\n         process, and one instance of the Session object per\n         thread/channel/request depending on how the MDK is integrated\n         and used within the application framework of choice.\n</p>
+  <p>The MDK API consists of two interfaces: MDK and Session. The
+MDK interface holds globally scoped APIs and state associated
+with the microservice. The Session interface holds locally
+scoped APIs and state. A Session must be used sequentially.</p>
+<p>The MDK instance is responsible for communicating with
+foundational services like discovery and tracing.</p>
+<p>There will typically be one MDK instance for the entire
+process, and one instance of the Session object per
+thread/channel/request depending on how the MDK is integrated
+and used within the application framework of choice.</p>
 
 
   <div class='pre p1 fill-light'>MDK()</div>
@@ -418,7 +428,8 @@
 
   
 
-  <p>\n             Start the MDK. An MDK instance will not communicate with\n             foundational services unless it is started.\n</p>
+  <p>Start the MDK. An MDK instance will not communicate with
+foundational services unless it is started.</p>
 
 
   <div class='pre p1 fill-light'>start()</div>
@@ -464,7 +475,11 @@
 
   
 
-  <p>\n             Stop the MDK. When the MDK stops unregisters any service\n             endpoints from the discovery system. This should always\n             be done prior to process exit in order to propogate node\n             shutdowns in realtime rather than waiting for heartbeats\n             to detect node departures.\n</p>
+  <p>Stop the MDK. When the MDK stops unregisters any service
+endpoints from the discovery system. This should always
+be done prior to process exit in order to propogate node
+shutdowns in realtime rather than waiting for heartbeats
+to detect node departures.</p>
 
 
   <div class='pre p1 fill-light'>stop()</div>
@@ -510,7 +525,10 @@
 
   
 
-  <p>\n             Registers a service endpoint with the discovery\n             system. This can be called at any point, however\n             registered endpoints will not be advertised to the\n             discovery system until the MDK is started.\n</p>
+  <p>Registers a service endpoint with the discovery
+system. This can be called at any point, however
+registered endpoints will not be advertised to the
+discovery system until the MDK is started.</p>
 
 
   <div class='pre p1 fill-light'>register(service: Any, version: Any, address: Any)</div>
@@ -582,7 +600,12 @@
 
   
 
-  <p>\n             Creates a new Session. A Session created in this way will\n             result in a new distributed trace. This should therefore\n             be used primarily by edge services. Intermediary and\n             foundational services should make use of\n             join(encodedContext) in order to preserve distributed\n             traces.\n</p>
+  <p>Creates a new Session. A Session created in this way will
+result in a new distributed trace. This should therefore
+be used primarily by edge services. Intermediary and
+foundational services should make use of
+join(encodedContext) in order to preserve distributed
+traces.</p>
 
 
   <div class='pre p1 fill-light'>session()</div>
@@ -628,7 +651,7 @@
 
   
 
-  <p>\n             Create a new Session and join it to a distributed trace.\n</p>
+  <p>Create a new Session and join it to a distributed trace.</p>
 
 
   <div class='pre p1 fill-light'>join(encodedContext: Any)</div>
@@ -694,7 +717,42 @@
   </div>
   
 
-  <p>\n         A session provides a lightweight sequential context that a\n         microservice can use in the context of any application\n         framework in order to manage its interactions with other\n         microservices. It provides simple APIs for service\n         resolution, distributed tracing, and circuit breakers.\n\n         A microservices architecture enables small self contained\n         units of business logic to be implemented by separate teams\n         working on isolated services based on the languages and\n         frameworks best suited for their problem domain.\n\n         Any given microservice will contain sequential business logic\n         implemented in a variety of ways depending on the application\n         framework chosen. For example it may be a long running\n         thread, a simple blocking request handler, or a chained\n         series of reactive handlers in an async environment.\n\n         For the most part this business logic can be implemented\n         exactly as prescribed by the application framework of choice,\n         however in a microservices architecture, some special care\n         needs to be taken when this business logic interacts with\n         other microservices.\n\n         Because microservices are updated with much higher frequency\n         than normal web applications, the interactions between them\n         form key points that require extra care beyond normal web\n         interactions in order to avoid creating a system that is both\n         extremely fragile, unreliable, and opaque.\n\n         Realtime service resolution, distributed tracing, and\n         resilience heuristics such as circuit breakers provide the\n         foundational behavior required at these interaction\n         points. These capabilites must be combined with the defensive\n         coding practice of intelligent fallback behavior when remote\n         services are unavailable or misbehaving, in order to build a\n         robust microservice application.\n\n         Because of this, a session is expected to be created and made\n         available to all business logic within a given microservice,\n         e.g. on a per request basis, as a thread local, part of a\n         context object, etc depending on the application framework of\n         choice.\n</p>
+  <p>A session provides a lightweight sequential context that a
+microservice can use in the context of any application
+framework in order to manage its interactions with other
+microservices. It provides simple APIs for service
+resolution, distributed tracing, and circuit breakers.</p>
+<p>A microservices architecture enables small self contained
+units of business logic to be implemented by separate teams
+working on isolated services based on the languages and
+frameworks best suited for their problem domain.</p>
+<p>Any given microservice will contain sequential business logic
+implemented in a variety of ways depending on the application
+framework chosen. For example it may be a long running
+thread, a simple blocking request handler, or a chained
+series of reactive handlers in an async environment.</p>
+<p>For the most part this business logic can be implemented
+exactly as prescribed by the application framework of choice,
+however in a microservices architecture, some special care
+needs to be taken when this business logic interacts with
+other microservices.</p>
+<p>Because microservices are updated with much higher frequency
+than normal web applications, the interactions between them
+form key points that require extra care beyond normal web
+interactions in order to avoid creating a system that is both
+extremely fragile, unreliable, and opaque.</p>
+<p>Realtime service resolution, distributed tracing, and
+resilience heuristics such as circuit breakers provide the
+foundational behavior required at these interaction
+points. These capabilites must be combined with the defensive
+coding practice of intelligent fallback behavior when remote
+services are unavailable or misbehaving, in order to build a
+robust microservice application.</p>
+<p>Because of this, a session is expected to be created and made
+available to all business logic within a given microservice,
+e.g. on a per request basis, as a thread local, part of a
+context object, etc depending on the application framework of
+choice.</p>
 
 
   <div class='pre p1 fill-light'>Session()</div>
@@ -1107,7 +1165,7 @@
 
   
 
-  <p>\n             Locate a compatible service instance.\n</p>
+  <p>Locate a compatible service instance.</p>
 
 
   <div class='pre p1 fill-light'>resolve(service: Any, version: Any)</div>
@@ -1172,7 +1230,7 @@
 
   
 
-  <p>\n             Locate a compatible service instance with a non-default timeout.\n</p>
+  <p>Locate a compatible service instance with a non-default timeout.</p>
 
 
   <div class='pre p1 fill-light'>resolve_until(service: Any, version: Any, timeout: Any)</div>
@@ -1244,7 +1302,7 @@
 
   
 
-  <p>\n             Locate a compatible service instance asynchronously. The result is returned as a promise.\n</p>
+  <p>Locate a compatible service instance asynchronously. The result is returned as a promise.</p>
 
 
   <div class='pre p1 fill-light'>resolve_async(service: Any, version: Any)</div>
@@ -1309,7 +1367,18 @@
 
   
 
-  <p>\n             Start an interaction with a remote service.\n\n             The session tracks any nodes resolved during an\n             interactin with a remote service.\n\n             The service resolution API permits a compatible instance\n             of the service to be located. In addition, it tracks\n             which exact instances are in use during any\n             interaction. Should the interaction fail, circuit breaker\n             state is updated for those nodes, and all involved\n             instances involved are reported to the tracing services.\n\n             This permits realtime reporting of integration issues\n             when services are updated, and also allows circuit\n             breakers to mitigate the impact of any such issues.\n</p>
+  <p>Start an interaction with a remote service.</p>
+<p>The session tracks any nodes resolved during an
+interactin with a remote service.</p>
+<p>The service resolution API permits a compatible instance
+of the service to be located. In addition, it tracks
+which exact instances are in use during any
+interaction. Should the interaction fail, circuit breaker
+state is updated for those nodes, and all involved
+instances involved are reported to the tracing services.</p>
+<p>This permits realtime reporting of integration issues
+when services are updated, and also allows circuit
+breakers to mitigate the impact of any such issues.</p>
 
 
   <div class='pre p1 fill-light'>start_interaction()</div>
@@ -1355,7 +1424,10 @@
 
   
 
-  <p>\n             Record an interaction as failed.\n\n             This will update circuit breaker state for the remote\n             nodes, as well as reporting all nodes involved to the\n             tracing system.\n</p>
+  <p>Record an interaction as failed.</p>
+<p>This will update circuit breaker state for the remote
+nodes, as well as reporting all nodes involved to the
+tracing system.</p>
 
 
   <div class='pre p1 fill-light'>fail_interaction(message: Any)</div>
@@ -1413,7 +1485,8 @@
 
   
 
-  <p>\n             Finish an interaction.\n\n             This marks an interaction as completed.\n</p>
+  <p>Finish an interaction.</p>
+<p>This marks an interaction as completed.</p>
 
 
   <div class='pre p1 fill-light'>finish_interaction()</div>
@@ -1459,7 +1532,9 @@
 
   
 
-  <p>\n             This is a convenience API that will perform\n             start_interaction() followed by callable(ssn) followed by\n             finish_interaction().\n\n</p>
+  <p>This is a convenience API that will perform
+start_interaction() followed by callable(ssn) followed by
+finish_interaction().</p>
 
 
   <div class='pre p1 fill-light'>interact(callable: Any)</div>

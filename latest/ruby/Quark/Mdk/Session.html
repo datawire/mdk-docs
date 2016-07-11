@@ -124,38 +124,41 @@
 
   <section class="description">
     
-<p>n         A session provides a lightweight sequential context that an      
-microservice can use in the context of any applicationn         framework
-in order to manage its interactions with othern         microservices. It
-provides simple APIs for servicen         resolution, distributed tracing,
-and circuit breakers.nn         A microservices architecture enables small
-self containedn         units of business logic to be implemented by
-separate teamsn         working on isolated services based on the languages
-andn         frameworks best suited for their problem domain.nn         Any
-given microservice will contain sequential business logicn        
-implemented in a variety of ways depending on the applicationn        
-framework chosen. For example it may be a long runningn         thread, a
-simple blocking request handler, or a chainedn         series of reactive
-handlers in an async environment.nn         For the most part this business
-logic can be implementedn         exactly as prescribed by the application
-framework of choice,n         however in a microservices architecture, some
-special caren         needs to be taken when this business logic interacts
-withn         other microservices.nn         Because microservices are
-updated with much higher frequencyn         than normal web applications,
-the interactions between themn         form key points that require extra
-care beyond normal webn         interactions in order to avoid creating a
-system that is bothn         extremely fragile, unreliable, and opaque.nn  
-Realtime service resolution, distributed tracing, andn         resilience
-heuristics such as circuit breakers provide then         foundational
-behavior required at these interactionn         points. These capabilites
-must be combined with the defensiven         coding practice of intelligent
-fallback behavior when remoten         services are unavailable or
-misbehaving, in order to build an         robust microservice
-application.nn         Because of this, a session is expected to be created
-and maden         available to all business logic within a given
-microservice,n         e.g. on a per request basis, as a thread local, part
-of an         context object, etc depending on the application framework
-ofn         choice.n</p>
+<p>A session provides a lightweight sequential context that a microservice can
+use in the context of any application framework in order to manage its
+interactions with other microservices. It provides simple APIs for service
+resolution, distributed tracing, and circuit breakers.</p>
+
+<p>A microservices architecture enables small self contained units of business
+logic to be implemented by separate teams working on isolated services
+based on the languages and frameworks best suited for their problem domain.</p>
+
+<p>Any given microservice will contain sequential business logic implemented
+in a variety of ways depending on the application framework chosen. For
+example it may be a long running thread, a simple blocking request handler,
+or a chained series of reactive handlers in an async environment.</p>
+
+<p>For the most part this business logic can be implemented exactly as
+prescribed by the application framework of choice, however in a
+microservices architecture, some special care needs to be taken when this
+business logic interacts with other microservices.</p>
+
+<p>Because microservices are updated with much higher frequency than normal
+web applications, the interactions between them form key points that
+require extra care beyond normal web interactions in order to avoid
+creating a system that is both extremely fragile, unreliable, and opaque.</p>
+
+<p>Realtime service resolution, distributed tracing, and resilience heuristics
+such as circuit breakers provide the foundational behavior required at
+these interaction points. These capabilites must be combined with the
+defensive coding practice of intelligent fallback behavior when remote
+services are unavailable or misbehaving, in order to build a robust
+microservice application.</p>
+
+<p>Because of this, a session is expected to be created and made available to
+all business logic within a given microservice, e.g. on a per request
+basis, as a thread local, part of a context object, etc depending on the
+application framework of choice.</p>
 
   </section>
 
@@ -197,7 +200,7 @@ ofn         choice.n</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 137</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 211</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>()
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__init_fields__</span>
 
@@ -240,7 +243,7 @@ ofn         choice.n</p>
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 263</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 367</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
 
@@ -275,7 +278,7 @@ ofn         choice.n</p>
 
           
           <div class="method-source-code" id="critical-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 158</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 232</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">critical</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.critical` is an abstract method&#39;</span>
 
@@ -310,7 +313,7 @@ ofn         choice.n</p>
 
           
           <div class="method-source-code" id="debug-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 194</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 268</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">debug</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.debug` is an abstract method&#39;</span>
 
@@ -345,7 +348,7 @@ ofn         choice.n</p>
 
           
           <div class="method-source-code" id="error-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 167</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 241</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">error</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.error` is an abstract method&#39;</span>
 
@@ -374,15 +377,16 @@ ofn         choice.n</p>
 
         <div class="method-description">
           
-          <p>n             Record an interaction as failed.nn             This will
-update circuit breaker state for the remoten             nodes, as well as
-reporting all nodes involved to then             tracing system.n</p>
+          <p>Record an interaction as failed.</p>
+
+<p>This will update circuit breaker state for the remote nodes, as well as
+reporting all nodes involved to the tracing system.</p>
           
           
 
           
           <div class="method-source-code" id="fail_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 239</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 336</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fail_interaction</span>(<span class="ruby-identifier">message</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.fail_interaction` is an abstract method&#39;</span>
 
@@ -411,14 +415,15 @@ reporting all nodes involved to then             tracing system.n</p>
 
         <div class="method-description">
           
-          <p>n             Finish an interaction.nn             This marks an
-interaction as completed.n</p>
+          <p>Finish an interaction.</p>
+
+<p>This marks an interaction as completed.</p>
           
           
 
           
           <div class="method-source-code" id="finish_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 248</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 348</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">finish_interaction</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.finish_interaction` is an abstract method&#39;</span>
 
@@ -453,7 +458,7 @@ interaction as completed.n</p>
 
           
           <div class="method-source-code" id="info-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 185</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 259</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">info</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.info` is an abstract method&#39;</span>
 
@@ -488,7 +493,7 @@ interaction as completed.n</p>
 
           
           <div class="method-source-code" id="inject-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 149</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 223</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inject</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.inject` is an abstract method&#39;</span>
 
@@ -517,16 +522,16 @@ interaction as completed.n</p>
 
         <div class="method-description">
           
-          <p>n             This is a convenience API that will performn             <a
+          <p>This is a convenience API that will perform <a
 href="Session.html#method-i-start_interaction">#start_interaction</a>()
-followed by callable(ssn) followed byn             <a
-href="Session.html#method-i-finish_interaction">#finish_interaction</a>().nn</p>
+followed by callable(ssn) followed by <a
+href="Session.html#method-i-finish_interaction">#finish_interaction</a>().</p>
           
           
 
           
           <div class="method-source-code" id="interact-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 257</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 361</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">interact</span>(<span class="ruby-identifier">callable</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.interact` is an abstract method&#39;</span>
 
@@ -555,13 +560,13 @@ href="Session.html#method-i-finish_interaction">#finish_interaction</a>().nn</p>
 
         <div class="method-description">
           
-          <p>n             Locate a compatible service instance.n</p>
+          <p>Locate a compatible service instance.</p>
           
           
 
           
           <div class="method-source-code" id="resolve-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 203</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 278</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.resolve` is an abstract method&#39;</span>
 
@@ -590,14 +595,14 @@ href="Session.html#method-i-finish_interaction">#finish_interaction</a>().nn</p>
 
         <div class="method-description">
           
-          <p>n             Locate a compatible service instance asynchronously. The
-result is returned as a promise.n</p>
+          <p>Locate a compatible service instance asynchronously. The result is returned
+as a promise.</p>
           
           
 
           
           <div class="method-source-code" id="resolve_async-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 221</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 298</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_async</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.resolve_async` is an abstract method&#39;</span>
 
@@ -626,14 +631,13 @@ result is returned as a promise.n</p>
 
         <div class="method-description">
           
-          <p>n             Locate a compatible service instance with a non-default
-timeout.n</p>
+          <p>Locate a compatible service instance with a non-default timeout.</p>
           
           
 
           
           <div class="method-source-code" id="resolve_until-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 212</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 288</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_until</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">timeout</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.resolve_until` is an abstract method&#39;</span>
 
@@ -662,23 +666,26 @@ timeout.n</p>
 
         <div class="method-description">
           
-          <p>n             Start an interaction with a remote service.nn             The
-session tracks any nodes resolved during ann             interactin with a
-remote service.nn             The service resolution API permits a
-compatible instancen             of the service to be located. In addition,
-it tracksn             which exact instances are in use during anyn        
-interaction. Should the interaction fail, circuit breakern            
-state is updated for those nodes, and all involvedn             instances
-involved are reported to the tracing services.nn             This permits
-realtime reporting of integration issuesn             when services are
-updated, and also allows circuitn             breakers to mitigate the
-impact of any such issues.n</p>
+          <p>Start an interaction with a remote service.</p>
+
+<p>The session tracks any nodes resolved during an interactin with a remote
+service.</p>
+
+<p>The service resolution API permits a compatible instance of the service to
+be located. In addition, it tracks which exact instances are in use during
+any interaction. Should the interaction fail, circuit breaker state is
+updated for those nodes, and all involved instances involved are reported
+to the tracing services.</p>
+
+<p>This permits realtime reporting of integration issues when services are
+updated, and also allows circuit breakers to mitigate the impact of any
+such issues.</p>
           
           
 
           
           <div class="method-source-code" id="start_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 230</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 322</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start_interaction</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.start_interaction` is an abstract method&#39;</span>
 
@@ -713,7 +720,7 @@ impact of any such issues.n</p>
 
           
           <div class="method-source-code" id="warn-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 176</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 250</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">warn</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.warn` is an abstract method&#39;</span>
 

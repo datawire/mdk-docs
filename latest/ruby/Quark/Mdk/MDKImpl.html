@@ -203,7 +203,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 284</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 388</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>()
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__init_fields__</span>
@@ -253,7 +253,7 @@
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 395</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 499</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_disco</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_discovery</span>.<span class="ruby-constant">Discovery</span>.<span class="ruby-identifier">new</span>()
@@ -291,7 +291,7 @@
 
           
           <div class="method-source-code" id="_getClass-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 348</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 452</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_getClass</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;mdk.MDKImpl&quot;</span>
@@ -327,7 +327,7 @@
 
           
           <div class="method-source-code" id="_getField-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 355</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 459</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_getField</span>(<span class="ruby-identifier">name</span>)
     
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;CONTEXT_HEADER&quot;</span>))
@@ -378,7 +378,7 @@
 
           
           <div class="method-source-code" id="_setField-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 377</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 481</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_setField</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)
     
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;logger&quot;</span>))
@@ -425,7 +425,7 @@
 
           
           <div class="method-source-code" id="_timeout-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 300</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 404</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_timeout</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-value">10.0</span>
@@ -461,7 +461,7 @@
 
           
           <div class="method-source-code" id="join-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 341</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 445</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">join</span>(<span class="ruby-identifier">encodedContext</span>)
     
     <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">SessionImpl</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">encodedContext</span>)
@@ -497,7 +497,7 @@
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 322</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 426</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">address</span>)
     
     <span class="ruby-identifier">node</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_discovery</span>.<span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>()
@@ -538,7 +538,7 @@
 
           
           <div class="method-source-code" id="session-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 334</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 438</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">session</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">SessionImpl</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-keyword">nil</span>)
@@ -574,7 +574,7 @@
 
           
           <div class="method-source-code" id="start-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 307</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 411</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>()
     
     <span class="ruby-ivar">@_disco</span>.<span class="ruby-identifier">start</span>()
@@ -610,7 +610,7 @@
 
           
           <div class="method-source-code" id="stop-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 314</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 418</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>()
     
     <span class="ruby-ivar">@_disco</span>.<span class="ruby-identifier">stop</span>()

@@ -108,19 +108,21 @@
 
   <section class="description">
     
-<p>n         The <a href="MDK.html">MDK</a> API consists of two interfaces: <a
-href="MDK.html">MDK</a> and <a href="Session.html">Session</a>. Then       
-<a href="MDK.html">MDK</a> interface holds globally scoped APIs and state
-associatedn         with the microservice. The <a
-href="Session.html">Session</a> interface holds locallyn         scoped
-APIs and state. A <a href="Session.html">Session</a> must be used
-sequentially.nn         The <a href="MDK.html">MDK</a> instance is
-responsible for communicating withn         foundational services like
-discovery and tracing.nn         There will typically be one <a
-href="MDK.html">MDK</a> instance for the entiren         process, and one
-instance of the <a href="Session.html">Session</a> object pern        
-thread/channel/request depending on how the <a href="MDK.html">MDK</a> is
-integratedn         and used within the application framework of choice.n</p>
+<p>The <a href="MDK.html">MDK</a> API consists of two interfaces: <a
+href="MDK.html">MDK</a> and <a href="Session.html">Session</a>. The <a
+href="MDK.html">MDK</a> interface holds globally scoped APIs and state
+associated with the microservice. The <a href="Session.html">Session</a>
+interface holds locally scoped APIs and state. A <a
+href="Session.html">Session</a> must be used sequentially.</p>
+
+<p>The <a href="MDK.html">MDK</a> instance is responsible for communicating
+with foundational services like discovery and tracing.</p>
+
+<p>There will typically be one <a href="MDK.html">MDK</a> instance for the
+entire process, and one instance of the <a href="Session.html">Session</a>
+object per thread/channel/request depending on how the <a
+href="MDK.html">MDK</a> is integrated and used within the application
+framework of choice.</p>
 
   </section>
 
@@ -162,7 +164,7 @@ integratedn         and used within the application framework of choice.n</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 62</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 76</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>()
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__init_fields__</span>
 
@@ -205,7 +207,7 @@ integratedn         and used within the application framework of choice.n</p>
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 116</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 148</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
 
@@ -234,14 +236,14 @@ integratedn         and used within the application framework of choice.n</p>
 
         <div class="method-description">
           
-          <p>n             Create a new <a href="Session.html">Session</a> and join it
-to a distributed trace.n</p>
+          <p>Create a new <a href="Session.html">Session</a> and join it to a
+distributed trace.</p>
           
           
 
           
           <div class="method-source-code" id="join-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 110</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">join</span>(<span class="ruby-identifier">encodedContext</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.join` is an abstract method&#39;</span>
 
@@ -270,16 +272,15 @@ to a distributed trace.n</p>
 
         <div class="method-description">
           
-          <p>n             Registers a service endpoint with the discoveryn            
-system. This can be called at any point, howevern             registered
-endpoints will not be advertised to then             discovery system until
-the <a href="MDK.html">MDK</a> is started.n</p>
+          <p>Registers a service endpoint with the discovery system. This can be called
+at any point, however registered endpoints will not be advertised to the
+discovery system until the <a href="MDK.html">MDK</a> is started.</p>
           
           
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 92</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">address</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.register` is an abstract method&#39;</span>
 
@@ -308,18 +309,17 @@ the <a href="MDK.html">MDK</a> is started.n</p>
 
         <div class="method-description">
           
-          <p>n             Creates a new <a href="Session.html">Session</a>. A <a
-href="Session.html">Session</a> created in this way willn            
-result in a new distributed trace. This should thereforen             be
-used primarily by edge services. Intermediary andn             foundational
-services should make use ofn             join(encodedContext) in order to
-preserve distributedn             traces.n</p>
+          <p>Creates a new <a href="Session.html">Session</a>. A <a
+href="Session.html">Session</a> created in this way will result in a new
+distributed trace. This should therefore be used primarily by edge
+services. Intermediary and foundational services should make use of
+join(encodedContext) in order to preserve distributed traces.</p>
           
           
 
           
           <div class="method-source-code" id="session-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 101</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 132</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">session</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.session` is an abstract method&#39;</span>
 
@@ -348,15 +348,15 @@ preserve distributedn             traces.n</p>
 
         <div class="method-description">
           
-          <p>n             Start the <a href="MDK.html">MDK</a>. An <a
-href="MDK.html">MDK</a> instance will not communicate withn            
-foundational services unless it is started.n</p>
+          <p>Start the <a href="MDK.html">MDK</a>. An <a href="MDK.html">MDK</a>
+instance will not communicate with foundational services unless it is
+started.</p>
           
           
 
           
           <div class="method-source-code" id="start-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 74</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.start` is an abstract method&#39;</span>
 
@@ -385,18 +385,17 @@ foundational services unless it is started.n</p>
 
         <div class="method-description">
           
-          <p>n             Stop the <a href="MDK.html">MDK</a>. When the <a
-href="MDK.html">MDK</a> stops unregisters any servicen            
-endpoints from the discovery system. This should alwaysn             be
-done prior to process exit in order to propogate noden            
-shutdowns in realtime rather than waiting for heartbeatsn             to
-detect node departures.n</p>
+          <p>Stop the <a href="MDK.html">MDK</a>. When the <a href="MDK.html">MDK</a>
+stops unregisters any service endpoints from the discovery system. This
+should always be done prior to process exit in order to propogate node
+shutdowns in realtime rather than waiting for heartbeats to detect node
+departures.</p>
           
           
 
           
           <div class="method-source-code" id="stop-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 83</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.stop` is an abstract method&#39;</span>
 
