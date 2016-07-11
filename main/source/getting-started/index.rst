@@ -138,3 +138,10 @@ and versions of each.
 Now log on to your account on Mission Control, and you should see each of
 the microservices listed as Active and Healthy. You should also see new tracing
 messages from each of the services in the Logs section.
+
+Digging Deeper
+--------------
+
+Now that you've seen the |mdk| at a high level, it's time to dig
+into the API at a deeper level to learn how to write your
+own microservices using it with the :doc:`Deep Dive <../deep-dive/index>`.
