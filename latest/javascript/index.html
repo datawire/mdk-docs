@@ -53,6 +53,17 @@
                 
                 <div class='toggle-target display-none'>
                   
+                  <ul class='list-reset py1-ul pl1'>
+                    <li class='h5'>Static members</li>
+                    
+                      <li><a
+                        href='#MDK.CONTEXT_HEADER'
+                        class='regular pre-open'>
+                        .CONTEXT_HEADER
+                      </a></li>
+                    
+                    </ul>
+                  
                   
                     <ul class='list-reset py1-ul pl1'>
                       <li class='h5'>Instance members</li>
@@ -96,129 +107,108 @@
               
                 
                 <li><a
-                  href='##inject'
-                  class="">
-                  inject
-                  
+                  href='#Session'
+                  class=" toggle-sibling">
+                  Session
+                  <span class='icon'>▸</span>
                 </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'>Instance members</li>
+                      
+                      <li><a
+                        href='#Session#inject'
+                        class='regular pre-open'>
+                        #inject
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#critical'
+                        class='regular pre-open'>
+                        #critical
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#error'
+                        class='regular pre-open'>
+                        #error
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#warn'
+                        class='regular pre-open'>
+                        #warn
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#info'
+                        class='regular pre-open'>
+                        #info
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#debug'
+                        class='regular pre-open'>
+                        #debug
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#resolve'
+                        class='regular pre-open'>
+                        #resolve
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#resolve_until'
+                        class='regular pre-open'>
+                        #resolve_until
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#resolve_async'
+                        class='regular pre-open'>
+                        #resolve_async
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#start_interaction'
+                        class='regular pre-open'>
+                        #start_interaction
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#fail_interaction'
+                        class='regular pre-open'>
+                        #fail_interaction
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#finish_interaction'
+                        class='regular pre-open'>
+                        #finish_interaction
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#interact'
+                        class='regular pre-open'>
+                        #interact
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                </div>
                 
                 </li>
               
                 
                 <li><a
-                  href='##critical'
+                  href='#.CONTEXT_HEADER'
                   class="">
-                  critical
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##error'
-                  class="">
-                  error
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##warn'
-                  class="">
-                  warn
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##info'
-                  class="">
-                  info
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##debug'
-                  class="">
-                  debug
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##resolve'
-                  class="">
-                  resolve
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##resolve_until'
-                  class="">
-                  resolve_until
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##resolve_async'
-                  class="">
-                  resolve_async
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##start_interaction'
-                  class="">
-                  start_interaction
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##fail'
-                  class="">
-                  fail
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##finish_interaction'
-                  class="">
-                  finish_interaction
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='##interact'
-                  class="">
-                  interact
+                  CONTEXT_HEADER
                   
                 </a>
                 
@@ -246,7 +236,7 @@
   </div>
   
 
-  <p>Create an MDK instance.</p>
+  <p>Create an unstarted instance of the MDK.</p>
 
 
   <div class='pre p1 fill-light'>init()</div>
@@ -290,7 +280,7 @@
   </div>
   
 
-  <p>Return a started MDK.</p>
+  <p>\n         Create a started instance of the MDK. This is equivalent to\n         callint init() followed by start() on the resulting instance.\n</p>
 
 
   <div class='pre p1 fill-light'>start()</div>
@@ -334,7 +324,7 @@
   </div>
   
 
-  <p>\n         The MDK API consists of two interfaces: MDK and Session. The\n         MDK interface holds globally scoped APIs and state associated\n         with the microservice. The Session interface holds locally\n         scoped APIs and state. A Session must be used sequentially.\n\n         There will typically be one MDK instance for the entire\n         process, and one instance of the Session object per\n         thread/channel/request depending on how the MDK is integrated\n         and used within the application framework of choice.\n</p>
+  <p>\n         The MDK API consists of two interfaces: MDK and Session. The\n         MDK interface holds globally scoped APIs and state associated\n         with the microservice. The Session interface holds locally\n         scoped APIs and state. A Session must be used sequentially.\n\n         The MDK instance is responsible for communicating with\n         foundational services like discovery and tracing.\n\n         There will typically be one MDK instance for the entire\n         process, and one instance of the Session object per\n         thread/channel/request depending on how the MDK is integrated\n         and used within the application framework of choice.\n</p>
 
 
   <div class='pre p1 fill-light'>MDK()</div>
@@ -358,6 +348,58 @@
   
 
   
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <div class="clearfix">
+  
+    <div class='keyline-bottom' id='MDK.CONTEXT_HEADER'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>CONTEXT_HEADER</span>
+            <span class='quiet code space-right2'></span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>This header is used to propogate shared context for distributed traces.</p>
+
+
+  <div class='pre p1 fill-light'>CONTEXT_HEADER</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
 
   
     <div class='py1 quiet mt1 prose-big'>Instance Members</div>
@@ -376,7 +418,7 @@
 
   
 
-  <p>Start the uplink.</p>
+  <p>\n             Start the MDK. An MDK instance will not communicate with\n             foundational services unless it is started.\n</p>
 
 
   <div class='pre p1 fill-light'>start()</div>
@@ -422,7 +464,7 @@
 
   
 
-  <p>Stop the uplink.</p>
+  <p>\n             Stop the MDK. When the MDK stops unregisters any service\n             endpoints from the discovery system. This should always\n             be done prior to process exit in order to propogate node\n             shutdowns in realtime rather than waiting for heartbeats\n             to detect node departures.\n</p>
 
 
   <div class='pre p1 fill-light'>stop()</div>
@@ -468,7 +510,7 @@
 
   
 
-  <p>Make our service known to discovery.</p>
+  <p>\n             Registers a service endpoint with the discovery\n             system. This can be called at any point, however\n             registered endpoints will not be advertised to the\n             discovery system until the MDK is started.\n</p>
 
 
   <div class='pre p1 fill-light'>register(service: Any, version: Any, address: Any)</div>
@@ -540,7 +582,7 @@
 
   
 
-  <p>Create a new Session.</p>
+  <p>\n             Creates a new Session. A Session created in this way will\n             result in a new distributed trace. This should therefore\n             be used primarily by edge services. Intermediary and\n             foundational services should make use of\n             join(encodedContext) in order to preserve distributed\n             traces.\n</p>
 
 
   <div class='pre p1 fill-light'>session()</div>
@@ -586,7 +628,7 @@
 
   
 
-  <p>Create a new Session and join it to a distributed trace.</p>
+  <p>\n             Create a new Session and join it to a distributed trace.\n</p>
 
 
   <div class='pre p1 fill-light'>join(encodedContext: Any)</div>
@@ -645,11 +687,53 @@
 
   
   <div class='clearfix'>
-    <h2 class='fl' id='#inject'>
-      inject
+    <h2 class='fl' id='Session'>
+      Session
     </h2>
     
   </div>
+  
+
+  <p>\n         A session provides a lightweight sequential context that a\n         microservice can use in the context of any application\n         framework in order to manage its interactions with other\n         microservices. It provides simple APIs for service\n         resolution, distributed tracing, and circuit breakers.\n\n         A microservices architecture enables small self contained\n         units of business logic to be implemented by separate teams\n         working on isolated services based on the languages and\n         frameworks best suited for their problem domain.\n\n         Any given microservice will contain sequential business logic\n         implemented in a variety of ways depending on the application\n         framework chosen. For example it may be a long running\n         thread, a simple blocking request handler, or a chained\n         series of reactive handlers in an async environment.\n\n         For the most part this business logic can be implemented\n         exactly as prescribed by the application framework of choice,\n         however in a microservices architecture, some special care\n         needs to be taken when this business logic interacts with\n         other microservices.\n\n         Because microservices are updated with much higher frequency\n         than normal web applications, the interactions between them\n         form key points that require extra care beyond normal web\n         interactions in order to avoid creating a system that is both\n         extremely fragile, unreliable, and opaque.\n\n         Realtime service resolution, distributed tracing, and\n         resilience heuristics such as circuit breakers provide the\n         foundational behavior required at these interaction\n         points. These capabilites must be combined with the defensive\n         coding practice of intelligent fallback behavior when remote\n         services are unavailable or misbehaving, in order to build a\n         robust microservice application.\n\n         Because of this, a session is expected to be created and made\n         available to all business logic within a given microservice,\n         e.g. on a per request basis, as a thread local, part of a\n         context object, etc depending on the application framework of\n         choice.\n</p>
+
+
+  <div class='pre p1 fill-light'>Session()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='keyline-bottom' id='Session#inject'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>inject</span>
+            <span class='quiet code space-right2'>()</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
   
 
   <p>Grabs the encoded context.</p>
@@ -682,18 +766,20 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
-
+      </div>
+    </div>
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#critical'>
-      critical
-    </h2>
-    
-  </div>
+    <div class='keyline-bottom' id='Session#critical'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>critical</span>
+            <span class='quiet code space-right2'>(category, text)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
   
 
   <p>Record a log entry at the CRITICAL logging level.</p>
@@ -745,18 +831,20 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
-
+      </div>
+    </div>
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#error'>
-      error
-    </h2>
-    
-  </div>
+    <div class='keyline-bottom' id='Session#error'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>error</span>
+            <span class='quiet code space-right2'>(category, text)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
   
 
   <p>Record a log entry at the ERROR logging level.</p>
@@ -808,18 +896,20 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
-
+      </div>
+    </div>
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#warn'>
-      warn
-    </h2>
-    
-  </div>
+    <div class='keyline-bottom' id='Session#warn'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>warn</span>
+            <span class='quiet code space-right2'>(category, text)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
   
 
   <p>Record a log entry at the WARN logging level.</p>
@@ -871,18 +961,20 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
-
+      </div>
+    </div>
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#info'>
-      info
-    </h2>
-    
-  </div>
+    <div class='keyline-bottom' id='Session#info'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>info</span>
+            <span class='quiet code space-right2'>(category, text)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
   
 
   <p>Record a log entry at the INFO logging level.</p>
@@ -934,18 +1026,20 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
-
+      </div>
+    </div>
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#debug'>
-      debug
-    </h2>
-    
-  </div>
+    <div class='keyline-bottom' id='Session#debug'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>debug</span>
+            <span class='quiet code space-right2'>(category, text)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
   
 
   <p>Record a log entry at the DEBUG logging level.</p>
@@ -997,21 +1091,23 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#resolve'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>resolve</span>
+            <span class='quiet code space-right2'>(service, version)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
 
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#resolve'>
-      resolve
-    </h2>
-    
-  </div>
-  
 
-  <p>Look up a service name with a specific version via discovery.</p>
+  <p>\n             Locate a compatible service instance.\n</p>
 
 
   <div class='pre p1 fill-light'>resolve(service: Any, version: Any)</div>
@@ -1060,21 +1156,23 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#resolve_until'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>resolve_until</span>
+            <span class='quiet code space-right2'>(service, version, timeout)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
 
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#resolve_until'>
-      resolve_until
-    </h2>
-    
-  </div>
-  
 
-  <p>Look up a service name with a specific version via discovery, with timeout.</p>
+  <p>\n             Locate a compatible service instance with a non-default timeout.\n</p>
 
 
   <div class='pre p1 fill-light'>resolve_until(service: Any, version: Any, timeout: Any)</div>
@@ -1130,21 +1228,23 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#resolve_async'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>resolve_async</span>
+            <span class='quiet code space-right2'>(service, version)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
 
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#resolve_async'>
-      resolve_async
-    </h2>
-    
-  </div>
-  
 
-  <p>Asynchronously look up a service name/version via discovery. The result is returned as a promise.</p>
+  <p>\n             Locate a compatible service instance asynchronously. The result is returned as a promise.\n</p>
 
 
   <div class='pre p1 fill-light'>resolve_async(service: Any, version: Any)</div>
@@ -1193,21 +1293,23 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#start_interaction'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>start_interaction</span>
+            <span class='quiet code space-right2'>()</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
 
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#start_interaction'>
-      start_interaction
-    </h2>
-    
-  </div>
-  
 
-  <p>Start an interaction.</p>
+  <p>\n             Start an interaction with a remote service.\n\n             The session tracks any nodes resolved during an\n             interactin with a remote service.\n\n             The service resolution API permits a compatible instance\n             of the service to be located. In addition, it tracks\n             which exact instances are in use during any\n             interaction. Should the interaction fail, circuit breaker\n             state is updated for those nodes, and all involved\n             instances involved are reported to the tracing services.\n\n             This permits realtime reporting of integration issues\n             when services are updated, and also allows circuit\n             breakers to mitigate the impact of any such issues.\n</p>
 
 
   <div class='pre p1 fill-light'>start_interaction()</div>
@@ -1237,24 +1339,26 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#fail_interaction'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>fail_interaction</span>
+            <span class='quiet code space-right2'>(message)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
 
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#fail'>
-      fail
-    </h2>
-    
-  </div>
-  
 
-  <p>Record an interaction failure.</p>
+  <p>\n             Record an interaction as failed.\n\n             This will update circuit breaker state for the remote\n             nodes, as well as reporting all nodes involved to the\n             tracing system.\n</p>
 
 
-  <div class='pre p1 fill-light'>fail(message: Any)</div>
+  <div class='pre p1 fill-light'>fail_interaction(message: Any)</div>
 
   
 
@@ -1293,21 +1397,23 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#finish_interaction'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>finish_interaction</span>
+            <span class='quiet code space-right2'>()</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
 
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#finish_interaction'>
-      finish_interaction
-    </h2>
-    
-  </div>
-  
 
-  <p>Finish an interaction.</p>
+  <p>\n             Finish an interaction.\n\n             This marks an interaction as completed.\n</p>
 
 
   <div class='pre p1 fill-light'>finish_interaction()</div>
@@ -1337,21 +1443,23 @@
   
 </section>
 
-            
-          
-            
-              <section class='py2 clearfix'>
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#interact'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>interact</span>
+            <span class='quiet code space-right2'>(callable)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
 
   
-  <div class='clearfix'>
-    <h2 class='fl' id='#interact'>
-      interact
-    </h2>
-    
-  </div>
-  
 
-  <p>start_interaction(); callable(mdk); finish_interaction();</p>
+  <p>\n             This is a convenience API that will perform\n             start_interaction() followed by callable(ssn) followed by\n             finish_interaction().\n\n</p>
 
 
   <div class='pre p1 fill-light'>interact(callable: Any)</div>
@@ -1376,6 +1484,60 @@
         </div>
       
     </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='.CONTEXT_HEADER'>
+      CONTEXT_HEADER
+    </h2>
+    
+  </div>
+  
+
+  <p>This header is used to propogate shared context for distributed traces.</p>
+
+
+  <div class='pre p1 fill-light'>CONTEXT_HEADER</div>
+
+  
+
+  
+  
+  
+  
+  
+
   
 
   

@@ -53,6 +53,8 @@
 MDK interface holds globally scoped APIs and state associated
 with the microservice. The Session interface holds locally
 scoped APIs and state. A Session must be used sequentially.</p>
+<p>The MDK instance is responsible for communicating with
+foundational services like discovery and tracing.</p>
 <p>There will typically be one MDK instance for the entire
 process, and one instance of the Session object per
 thread/channel/request depending on how the MDK is integrated
@@ -76,25 +78,38 @@ and used within the application framework of choice.</p>
 <dl class="method">
 <dt id="mdk.MDK.register">
 <code class="descname">register</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>address</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.register" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make our service known to discovery.</p>
+<dd><p>Registers a service endpoint with the discovery
+system. This can be called at any point, however
+registered endpoints will not be advertised to the
+discovery system until the MDK is started.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdk.MDK.session">
 <code class="descname">session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.session" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new Session.</p>
+<dd><p>Creates a new Session. A Session created in this way will
+result in a new distributed trace. This should therefore
+be used primarily by edge services. Intermediary and
+foundational services should make use of
+join(encodedContext) in order to preserve distributed
+traces.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdk.MDK.start">
 <code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start the uplink.</p>
+<dd><p>Start the MDK. An MDK instance will not communicate with
+foundational services unless it is started.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdk.MDK.stop">
 <code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop the uplink.</p>
+<dd><p>Stop the MDK. When the MDK stops unregisters any service
+endpoints from the discovery system. This should always
+be done prior to process exit in order to propogate node
+shutdowns in realtime rather than waiting for heartbeats
+to detect node departures.</p>
 </dd></dl>
 
 </dd></dl>
@@ -147,7 +162,43 @@ and used within the application framework of choice.</p>
 <dl class="class">
 <dt id="mdk.Session">
 <em class="property">class </em><code class="descclassname">mdk.</code><code class="descname">Session</code><a class="headerlink" href="#mdk.Session" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>A session provides a lightweight sequential context that a
+microservice can use in the context of any application
+framework in order to manage its interactions with other
+microservices. It provides simple APIs for service
+resolution, distributed tracing, and circuit breakers.</p>
+<p>A microservices architecture enables small self contained
+units of business logic to be implemented by separate teams
+working on isolated services based on the languages and
+frameworks best suited for their problem domain.</p>
+<p>Any given microservice will contain sequential business logic
+implemented in a variety of ways depending on the application
+framework chosen. For example it may be a long running
+thread, a simple blocking request handler, or a chained
+series of reactive handlers in an async environment.</p>
+<p>For the most part this business logic can be implemented
+exactly as prescribed by the application framework of choice,
+however in a microservices architecture, some special care
+needs to be taken when this business logic interacts with
+other microservices.</p>
+<p>Because microservices are updated with much higher frequency
+than normal web applications, the interactions between them
+form key points that require extra care beyond normal web
+interactions in order to avoid creating a system that is both
+extremely fragile, unreliable, and opaque.</p>
+<p>Realtime service resolution, distributed tracing, and
+resilience heuristics such as circuit breakers provide the
+foundational behavior required at these interaction
+points. These capabilites must be combined with the defensive
+coding practice of intelligent fallback behavior when remote
+services are unavailable or misbehaving, in order to build a
+robust microservice application.</p>
+<p>Because of this, a session is expected to be created and made
+available to all business logic within a given microservice,
+e.g. on a per request basis, as a thread local, part of a
+context object, etc depending on the application framework of
+choice.</p>
+<dl class="method">
 <dt id="mdk.Session.critical">
 <code class="descname">critical</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.critical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Record a log entry at the CRITICAL logging level.</p>
@@ -166,15 +217,19 @@ and used within the application framework of choice.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="mdk.Session.fail">
-<code class="descname">fail</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.fail" title="Permalink to this definition">¶</a></dt>
-<dd><p>Record an interaction failure.</p>
+<dt id="mdk.Session.fail_interaction">
+<code class="descname">fail_interaction</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.fail_interaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record an interaction as failed.</p>
+<p>This will update circuit breaker state for the remote
+nodes, as well as reporting all nodes involved to the
+tracing system.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdk.Session.finish_interaction">
 <code class="descname">finish_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.finish_interaction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finish an interaction.</p>
+<p>This marks an interaction as completed.</p>
 </dd></dl>
 
 <dl class="method">
@@ -192,7 +247,9 @@ and used within the application framework of choice.</p>
 <dl class="method">
 <dt id="mdk.Session.interact">
 <code class="descname">interact</code><span class="sig-paren">(</span><em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.interact" title="Permalink to this definition">¶</a></dt>
-<dd><p>start_interaction(); callable(mdk); finish_interaction();</p>
+<dd><p>This is a convenience API that will perform
+start_interaction() followed by callable(ssn) followed by
+finish_interaction().</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -203,25 +260,36 @@ and used within the application framework of choice.</p>
 <dl class="method">
 <dt id="mdk.Session.resolve">
 <code class="descname">resolve</code><span class="sig-paren">(</span><em>service</em>, <em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.resolve" title="Permalink to this definition">¶</a></dt>
-<dd><p>Look up a service name with a specific version via discovery.</p>
+<dd><p>Locate a compatible service instance.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdk.Session.resolve_async">
 <code class="descname">resolve_async</code><span class="sig-paren">(</span><em>service</em>, <em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.resolve_async" title="Permalink to this definition">¶</a></dt>
-<dd><p>Asynchronously look up a service name/version via discovery. The result is returned as a promise.</p>
+<dd><p>Locate a compatible service instance asynchronously. The result is returned as a promise.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdk.Session.resolve_until">
 <code class="descname">resolve_until</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.resolve_until" title="Permalink to this definition">¶</a></dt>
-<dd><p>Look up a service name with a specific version via discovery, with timeout.</p>
+<dd><p>Locate a compatible service instance with a non-default timeout.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdk.Session.start_interaction">
 <code class="descname">start_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.start_interaction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start an interaction.</p>
+<dd><p>Start an interaction with a remote service.</p>
+<p>The session tracks any nodes resolved during an
+interactin with a remote service.</p>
+<p>The service resolution API permits a compatible instance
+of the service to be located. In addition, it tracks
+which exact instances are in use during any
+interaction. Should the interaction fail, circuit breaker
+state is updated for those nodes, and all involved
+instances involved are reported to the tracing services.</p>
+<p>This permits realtime reporting of integration issues
+when services are updated, and also allows circuit
+breakers to mitigate the impact of any such issues.</p>
 </dd></dl>
 
 <dl class="method">
@@ -251,8 +319,8 @@ and used within the application framework of choice.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="mdk.SessionImpl.fail">
-<code class="descname">fail</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.fail" title="Permalink to this definition">¶</a></dt>
+<dt id="mdk.SessionImpl.fail_interaction">
+<code class="descname">fail_interaction</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.fail_interaction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -320,13 +388,14 @@ and used within the application framework of choice.</p>
 <dl class="function">
 <dt id="mdk.init">
 <code class="descclassname">mdk.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.init" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create an MDK instance.</p>
+<dd><p>Create an unstarted instance of the MDK.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mdk.start">
 <code class="descclassname">mdk.</code><code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a started MDK.</p>
+<dd><p>Create a started instance of the MDK. This is equivalent to
+callint init() followed by start() on the resulting instance.</p>
 </dd></dl>
 
 </div>
