@@ -9,7 +9,7 @@
 require 'sinatra/base'
 
 require 'mdk'
-$mdk = ::Quark::Mdk.init()
+$mdk = ::Quark::Mdk.start()
 SERVICE_NAME = ARGV[0]
 
 class MyApp < Sinatra::Application
@@ -17,7 +17,7 @@ class MyApp < Sinatra::Application
 
   get '/' do
     # Join the logging context for the request, if possible:
-    ssn = $mdk.join(headers['X-MDK-CONTEXT'])
+    ssn = $mdk.join(headers[$mdk.CONTEXT_HEADER])
     ssn.info(SERVICE_NAME, "Received a request.")
     return 'Hello World!'
   end
@@ -28,7 +28,6 @@ def main()
   host = "127.0.0.1"  # We are reachable only on localhost
   port = MyApp.port
 
-  $mdk.start()
   $mdk.register(SERVICE_NAME, "1.0.0", "http://#{host}:#{port}")
   begin
     MyApp.run!
