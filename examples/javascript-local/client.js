@@ -13,7 +13,7 @@
 var process = require("process");
 var args = process.argv.splice(process.execArgv.length + 2);
 
-if (args.length == 0) {
+if (args.length === 0) {
     throw "usage: client service-name";
 }
 
@@ -36,7 +36,7 @@ function loop() {
         var url = node.address;
 
         ssn.info("client", "Connecting to " + url);
-        var headers = {}
+        var headers = {};
         headers[mdk.MDK.CONTEXT_HEADER] = ssn.inject();
         var options = {url: url, headers: headers};
         request(options, showResult);

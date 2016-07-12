@@ -12,7 +12,7 @@
 var process = require("process");
 var args = process.argv.splice(process.execArgv.length + 2);
 
-if (args.length == 0) {
+if (args.length === 0) {
     throw "usage: server service-name [port]";
 }
 
@@ -20,7 +20,7 @@ var mdk = require("datawire_mdk").mdk;
 var MDK = mdk.start();
 process.on("beforeExit", function (code) {
     MDK.stop();
-})
+});
 
 var host = "127.0.0.1";         // We are reachable only on localhost
 var port = 5000;
@@ -38,7 +38,7 @@ var app = express();
 app.get("/", function (req, res) {
     // Join the logging context from the request, if possible:
     var ssn = MDK.join(req.get(mdk.MDK.CONTEXT_HEADER));
-    ssn.info(service, "Received a request.")
+    ssn.info(service, "Received a request.");
     res.send("Hello World (Node/Express)");
 });
 
