@@ -21,6 +21,9 @@ Below, we'll cover the steps required to create and register a microservice
 with the Datawire Discovery system, and then show how clients can then locate
 the service once it's running.
 
+Note: the code samples below are in Python, but you can see similar samples
+for Java, JavaScript, and Ruby in the `MDK Examples  <https://github.com/datawire/mdk-docs/tree/master/examples>`_ repository.
+
 Setting Up Your Environment
 ---------------------------
 
@@ -176,17 +179,100 @@ only one address get returned. Of course, if you launch even more microservices
 on other ports, the Discovery system will begin to return those new addresses
 too.
 
-Distributed Logging
+Microservices calling Microservices
+-----------------------------------
+
+TBD
+
+Distributed Tracing
 -------------------
 
-TBD
+Datawire's system includes a facility for distributed inter-microservice
+request tracing through the collection of correlated log messages within the
+Mission Control interface.
 
-Multiple Microservices
-----------------------
+Let's take our existing ``microservice.py`` code and add two lines into
+the implementation of the hello() function to log an INFO message to the
+Datawire cloud:
 
-TBD
+.. code-block:: python
 
-Datawire's Discovery Architecture
----------------------------------
+    #!/usr/bin/env python
+    import sys, mdk, atexit
+    host, port = sys.argv[1:3]
+    addr = "http://%s:%s" % (host, port)
+
+    from flask import Flask, request
+    app = Flask(__name__)
+
+    @app.route("/")
+    def hello():
+        # Join the logging context from the request, if possible.
+        # This will collect all cross-service calls for a particular
+        # request into the same group within Datawire Mission Control.
+        session = m.join(request.headers.get(m.CONTEXT_HEADER))
+
+        # Log an INFO-level trace message
+        session.info("hello", "Received a request.")
+
+        return "Hello World (via Datawire)!\n"
+
+    if __name__ == "__main__":
+        m = mdk.start()
+        m.register("hello", "1.0", addr)
+        atexit.register(m.stop)
+        app.run(host=host, port=port)
+
+Run this microservice on port 7000, and use ``curl http://127.0.0.1:7000`` to
+call it. Then, switch over to your browser and view the Logs panel in
+Datawire Mission Control. You should see a trace message group for the
+current time, and if you expand it, you should see the ``Received a request``
+message that was logged at INFO level.
+
+Cross-Service Tracing
+---------------------
+
+The ability to track request flow across multiple microservices is a very
+helpful feature when trying to diagnose an issue in a production environment.
+Datawire's Tracing Service makes it easy to see how a request flows all
+the way through a graph of microservices.
+
+Cross-service tracing in Datawire is just an extension of the distributed
+tracing model described earlier. By simply making sure that all requests
+sent to another microservice include a special context header, the log
+messages created as the request flow moves around the system can be tracked
+and grouped together in Datawire Mission Control.
+
+For example, if microservice A wishes to call an API on microservice B, the
+code in microservice A that makes that call simply needs to add a new HTTP header to its outbound request to B, as follows:
+
+.. code-block:: python
+
+    # Start a new session
+    ssn = mdk.session()
+
+    # Get an active address for service B via Discovery
+    url = ssn.resolve("B", "1.0").address
+
+    # Make the request to service B with the context header added
+    r = requests.get(url, headers={mdk.CONTEXT_HEADER: ssn.inject()})
+
+Now, the outbound HTTP request to microservice B will include an extra
+Datawire-specific header that identifies the request flow with a unique ID.
+When any other microservices log any messages under the same ID, those messages
+will be visible together in Mission Control. The code to do so within
+service B is trivial:
+
+.. code-block:: python
+
+    @app.route("/")
+    def hello():
+        # Join the logging context from the request, if possible:
+        ssn = MDK.join(request.headers.get(MDK.CONTEXT_HEADER))
+        ssn.info(app.service_name, "Received a request.")
+        return "Hello World!"
+
+Datawire's Architecture
+-----------------------
 
 TBD
