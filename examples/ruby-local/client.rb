@@ -8,10 +8,6 @@
 
 require 'rest-client'
 
-# Tell MDK's Quark layer to output logs to stdout:
-require 'quark'
-::DatawireQuarkCore::LoggerConfig.config.configure
-
 require 'mdk'
 
 def main(mdk, service, version)
