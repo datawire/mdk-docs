@@ -37,13 +37,13 @@ if __name__ == '__main__':
     import sys
 
     if len(sys.argv) < 2:
-        raise Exception("usage: client servicename");
+        raise Exception("usage: client service_name");
 
-    service = sys.argv[1]
+    service_name = sys.argv[1]
 
     MDK = init()
     MDK.start()
     try:
-        main(MDK, "!!!SERV!!!", "1.0.0")
+        main(MDK, service_name, "1.0.0")
     finally:
         MDK.stop()
