@@ -96,7 +96,8 @@ Then, type the following:
     import mdk
     m = mdk.init()
     m.start()
-    print(m.resolve("My First Service", "1.0").address)
+    print(m.session().resolve("My First Service", "1.0").address)
+    m.stop()
 
 You should see ``"http://127.0.0.1"`` printed - your client has found the address of the service it wants to talk to.
 
@@ -111,7 +112,7 @@ Running Sample Microservices
 ----------------------------
 
 The `Microcosm <https://github.com/datawire/microcosm>`_ is a
-collection of sample Python microservices that you can
+Python-based simulator of multiple mock microservices that you can
 quickly run within your environment in order to view them within `Datawire
 Mission Control <https://app.datawire.io>`_.
 
@@ -130,7 +131,7 @@ a new `virtualenv` for this too.
 
 3. Launch the Microcosm::
 
-    python microcosmctl.py run scenarios/countdown.yml
+    ./microcosm run scenarios/countdown.yml
 
 This particular scenario runs a number of microservices, with multiple instances
 and versions of each.
