@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 import requests
 import time
 
-from mdk import init
+import mdk
 
 def main(mdk, service, version):
     while True:
@@ -23,10 +23,10 @@ def main(mdk, service, version):
 
         # Wait 10 seconds for result, if no service is available an exception is
         # raised:
-        url = ssn.resolve_until(service, version, 10.0).address
+        url = ssn.resolve(service, version).address
 
         ssn.info("client", "Connecting to {}".format(url))
-        r = requests.get(url, headers={"X-MDK-Context": ssn.inject()})
+        r = requests.get(url, headers={mdk.CONTEXT_HEADER: ssn.inject()})
         ssn.info("client", "Got response {} (code {})".format(r.text, r.status_code))
         print("%s => %d: %s" % (url, r.status_code, r.text))
 
@@ -41,8 +41,7 @@ if __name__ == '__main__':
 
     service_name = sys.argv[1]
 
-    MDK = init()
-    MDK.start()
+    MDK = mdk.start()
     try:
         main(MDK, service_name, "1.0.0")
     finally:
