@@ -21,8 +21,8 @@ var service = args[0];
 
 var request = require("request");
 
-var MDK = require("datawire_mdk").mdk.init();
-MDK.start()
+var mdk = require("datawire_mdk").mdk;
+var MDK = mdk.start();
 
 function showResult(error, response, body) {
     var url = response.request.href;
@@ -36,12 +36,9 @@ function loop() {
         var url = node.address;
 
         ssn.info("client", "Connecting to " + url);
-        var options = {
-            url: url,
-            headers: {
-                "X-MDK-Context": ssn.inject(),
-            }
-        };
+        var headers = {}
+        headers[mdk.MDK.CONTEXT_HEADER] = ssn.inject();
+        var options = {url: url, headers: headers};
         request(options, showResult);
     });
 }

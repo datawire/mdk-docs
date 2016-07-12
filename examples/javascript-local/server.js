@@ -16,8 +16,8 @@ if (args.length == 0) {
     throw "usage: server service-name [port]";
 }
 
-var MDK = require("datawire_mdk").mdk.init();
-MDK.start()
+var mdk = require("datawire_mdk").mdk;
+var MDK = mdk.start();
 process.on("beforeExit", function (code) {
     MDK.stop();
 })
@@ -37,7 +37,7 @@ var app = express();
 
 app.get("/", function (req, res) {
     // Join the logging context from the request, if possible:
-    var ssn = MDK.join(req.get("X-MDK-Context"));
+    var ssn = MDK.join(req.get(mdk.MDK.CONTEXT_HEADER));
     ssn.info(service, "Received a request.")
     res.send("Hello World (Node/Express)");
 });
