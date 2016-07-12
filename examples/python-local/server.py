@@ -11,8 +11,8 @@ access control token.
 import logging
 logging.basicConfig(level=logging.INFO)
 
-from mdk import init
-MDK = init()
+import mdk
+MDK = mdk.start()
 
 from flask import Flask, request
 app = Flask(__name__)
@@ -20,7 +20,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     # Join the logging context from the request, if possible:
-    ssn = MDK.join(request.headers.get("X-MDK-Context"))
+    ssn = MDK.join(request.headers.get(MDK.CONTEXT_HEADER))
     ssn.info(app.service_name, "Received a request.")
     return "Hello World!"
 
@@ -30,13 +30,8 @@ def main(service_name, host, port):
     # Save the service name into the Flask app for later logging and such.
     app.service_name = service_name
 
-    MDK.start()
     MDK.register(app.service_name, "1.0.0", "http://%s:%d" % (host, port))
-
-    try:
-        app.run(host=host, port=port)
-    finally:
-        MDK.stop()
+    app.run(host=host, port=port)
 
 
 if __name__ == "__main__":
@@ -53,4 +48,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 2:
         port = int(sys.argv[2])
 
-    main(service_name, host, port)
+    try:
+        main(service_name, host, port)
+    finally:
+        MDK.stop()

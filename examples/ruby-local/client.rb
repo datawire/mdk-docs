@@ -9,18 +9,19 @@
 require 'rest-client'
 
 require 'mdk'
+$mdk = ::Quark::Mdk.start()
 
-def main(mdk, service, version)
+def main(service, version)
   while true
     # Initialize logging context:
-    ssn = mdk.session()
+    ssn = $mdk.session()
 
     # Wait 10 seconds for result, if no service is available an exception is
     # raised:
-    url = ssn.resolve_until(service, version, 10.0).address
+    url = ssn.resolve(service, version).address
 
     ssn.info("client", "Connecting to #{url}...")
-    response = RestClient.get url, {"X-MDK-Context" => ssn.inject()}
+    response = RestClient.get url, {$mdk.CONTEXT_HEADER => ssn.inject()}
     ssn.info("client", "Got response #{response.body} (#{response.code})")
     puts "#{url} => #{response.code}: #{response.body}"
     sleep 1
@@ -28,11 +29,9 @@ def main(mdk, service, version)
 end
 
 if __FILE__ == $0
-  mdk = ::Quark::Mdk.init()
-  mdk.start()
   begin
-    main(mdk, ARGV[0], "1.0.0")
+    main(ARGV[0], "1.0.0")
   ensure
-    mdk.stop
+    $mdk.stop
   end
 end
