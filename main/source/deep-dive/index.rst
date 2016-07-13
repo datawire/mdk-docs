@@ -21,6 +21,9 @@ Below, we'll cover the steps required to create and register a microservice
 with the Datawire Discovery system, and then show how clients can then locate
 the service once it's running.
 
+Note: the code samples below are in Python, but you can see similar samples
+for Java, JavaScript, and Ruby in the `MDK Examples  <https://github.com/datawire/mdk-docs/tree/master/examples>`_ repository.
+
 Setting Up Your Environment
 ---------------------------
 
@@ -32,8 +35,8 @@ You should see something like ``export DATAWIRE_TOKEN=<long string here>``;
 this will set the security token for your session. You'll need that token set
 in each terminal window that you use.
 
-Creating a Python Microservice with the MDK
--------------------------------------------
+Creating a Microservice with the MDK
+------------------------------------
 
 Let's take a simple Flask-based application and convert it to a Datawire
 microservice using the MDK. Here's the code for a plain Flask-based "Hello
@@ -117,8 +120,8 @@ original Flask-based microservice with the Datawire MDK. When we run this
 application, it registers itself with the Datawire Discovery Service, and
 will show up on the Datawire Mission Control UI when it's running.
 
-Discovering the Microservice
-----------------------------
+Service Discovery
+-----------------
 
 Now let's see how clients will find and call our microservice using the Datawire
 Discovery Service.
@@ -139,8 +142,8 @@ It should print the value ``http://127.0.0.1:7000``. That value was returned
 by the Datawire Discovery Service as the only available endpoint for the
 ``hello`` service.
 
-Load Balancing across Multiple Microservices
---------------------------------------------
+Load Balancing
+--------------
 
 With the other microservice still running on port 7000, let's now run another
 instance of the microservice on port 7001. Note: if you start a new terminal
@@ -176,17 +179,190 @@ only one address get returned. Of course, if you launch even more microservices
 on other ports, the Discovery system will begin to return those new addresses
 too.
 
-Distributed Logging
+Microservices calling Microservices
+-----------------------------------
+
+Microservices normally call other microservices. Doing so with the Datawire MDK
+and the associated Service Discovery system can be used to avoid having to
+deploy expensive per-service load balancers, cumbersome sidecar proxies, or
+other conventional pieces of software infrastructure.
+
+The code below illustrates how to resiliently call another microservice
+that is first located using the Service Discovery API in the MDK. It loops
+every second, resolving a new address each time. The resolution is extremely
+fast (and completely local) since the MDK synchronizes the service routing table
+with the Discovery service in the cloud, and it maintains a local copy of the
+always up-to-date service table in-process.
+
+.. code-block:: python
+
+    #!/usr/bin/env python
+    import requests, time, mdk
+
+    def main(mdk, service, version):
+        while True:
+            # Start a new session
+            ssn = mdk.session()
+
+            # Resolve the service name to a real endpoint address
+            url = ssn.resolve(service, version).address
+
+            # Make the request, passing in our request tracing header
+            r = requests.get(url, headers={mdk.CONTEXT_HEADER: ssn.inject()})
+            print("%s => %d: %s" % (url, r.status_code, r.text))
+
+            # Wait before we resolve a new address and call again
+            time.sleep(1)
+
+    if __name__ == '__main__':
+        import sys
+        if len(sys.argv) < 2:
+            raise Exception("usage: client service_name");
+
+        service_name = sys.argv[1]
+        MDK = mdk.start()
+        try:
+            main(MDK, service_name, "1.0.0")
+        finally:
+            MDK.stop()
+
+First, save the above code as ``client.py``. Then, run at least a couple of
+``hello`` microservices locally. Finally, run the code above with the command:
+
+.. code-block:: console
+
+    python client.py hello
+
+You should see a new address chosen each second as the load balancing logic
+in the MDK round-robins through the set of available service instance URLs.
+
+Distributed Tracing
 -------------------
 
-TBD
+Datawire's system includes a facility for distributed inter-microservice
+request tracing through the collection of correlated log messages within the
+Mission Control interface.
 
-Multiple Microservices
-----------------------
+Let's take our existing ``microservice.py`` code and add two lines into
+the implementation of the hello() function to log an INFO message to the
+Datawire cloud:
 
-TBD
+.. code-block:: python
 
-Datawire's Discovery Architecture
----------------------------------
+    #!/usr/bin/env python
+    import sys, mdk, atexit
+    host, port = sys.argv[1:3]
+    addr = "http://%s:%s" % (host, port)
 
-TBD
+    from flask import Flask, request
+    app = Flask(__name__)
+
+    @app.route("/")
+    def hello():
+        # Join the logging context from the request, if possible.
+        # This will collect all cross-service calls for a particular
+        # request into the same group within Datawire Mission Control.
+        session = m.join(request.headers.get(m.CONTEXT_HEADER))
+
+        # Log an INFO-level trace message
+        session.info("hello", "Received a request.")
+
+        return "Hello World (via Datawire)!\n"
+
+    if __name__ == "__main__":
+        m = mdk.start()
+        m.register("hello", "1.0", addr)
+        atexit.register(m.stop)
+        app.run(host=host, port=port)
+
+Run this microservice on port 7000, and use ``curl http://127.0.0.1:7000`` to
+call it. Then, switch over to your browser and view the Logs panel in
+Datawire Mission Control. You should see a trace message group for the
+current time, and if you expand it, you should see the ``Received a request``
+message that was logged at INFO level.
+
+Cross-Service Tracing
+---------------------
+
+The ability to track request flow across multiple microservices is a very
+helpful feature when trying to diagnose an issue in a production environment.
+Datawire's Tracing Service makes it easy to see how a request flows all
+the way through a graph of microservices.
+
+Cross-service tracing in Datawire is just an extension of the distributed
+tracing model described earlier. By simply making sure that all requests
+sent to another microservice include a special context header, the log
+messages created as the request flow moves around the system can be tracked
+and grouped together in Datawire Mission Control.
+
+For example, if microservice A wishes to call an API on microservice B, the
+code in microservice A that makes that call simply needs to add a new HTTP header to its outbound request to B, as follows:
+
+.. code-block:: python
+
+    # Start a new session
+    ssn = mdk.session()
+
+    # Get an active address for service B via Discovery
+    url = ssn.resolve("B", "1.0").address
+
+    # Make the request to service B with the context header added
+    r = requests.get(url, headers={mdk.CONTEXT_HEADER: ssn.inject()})
+
+Now, the outbound HTTP request to microservice B will include an extra
+Datawire-specific header that identifies the request flow with a unique ID.
+When any other microservices log any messages under the same ID, those messages
+will be visible together in Mission Control. The code to do so within
+service B is trivial:
+
+.. code-block:: python
+
+    @app.route("/")
+    def hello():
+        # Join the logging context from the request, if possible:
+        ssn = mdk.join(request.headers.get(mdk.CONTEXT_HEADER))
+        ssn.info(app.service_name, "Received a request.")
+        return "Hello World!"
+
+The Datawire Architecture
+-------------------------
+
+The Datawire Discovery Service is a multi-tenant, cloud-based, eventually
+consistent data synchronization service, purpose-built for a microservices
+environment. It is very suitable for applications with very high scalability
+requirements, where new microservices appear (or are retired) regularly, and
+where existing microservices instances scale up or down rapidly.
+
+As microservices instrumented with the MDK are launched, they register
+themselves with the Discovery Service in the cloud over a Web Socket connection.
+The registration data includes the service name, the address (typically a URL)
+of that instance's endpoint, and the version of that service. At that point,
+an efficient background heartbeat sequence begins over the Web Socket
+connection, with the service instance regularly informing the Discovery Service
+that it's still alive and should not be removed from the service routing table
+that it maintains.
+
+If the service should terminate unexpectedly or become unresponsive, the
+Discovery service will quickly notice the lack of heartbeats and remove the
+service instance from its list of active endpoints. If the service terminates
+gracefully, it asks to be removed from the list of active endpoints immediately
+as part of the ``stop()`` function.
+
+On the client side, a Web Socket connection is also opened to the Discovery
+Service when the ``start()`` function is called. The MDK on the client side
+immediately receives a copy of the service routing table, and any changes
+to the service endpoint listings are instantly and automatically sent
+over the same Web Socket connection. This ensures that MDK clients will
+always have a local, in-process copy of the potential service instances
+which they could call.
+
+Should any component in the system temporarily lose contact with the Datawire
+Discovery Service, they will retain the last known copy of the service routing
+table, and will have it updated again once they reconnect.
+
+All of these protocol interactions are completely open, thanks to their being
+specified in `Quark <https://github.com/datawire/quark>`_, a dedicated language
+that Datawire created to precisely specify protocol interactions. For example,
+the Discovery protocol is `specified in Quark <https://github.com/datawire/discovery/tree/master/quark>`_ and then compiled
+into the currently supported target languages (Python, Java, JavaScript, and
+Ruby). Broader language support is planned for the near future.
