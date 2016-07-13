@@ -35,8 +35,8 @@ You should see something like ``export DATAWIRE_TOKEN=<long string here>``;
 this will set the security token for your session. You'll need that token set
 in each terminal window that you use.
 
-Creating a Python Microservice with the MDK
--------------------------------------------
+Creating a Microservice with the MDK
+------------------------------------
 
 Let's take a simple Flask-based application and convert it to a Datawire
 microservice using the MDK. Here's the code for a plain Flask-based "Hello
@@ -120,8 +120,8 @@ original Flask-based microservice with the Datawire MDK. When we run this
 application, it registers itself with the Datawire Discovery Service, and
 will show up on the Datawire Mission Control UI when it's running.
 
-Discovering the Microservice
-----------------------------
+Service Discovery
+-----------------
 
 Now let's see how clients will find and call our microservice using the Datawire
 Discovery Service.
@@ -142,8 +142,8 @@ It should print the value ``http://127.0.0.1:7000``. That value was returned
 by the Datawire Discovery Service as the only available endpoint for the
 ``hello`` service.
 
-Load Balancing across Multiple Microservices
---------------------------------------------
+Load Balancing
+--------------
 
 With the other microservice still running on port 7000, let's now run another
 instance of the microservice on port 7001. Note: if you start a new terminal
@@ -182,7 +182,59 @@ too.
 Microservices calling Microservices
 -----------------------------------
 
-TBD
+Microservices normally call other microservices. Doing so with the Datawire MDK
+and the associated Service Discovery system can be used to avoid having to
+deploy expensive per-service load balancers, sidecar proxies, or other
+conventional pieces of software infrastructure.
+
+The code below illustrates how to resiliently call another microservice
+that is first located using the Service Discovery API in the MDK. It loops
+every second, resolving a new address each time. The resolution is extremely
+fast (and completely local) since the MDK synchronizes the service routing table
+with the Discovery service in the cloud, and it maintains a local copy of the
+always up-to-date service table in-process.
+
+.. code-block:: python
+
+    #!/usr/bin/env python
+    import requests, time, mdk
+
+    def main(mdk, service, version):
+        while True:
+            # Start a new session
+            ssn = mdk.session()
+
+            # Resolve the service name to a real endpoint address
+            url = ssn.resolve(service, version).address
+
+            # Make the request, passing in our request tracing header
+            r = requests.get(url, headers={mdk.CONTEXT_HEADER: ssn.inject()})
+            print("%s => %d: %s" % (url, r.status_code, r.text))
+
+            # Wait before we resolve a new address and call again
+            time.sleep(1)
+
+    if __name__ == '__main__':
+        import sys
+        if len(sys.argv) < 2:
+            raise Exception("usage: client service_name");
+
+        service_name = sys.argv[1]
+        MDK = mdk.start()
+        try:
+            main(MDK, service_name, "1.0.0")
+        finally:
+            MDK.stop()
+
+First, save the above code as ``client.py``. Then, run at least a couple of
+``hello`` microservices locally. Finally, run the code above with the command:
+
+.. code-block:: console
+
+    python client.py hello
+
+You should see a new address chosen each second as the load balancing logic
+in the MDK round-robins through the set of available service instance URLs.
 
 Distributed Tracing
 -------------------
@@ -268,11 +320,11 @@ service B is trivial:
     @app.route("/")
     def hello():
         # Join the logging context from the request, if possible:
-        ssn = MDK.join(request.headers.get(MDK.CONTEXT_HEADER))
+        ssn = mdk.join(request.headers.get(mdk.CONTEXT_HEADER))
         ssn.info(app.service_name, "Received a request.")
         return "Hello World!"
 
-Datawire's Architecture
------------------------
+The Datawire Architecture
+-------------------------
 
 TBD
