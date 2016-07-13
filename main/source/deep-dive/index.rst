@@ -184,8 +184,8 @@ Microservices calling Microservices
 
 Microservices normally call other microservices. Doing so with the Datawire MDK
 and the associated Service Discovery system can be used to avoid having to
-deploy expensive per-service load balancers, sidecar proxies, or other
-conventional pieces of software infrastructure.
+deploy expensive per-service load balancers, cumbersome sidecar proxies, or
+other conventional pieces of software infrastructure.
 
 The code below illustrates how to resiliently call another microservice
 that is first located using the Service Discovery API in the MDK. It loops
@@ -327,4 +327,42 @@ service B is trivial:
 The Datawire Architecture
 -------------------------
 
-TBD
+The Datawire Discovery Service is a multi-tenant, cloud-based, eventually
+consistent data synchronization service, purpose-built for a microservices
+environment. It is very suitable for applications with very high scalability
+requirements, where new microservices appear (or are retired) regularly, and
+where existing microservices instances scale up or down rapidly.
+
+As microservices instrumented with the MDK are launched, they register
+themselves with the Discovery Service in the cloud over a Web Socket connection.
+The registration data includes the service name, the address (typically a URL)
+of that instance's endpoint, and the version of that service. At that point,
+an efficient background heartbeat sequence begins over the Web Socket
+connection, with the service instance regularly informing the Discovery Service
+that it's still alive and should not be removed from the service routing table
+that it maintains.
+
+If the service should terminate unexpectedly or become unresponsive, the
+Discovery service will quickly notice the lack of heartbeats and remove the
+service instance from its list of active endpoints. If the service terminates
+gracefully, it asks to be removed from the list of active endpoints immediately
+as part of the ``stop()`` function.
+
+On the client side, a Web Socket connection is also opened to the Discovery
+Service when the ``start()`` function is called. The MDK on the client side
+immediately receives a copy of the service routing table, and any changes
+to the service endpoint listings are instantly and automatically sent
+over the same Web Socket connection. This ensures that MDK clients will
+always have a local, in-process copy of the potential service instances
+which they could call.
+
+Should any component in the system temporarily lose contact with the Datawire
+Discovery Service, they will retain the last known copy of the service routing
+table, and will have it updated again once they reconnect.
+
+All of these protocol interactions are completely open, thanks to their being
+specified in `Quark <https://github.com/datawire/quark>`_, a dedicated language
+that Datawire created to precisely specify protocol interactions. For example,
+the Discovery protocol is `specified in Quark <https://github.com/datawire/discovery/tree/master/quark>`_ and then compiled
+into the currently supported target languages (Python, Java, JavaScript, and
+Ruby). Broader language support is planned for the near future.
