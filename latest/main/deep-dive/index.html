@@ -84,6 +84,8 @@ to use via the MDK.</p>
 <p>Below, we&#8217;ll cover the steps required to create and register a microservice
 with the Datawire Discovery system, and then show how clients can then locate
 the service once it&#8217;s running.</p>
+<p>Note: the code samples below are in Python, but you can see similar samples
+for Java, JavaScript, and Ruby in the <a class="reference external" href="https://github.com/datawire/mdk-docs/tree/master/examples">MDK Examples</a> repository.</p>
 </div>
 <div class="section" id="setting-up-your-environment">
 <h2>Setting Up Your Environment<a class="headerlink" href="#setting-up-your-environment" title="Permalink to this headline">¶</a></h2>
@@ -95,8 +97,8 @@ You should see something like <code class="docutils literal"><span class="pre">e
 this will set the security token for your session. You&#8217;ll need that token set
 in each terminal window that you use.</p>
 </div>
-<div class="section" id="creating-a-python-microservice-with-the-mdk">
-<h2>Creating a Python Microservice with the MDK<a class="headerlink" href="#creating-a-python-microservice-with-the-mdk" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-a-microservice-with-the-mdk">
+<h2>Creating a Microservice with the MDK<a class="headerlink" href="#creating-a-microservice-with-the-mdk" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s take a simple Flask-based application and convert it to a Datawire
 microservice using the MDK. Here&#8217;s the code for a plain Flask-based &#8220;Hello
 World&#8221; microservice:</p>
@@ -167,8 +169,8 @@ original Flask-based microservice with the Datawire MDK. When we run this
 application, it registers itself with the Datawire Discovery Service, and
 will show up on the Datawire Mission Control UI when it&#8217;s running.</p>
 </div>
-<div class="section" id="discovering-the-microservice">
-<h2>Discovering the Microservice<a class="headerlink" href="#discovering-the-microservice" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="service-discovery">
+<h2>Service Discovery<a class="headerlink" href="#service-discovery" title="Permalink to this headline">¶</a></h2>
 <p>Now let&#8217;s see how clients will find and call our microservice using the Datawire
 Discovery Service.</p>
 <p>With your service running, launch a Python interpreter in your terminal (making
@@ -185,8 +187,8 @@ run the following code:</p>
 by the Datawire Discovery Service as the only available endpoint for the
 <code class="docutils literal"><span class="pre">hello</span></code> service.</p>
 </div>
-<div class="section" id="load-balancing-across-multiple-microservices">
-<h2>Load Balancing across Multiple Microservices<a class="headerlink" href="#load-balancing-across-multiple-microservices" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="load-balancing">
+<h2>Load Balancing<a class="headerlink" href="#load-balancing" title="Permalink to this headline">¶</a></h2>
 <p>With the other microservice still running on port 7000, let&#8217;s now run another
 instance of the microservice on port 7001. Note: if you start a new terminal
 window, be sure to set your <code class="docutils literal"><span class="pre">DATAWIRE_TOKEN</span></code> environment variable there too.</p>
@@ -215,17 +217,171 @@ only one address get returned. Of course, if you launch even more microservices
 on other ports, the Discovery system will begin to return those new addresses
 too.</p>
 </div>
-<div class="section" id="distributed-logging">
-<h2>Distributed Logging<a class="headerlink" href="#distributed-logging" title="Permalink to this headline">¶</a></h2>
-<p>TBD</p>
+<div class="section" id="microservices-calling-microservices">
+<h2>Microservices calling Microservices<a class="headerlink" href="#microservices-calling-microservices" title="Permalink to this headline">¶</a></h2>
+<p>Microservices normally call other microservices. Doing so with the Datawire MDK
+and the associated Service Discovery system can be used to avoid having to
+deploy expensive per-service load balancers, cumbersome sidecar proxies, or
+other conventional pieces of software infrastructure.</p>
+<p>The code below illustrates how to resiliently call another microservice
+that is first located using the Service Discovery API in the MDK. It loops
+every second, resolving a new address each time. The resolution is extremely
+fast (and completely local) since the MDK synchronizes the service routing table
+with the Discovery service in the cloud, and it maintains a local copy of the
+always up-to-date service table in-process.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">requests</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">mdk</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">mdk</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="c1"># Start a new session</span>
+        <span class="n">ssn</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+
+        <span class="c1"># Resolve the service name to a real endpoint address</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">ssn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span><span class="o">.</span><span class="n">address</span>
+
+        <span class="c1"># Make the request, passing in our request tracing header</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="n">mdk</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">:</span> <span class="n">ssn</span><span class="o">.</span><span class="n">inject</span><span class="p">()})</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> =&gt; </span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+
+        <span class="c1"># Wait before we resolve a new address and call again</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;usage: client service_name&quot;</span><span class="p">);</span>
+
+    <span class="n">service_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">MDK</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">(</span><span class="n">MDK</span><span class="p">,</span> <span class="n">service_name</span><span class="p">,</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">MDK</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</pre></div>
 </div>
-<div class="section" id="multiple-microservices">
-<h2>Multiple Microservices<a class="headerlink" href="#multiple-microservices" title="Permalink to this headline">¶</a></h2>
-<p>TBD</p>
+<p>First, save the above code as <code class="docutils literal"><span class="pre">client.py</span></code>. Then, run at least a couple of
+<code class="docutils literal"><span class="pre">hello</span></code> microservices locally. Finally, run the code above with the command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">python client.py hello</span>
+</pre></div>
 </div>
-<div class="section" id="datawire-s-discovery-architecture">
-<h2>Datawire&#8217;s Discovery Architecture<a class="headerlink" href="#datawire-s-discovery-architecture" title="Permalink to this headline">¶</a></h2>
-<p>TBD</p>
+<p>You should see a new address chosen each second as the load balancing logic
+in the MDK round-robins through the set of available service instance URLs.</p>
+</div>
+<div class="section" id="distributed-tracing">
+<h2>Distributed Tracing<a class="headerlink" href="#distributed-tracing" title="Permalink to this headline">¶</a></h2>
+<p>Datawire&#8217;s system includes a facility for distributed inter-microservice
+request tracing through the collection of correlated log messages within the
+Mission Control interface.</p>
+<p>Let&#8217;s take our existing <code class="docutils literal"><span class="pre">microservice.py</span></code> code and add two lines into
+the implementation of the hello() function to log an INFO message to the
+Datawire cloud:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">mdk</span><span class="o">,</span> <span class="nn">atexit</span>
+<span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">addr</span> <span class="o">=</span> <span class="s2">&quot;http://</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="c1"># Join the logging context from the request, if possible.</span>
+    <span class="c1"># This will collect all cross-service calls for a particular</span>
+    <span class="c1"># request into the same group within Datawire Mission Control.</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">))</span>
+
+    <span class="c1"># Log an INFO-level trace message</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;Received a request.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s2">&quot;Hello World (via Datawire)!</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+    <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run this microservice on port 7000, and use <code class="docutils literal"><span class="pre">curl</span> <span class="pre">http://127.0.0.1:7000</span></code> to
+call it. Then, switch over to your browser and view the Logs panel in
+Datawire Mission Control. You should see a trace message group for the
+current time, and if you expand it, you should see the <code class="docutils literal"><span class="pre">Received</span> <span class="pre">a</span> <span class="pre">request</span></code>
+message that was logged at INFO level.</p>
+</div>
+<div class="section" id="cross-service-tracing">
+<h2>Cross-Service Tracing<a class="headerlink" href="#cross-service-tracing" title="Permalink to this headline">¶</a></h2>
+<p>The ability to track request flow across multiple microservices is a very
+helpful feature when trying to diagnose an issue in a production environment.
+Datawire&#8217;s Tracing Service makes it easy to see how a request flows all
+the way through a graph of microservices.</p>
+<p>Cross-service tracing in Datawire is just an extension of the distributed
+tracing model described earlier. By simply making sure that all requests
+sent to another microservice include a special context header, the log
+messages created as the request flow moves around the system can be tracked
+and grouped together in Datawire Mission Control.</p>
+<p>For example, if microservice A wishes to call an API on microservice B, the
+code in microservice A that makes that call simply needs to add a new HTTP header to its outbound request to B, as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Start a new session</span>
+<span class="n">ssn</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+
+<span class="c1"># Get an active address for service B via Discovery</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">ssn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">address</span>
+
+<span class="c1"># Make the request to service B with the context header added</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="n">mdk</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">:</span> <span class="n">ssn</span><span class="o">.</span><span class="n">inject</span><span class="p">()})</span>
+</pre></div>
+</div>
+<p>Now, the outbound HTTP request to microservice B will include an extra
+Datawire-specific header that identifies the request flow with a unique ID.
+When any other microservices log any messages under the same ID, those messages
+will be visible together in Mission Control. The code to do so within
+service B is trivial:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="c1"># Join the logging context from the request, if possible:</span>
+    <span class="n">ssn</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mdk</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">))</span>
+    <span class="n">ssn</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">service_name</span><span class="p">,</span> <span class="s2">&quot;Received a request.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-datawire-architecture">
+<h2>The Datawire Architecture<a class="headerlink" href="#the-datawire-architecture" title="Permalink to this headline">¶</a></h2>
+<p>The Datawire Discovery Service is a multi-tenant, cloud-based, eventually
+consistent data synchronization service, purpose-built for a microservices
+environment. It is very suitable for applications with very high scalability
+requirements, where new microservices appear (or are retired) regularly, and
+where existing microservices instances scale up or down rapidly.</p>
+<p>As microservices instrumented with the MDK are launched, they register
+themselves with the Discovery Service in the cloud over a Web Socket connection.
+The registration data includes the service name, the address (typically a URL)
+of that instance&#8217;s endpoint, and the version of that service. At that point,
+an efficient background heartbeat sequence begins over the Web Socket
+connection, with the service instance regularly informing the Discovery Service
+that it&#8217;s still alive and should not be removed from the service routing table
+that it maintains.</p>
+<p>If the service should terminate unexpectedly or become unresponsive, the
+Discovery service will quickly notice the lack of heartbeats and remove the
+service instance from its list of active endpoints. If the service terminates
+gracefully, it asks to be removed from the list of active endpoints immediately
+as part of the <code class="docutils literal"><span class="pre">stop()</span></code> function.</p>
+<p>On the client side, a Web Socket connection is also opened to the Discovery
+Service when the <code class="docutils literal"><span class="pre">start()</span></code> function is called. The MDK on the client side
+immediately receives a copy of the service routing table, and any changes
+to the service endpoint listings are instantly and automatically sent
+over the same Web Socket connection. This ensures that MDK clients will
+always have a local, in-process copy of the potential service instances
+which they could call.</p>
+<p>Should any component in the system temporarily lose contact with the Datawire
+Discovery Service, they will retain the last known copy of the service routing
+table, and will have it updated again once they reconnect.</p>
+<p>All of these protocol interactions are completely open, thanks to their being
+specified in <a class="reference external" href="https://github.com/datawire/quark">Quark</a>, a dedicated language
+that Datawire created to precisely specify protocol interactions. For example,
+the Discovery protocol is <a class="reference external" href="https://github.com/datawire/discovery/tree/master/quark">specified in Quark</a> and then compiled
+into the currently supported target languages (Python, Java, JavaScript, and
+Ruby). Broader language support is planned for the near future.</p>
 </div>
 </div>
 
@@ -240,12 +396,13 @@ too.</p>
 <li><a class="reference internal" href="#">Deep Dive</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#setting-up-your-environment">Setting Up Your Environment</a></li>
-<li><a class="reference internal" href="#creating-a-python-microservice-with-the-mdk">Creating a Python Microservice with the MDK</a></li>
-<li><a class="reference internal" href="#discovering-the-microservice">Discovering the Microservice</a></li>
-<li><a class="reference internal" href="#load-balancing-across-multiple-microservices">Load Balancing across Multiple Microservices</a></li>
-<li><a class="reference internal" href="#distributed-logging">Distributed Logging</a></li>
-<li><a class="reference internal" href="#multiple-microservices">Multiple Microservices</a></li>
-<li><a class="reference internal" href="#datawire-s-discovery-architecture">Datawire&#8217;s Discovery Architecture</a></li>
+<li><a class="reference internal" href="#creating-a-microservice-with-the-mdk">Creating a Microservice with the MDK</a></li>
+<li><a class="reference internal" href="#service-discovery">Service Discovery</a></li>
+<li><a class="reference internal" href="#load-balancing">Load Balancing</a></li>
+<li><a class="reference internal" href="#microservices-calling-microservices">Microservices calling Microservices</a></li>
+<li><a class="reference internal" href="#distributed-tracing">Distributed Tracing</a></li>
+<li><a class="reference internal" href="#cross-service-tracing">Cross-Service Tracing</a></li>
+<li><a class="reference internal" href="#the-datawire-architecture">The Datawire Architecture</a></li>
 </ul>
 </li>
 </ul>
