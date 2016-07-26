@@ -344,7 +344,7 @@ Circuit breakers are powerful abstractions that help limit the scope of failure.
          ssn.fail_interaction("%s, %s: %s" % (config.service, config.node, traceback.format_exc()))
          result['requests'].append("ERROR(%s)" % node)
 
-There are three methods used to wrap a remote call with a circuit breaker. To start a circuit breaker, use the ``start_interaction`` method. This method starts the interaction with a remote service, and tracks the different services that are invoked during the interaction. This could be a single service, or multiple service. When the interaction has successfully completed, the ``finish_interaction`` method is called, which will record the interaction as successfully completing. If an interaction fails, the ``fail_interaction`` method is called, which will record a failed interaction. By default, a single failure will trigger the circuit breaker to fall back to a known good version for 30 seconds.
+There are three methods used to wrap a remote call with a circuit breaker. To start a circuit breaker, use the ``start_interaction`` method. This method starts the interaction with a remote service, and tracks the different services that are invoked during the interaction. This could be a single service, or multiple service. When the interaction has successfully completed, the ``finish_interaction`` method is called, which will record the interaction as successfully completing. If an interaction fails, the ``fail_interaction`` method is called, which will record a failed interaction. With a failed interaction, the services that are invoked are blacklisted.  By default, three failures will trigger the circuit breaker to blacklist the services for 30 seconds.
 
 The Datawire Architecture
 -------------------------
