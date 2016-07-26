@@ -324,6 +324,28 @@ service B is trivial:
         ssn.info(app.service_name, "Received a request.")
         return "Hello World!"
 
+Circuit Breakers
+----------------
+
+Circuit breakers are powerful abstractions that help limit the scope of failure. The MDK includes native support for circuit breakers that are integrated with service discovery. For example, imagine service A calls service B, and service B returns a result that triggers an exception in A. A can blacklist service B for a certain period of time, and fall back to an older version of B, periodically testing to see if the new version of B returns the proper result. Here is an example of a circuit breaker:
+
+.. code-block:: python
+
+    ssn.start_interaction()
+    node = ssn.resolve(service, version)
+    try:
+         response = requests.get(node.address, headers={m.CONTEXT_HEADER: ssn.inject()}, timeout=3.0)
+         ssn.info(config.name, "%s initiating request to %s" % (config.node, node))
+         responder_data = response.json()
+         ssn.info(config.name, "%s got response %s" % (config.node, responder_data['request_id']))
+         result['requests'].append(responder_data)
+         ssn.finish_interaction()
+    except:
+         ssn.fail_interaction("%s, %s: %s" % (config.service, config.node, traceback.format_exc()))
+         result['requests'].append("ERROR(%s)" % node)
+
+There are three methods used to wrap a remote call with a circuit breaker. To start a circuit breaker, use the ``start_interaction`` method. This method starts the interaction with a remote service, and tracks the different services that are invoked during the interaction. This could be a single service, or multiple services. When the interaction has successfully completed, the ``finish_interaction`` method is called, which will record the interaction as successfully completing. If an interaction fails, the ``fail_interaction`` method is called, which will record a failed interaction. With a failed interaction, the services that are invoked are blacklisted.  By default, three failures will trigger the circuit breaker to blacklist the services for 30 seconds.
+
 The Datawire Architecture
 -------------------------
 

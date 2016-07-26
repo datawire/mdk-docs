@@ -346,6 +346,25 @@ service B is trivial:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="circuit-breakers">
+<h2>Circuit Breakers<a class="headerlink" href="#circuit-breakers" title="Permalink to this headline">¶</a></h2>
+<p>Circuit breakers are powerful abstractions that help limit the scope of failure. The MDK includes native support for circuit breakers that are integrated with service discovery. For example, imagine service A calls service B, and service B returns a result that triggers an exception in A. A can blacklist service B for a certain period of time, and fall back to an older version of B, periodically testing to see if the new version of B returns the proper result. Here is an example of a circuit breaker:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ssn</span><span class="o">.</span><span class="n">start_interaction</span><span class="p">()</span>
+<span class="n">node</span> <span class="o">=</span> <span class="n">ssn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+     <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="n">m</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">:</span> <span class="n">ssn</span><span class="o">.</span><span class="n">inject</span><span class="p">()},</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+     <span class="n">ssn</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> initiating request to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="p">))</span>
+     <span class="n">responder_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+     <span class="n">ssn</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> got response </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">responder_data</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]))</span>
+     <span class="n">result</span><span class="p">[</span><span class="s1">&#39;requests&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">responder_data</span><span class="p">)</span>
+     <span class="n">ssn</span><span class="o">.</span><span class="n">finish_interaction</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+     <span class="n">ssn</span><span class="o">.</span><span class="n">fail_interaction</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">service</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span>
+     <span class="n">result</span><span class="p">[</span><span class="s1">&#39;requests&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ERROR(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">node</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are three methods used to wrap a remote call with a circuit breaker. To start a circuit breaker, use the <code class="docutils literal"><span class="pre">start_interaction</span></code> method. This method starts the interaction with a remote service, and tracks the different services that are invoked during the interaction. This could be a single service, or multiple services. When the interaction has successfully completed, the <code class="docutils literal"><span class="pre">finish_interaction</span></code> method is called, which will record the interaction as successfully completing. If an interaction fails, the <code class="docutils literal"><span class="pre">fail_interaction</span></code> method is called, which will record a failed interaction. With a failed interaction, the services that are invoked are blacklisted.  By default, three failures will trigger the circuit breaker to blacklist the services for 30 seconds.</p>
+</div>
 <div class="section" id="the-datawire-architecture">
 <h2>The Datawire Architecture<a class="headerlink" href="#the-datawire-architecture" title="Permalink to this headline">¶</a></h2>
 <p>The Datawire Discovery Service is a multi-tenant, cloud-based, eventually
@@ -402,6 +421,7 @@ Ruby). Broader language support is planned for the near future.</p>
 <li><a class="reference internal" href="#microservices-calling-microservices">Microservices calling Microservices</a></li>
 <li><a class="reference internal" href="#distributed-tracing">Distributed Tracing</a></li>
 <li><a class="reference internal" href="#cross-service-tracing">Cross-Service Tracing</a></li>
+<li><a class="reference internal" href="#circuit-breakers">Circuit Breakers</a></li>
 <li><a class="reference internal" href="#the-datawire-architecture">The Datawire Architecture</a></li>
 </ul>
 </li>
