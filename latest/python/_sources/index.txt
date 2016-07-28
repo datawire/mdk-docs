@@ -1,7 +1,7 @@
 
 .. datawire_mdk documentation master file, created by Quark
 
-datawire_mdk 2.0.0
+datawire_mdk 2.0.1
 ==================
 
 .. toctree::
