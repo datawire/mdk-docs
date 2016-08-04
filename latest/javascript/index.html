@@ -126,6 +126,12 @@
                       </a></li>
                       
                       <li><a
+                        href='#Session#externalize'
+                        class='regular pre-open'>
+                        #externalize
+                      </a></li>
+                      
+                      <li><a
                         href='#Session#critical'
                         class='regular pre-open'>
                         #critical
@@ -153,6 +159,18 @@
                         href='#Session#debug'
                         class='regular pre-open'>
                         #debug
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#trace'
+                        class='regular pre-open'>
+                        #trace
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#route'
+                        class='regular pre-open'>
+                        #route
                       </a></li>
                       
                       <li><a
@@ -827,6 +845,52 @@ choice.</p>
       </div>
     </div>
   
+    <div class='keyline-bottom' id='Session#externalize'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>externalize</span>
+            <span class='quiet code space-right2'>()</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>Returns an externalized representation of the distributed session.</p>
+
+
+  <div class='pre p1 fill-light'>externalize()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
     <div class='keyline-bottom' id='Session#critical'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="pad1y contain">
@@ -1127,6 +1191,147 @@ choice.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>text</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#trace'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>trace</span>
+            <span class='quiet code space-right2'>(level)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>Set the logging level for the session.</p>
+
+
+  <div class='pre p1 fill-light'>trace(level: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>level</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='Session#route'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>route</span>
+            <span class='quiet code space-right2'>(service, version, target, targetVersion)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>Override service resolution for the current distributed
+session. All attempts to resolve <em>service</em>, <em>version</em>
+will be replaced with an attempt to resolve <em>target</em>,
+<em>targetVersion</em>. This effect will be propogated to any
+downstream services involved in the distributed session.</p>
+
+
+  <div class='pre p1 fill-light'>route(service: Any, version: Any, target: Any, targetVersion: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>service</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>version</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>target</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>targetVersion</span> <code class='quiet'>(Any)</code> 
           </div>
           
         </div>

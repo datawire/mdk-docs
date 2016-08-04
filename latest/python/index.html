@@ -218,6 +218,12 @@ choice.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mdk.Session.externalize">
+<code class="descname">externalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.externalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an externalized representation of the distributed session.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="mdk.Session.fail_interaction">
 <code class="descname">fail_interaction</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.fail_interaction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Record an interaction as failed.</p>
@@ -277,6 +283,16 @@ finish_interaction().</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mdk.Session.route">
+<code class="descname">route</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>target</em>, <em>targetVersion</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.route" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override service resolution for the current distributed
+session. All attempts to resolve <em>service</em>, <em>version</em>
+will be replaced with an attempt to resolve <em>target</em>,
+<em>targetVersion</em>. This effect will be propogated to any
+downstream services involved in the distributed session.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="mdk.Session.start_interaction">
 <code class="descname">start_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.start_interaction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start an interaction with a remote service.</p>
@@ -291,6 +307,12 @@ instances involved are reported to the tracing services.</p>
 <p>This permits realtime reporting of integration issues
 when services are updated, and also allows circuit
 breakers to mitigate the impact of any such issues.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.Session.trace">
+<code class="descname">trace</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the logging level for the session.</p>
 </dd></dl>
 
 <dl class="method">
@@ -320,6 +342,11 @@ breakers to mitigate the impact of any such issues.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="mdk.SessionImpl.externalize">
+<code class="descname">externalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.externalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="mdk.SessionImpl.fail_interaction">
 <code class="descname">fail_interaction</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.fail_interaction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -327,6 +354,16 @@ breakers to mitigate the impact of any such issues.</p>
 <dl class="method">
 <dt id="mdk.SessionImpl.finish_interaction">
 <code class="descname">finish_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.finish_interaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.SessionImpl.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.SessionImpl.has">
+<code class="descname">has</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.has" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -355,8 +392,28 @@ breakers to mitigate the impact of any such issues.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="mdk.SessionImpl.quark_List_quark_Map_quark_String_quark_String___ref">
+<code class="descname">quark_List_quark_Map_quark_String_quark_String___ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.SessionImpl.quark_List_quark_Map_quark_String_quark_String___ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="mdk.SessionImpl.quark_List_quark_String__ref">
 <code class="descname">quark_List_quark_String__ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.SessionImpl.quark_List_quark_String__ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mdk.SessionImpl.quark_Map_quark_String_quark_List_quark_Map_quark_String_quark_String____ref">
+<code class="descname">quark_Map_quark_String_quark_List_quark_Map_quark_String_quark_String____ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.SessionImpl.quark_Map_quark_String_quark_List_quark_Map_quark_String_quark_String____ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mdk.SessionImpl.quark_Map_quark_String_quark_String__ref">
+<code class="descname">quark_Map_quark_String_quark_String__ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.SessionImpl.quark_Map_quark_String_quark_String__ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mdk.SessionImpl.quark_Map_quark_String_quark_int__ref">
+<code class="descname">quark_Map_quark_String_quark_int__ref</code><em class="property"> = None</em><a class="headerlink" href="#mdk.SessionImpl.quark_Map_quark_String_quark_int__ref" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -375,8 +432,23 @@ breakers to mitigate the impact of any such issues.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="mdk.SessionImpl.route">
+<code class="descname">route</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>target</em>, <em>targetVersion</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.route" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.SessionImpl.set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>property</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="mdk.SessionImpl.start_interaction">
 <code class="descname">start_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.start_interaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.SessionImpl.trace">
+<code class="descname">trace</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.trace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
