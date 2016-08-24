@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datawire_mdk 2.0.1 &mdash; datawire_mdk 2.0.1 documentation</title>
+    <title>datawire_mdk 2.0.3 &mdash; datawire_mdk 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.1',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datawire_mdk 2.0.1 documentation" href="#" />
+    <link rel="top" title="datawire_mdk 2.0.3 documentation" href="#" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -39,8 +39,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="datawire-mdk-2-0-1">
-<h1>datawire_mdk 2.0.1<a class="headerlink" href="#datawire-mdk-2-0-1" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="datawire-mdk-2-0-3">
+<h1>datawire_mdk 2.0.3<a class="headerlink" href="#datawire-mdk-2-0-3" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
@@ -117,11 +117,17 @@ to detect node departures.</p>
 
 <dl class="class">
 <dt id="mdk.MDKImpl">
-<em class="property">class </em><code class="descclassname">mdk.</code><code class="descname">MDKImpl</code><a class="headerlink" href="#mdk.MDKImpl" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mdk.</code><code class="descname">MDKImpl</code><span class="sig-paren">(</span><em>runtime</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="attribute">
 <dt id="mdk.MDKImpl.CONTEXT_HEADER">
 <code class="descname">CONTEXT_HEADER</code><em class="property"> = u'X-MDK-Context'</em><a class="headerlink" href="#mdk.MDKImpl.CONTEXT_HEADER" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.getDiscoveryFactory">
+<code class="descname">getDiscoveryFactory</code><span class="sig-paren">(</span><em>env</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.getDiscoveryFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose DiscoverySource based on environment variables.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mdk.MDKImpl.join">
@@ -285,7 +291,9 @@ finish_interaction().</p>
 <dl class="method">
 <dt id="mdk.Session.route">
 <code class="descname">route</code><span class="sig-paren">(</span><em>service</em>, <em>version</em>, <em>target</em>, <em>targetVersion</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.route" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override service resolution for the current distributed
+<dd><p>EXPERIMENTAL; requires MDK_EXPERIMENTAL=1 environment variable to
+function.</p>
+<p>Override service resolution for the current distributed
 session. All attempts to resolve <em>service</em>, <em>version</em>
 will be replaced with an attempt to resolve <em>target</em>,
 <em>targetVersion</em>. This effect will be propogated to any
@@ -312,7 +320,7 @@ breakers to mitigate the impact of any such issues.</p>
 <dl class="method">
 <dt id="mdk.Session.trace">
 <code class="descname">trace</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.trace" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the logging level for the session.</p>
+<dd><p>EXPERIMENTAL: Set the logging level for the session.</p>
 </dd></dl>
 
 <dl class="method">
@@ -468,7 +476,7 @@ breakers to mitigate the impact of any such issues.</p>
 <dt id="mdk.start">
 <code class="descclassname">mdk.</code><code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a started instance of the MDK. This is equivalent to
-callint init() followed by start() on the resulting instance.</p>
+calling init() followed by start() on the resulting instance.</p>
 </dd></dl>
 
 </div>
@@ -490,7 +498,7 @@ callint init() followed by start() on the resulting instance.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">datawire_mdk 2.0.1</a><ul>
+<li><a class="reference internal" href="#">datawire_mdk 2.0.3</a><ul>
 <li><a class="reference internal" href="#module-mdk">mdk</a></li>
 </ul>
 </li>

@@ -224,6 +224,16 @@
               
                 
                 <li><a
+                  href='##getDiscoveryFactory'
+                  class="">
+                  getDiscoveryFactory
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#.CONTEXT_HEADER'
                   class="">
                   CONTEXT_HEADER
@@ -299,7 +309,7 @@
   
 
   <p>Create a started instance of the MDK. This is equivalent to
-callint init() followed by start() on the resulting instance.</p>
+calling init() followed by start() on the resulting instance.</p>
 
 
   <div class='pre p1 fill-light'>start()</div>
@@ -1229,7 +1239,7 @@ choice.</p>
 
   
 
-  <p>Set the logging level for the session.</p>
+  <p>EXPERIMENTAL: Set the logging level for the session.</p>
 
 
   <div class='pre p1 fill-light'>trace(level: Any)</div>
@@ -1287,7 +1297,9 @@ choice.</p>
 
   
 
-  <p>Override service resolution for the current distributed
+  <p>EXPERIMENTAL; requires MDK_EXPERIMENTAL=1 environment variable to
+function.</p>
+<p>Override service resolution for the current distributed
 session. All attempts to resolve <em>service</em>, <em>version</em>
 will be replaced with an attempt to resolve <em>target</em>,
 <em>targetVersion</em>. This effect will be propogated to any
@@ -1785,6 +1797,62 @@ finish_interaction().</p>
     </div>
   
 </div>
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='#getDiscoveryFactory'>
+      getDiscoveryFactory
+    </h2>
+    
+  </div>
+  
+
+  <p>Choose DiscoverySource based on environment variables.</p>
+
+
+  <div class='pre p1 fill-light'>getDiscoveryFactory(env: Any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>env</span> <code class='quiet'>(Any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
   
 
