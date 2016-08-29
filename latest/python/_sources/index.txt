@@ -1,8 +1,8 @@
 
 .. datawire_mdk documentation master file, created by Quark
 
-datawire_mdk 2.0.3
-==================
+Datawire MDK
+============
 
 .. toctree::
    :maxdepth: 2
@@ -14,7 +14,6 @@ mdk
 .. automodule:: mdk
    :members:
    :undoc-members:
-
 
 Indices and tables
 ==================
