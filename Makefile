@@ -19,7 +19,7 @@ mainsetup: venv requirements.txt
 	venv/bin/pip install -U -r requirements.txt
 
 apisetup:
-	npm install documentation@4.0.0-beta5
+	npm install documentation@4.0.0-beta10
 	curl -L "https://raw.githubusercontent.com/datawire/quark/develop/install.sh" | bash -s -- ${QUARKINSTALLARGS} ${QUARKBRANCH}
 
 maindocs:
@@ -34,6 +34,8 @@ maindocs:
 
 apidocs:
 	quark compile "https://raw.githubusercontent.com/datawire/mdk/master/quark/mdk-2.0.q"
+	# Use a better Sphinx index page that only includes MDK package API docs:
+	cp -f docs-source-files/index.rst output/py/mdk-2.0/docs
 	javadoc -sourcepath $$(echo output/java/*/src/main/java | sed "s/ /:/g") -subpackages mdk -d dist/latest/java
 	source venv/bin/activate && quark install --python "https://raw.githubusercontent.com/datawire/mdk/master/quark/mdk-2.0.q"
 	source venv/bin/activate && sphinx-build output/py/mdk-2.0/docs dist/latest/python
