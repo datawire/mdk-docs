@@ -693,7 +693,7 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">critical</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     
     <span class="ruby-keyword">if</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">_enabled</span>(<span class="ruby-string">&quot;CRITICAL&quot;</span>))
-        <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
+        (<span class="ruby-ivar">@_mdk</span>).<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
         <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;CRITICAL&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-keyword">end</span>
 
@@ -732,7 +732,7 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">debug</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     
     <span class="ruby-keyword">if</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">_enabled</span>(<span class="ruby-string">&quot;DEBUG&quot;</span>))
-        <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
+        (<span class="ruby-ivar">@_mdk</span>).<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
         <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;DEBUG&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-keyword">end</span>
 
@@ -771,7 +771,7 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">error</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     
     <span class="ruby-keyword">if</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">_enabled</span>(<span class="ruby-string">&quot;ERROR&quot;</span>))
-        <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
+        (<span class="ruby-ivar">@_mdk</span>).<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
         <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;ERROR&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-keyword">end</span>
 
@@ -1010,7 +1010,7 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">info</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     
     <span class="ruby-keyword">if</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">_enabled</span>(<span class="ruby-string">&quot;INFO&quot;</span>))
-        <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
+        (<span class="ruby-ivar">@_mdk</span>).<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
         <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;INFO&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-keyword">end</span>
 
@@ -1389,7 +1389,7 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">warn</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     
     <span class="ruby-keyword">if</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">_enabled</span>(<span class="ruby-string">&quot;WARN&quot;</span>))
-        <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">MDKImpl</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
+        (<span class="ruby-ivar">@_mdk</span>).<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span>(((<span class="ruby-identifier">category</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;: &quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">text</span>))
         <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_log</span>(<span class="ruby-string">&quot;WARN&quot;</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-keyword">end</span>
 
