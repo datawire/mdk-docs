@@ -48,3 +48,9 @@ clean-dist:
 
 clean-venv:
 	rm -rf venv node_modules
+
+.PHONY: rebuild-zip
+rebuild-zip:
+	rm examples/java-local/*.zip
+	cd examples/java-local ; zip -r java-mdk-client.zip java-mdk-client
+	cd examples/java-local ; zip -r java-mdk-server.zip java-mdk-server
