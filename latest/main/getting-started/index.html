@@ -177,6 +177,11 @@ Mission Control</a>.</p>
 the <code class="docutils literal"><span class="pre">DATAWIRE_TOKEN</span></code> environment variable set. You should consider using
 a new <cite>virtualenv</cite> for this too.</p>
 <ol class="arabic">
+<li><p class="first">Set the <code class="docutils literal"><span class="pre">DATAWIRE_TOKEN</span></code> environment variable if you haven&#8217;t already. You can get the value for DATAWIRE_TOKEN from Mission Control:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">DATAWIRE_TOKEN</span><span class="o">=&lt;</span><span class="n">PASTE</span> <span class="n">TOKEN</span> <span class="n">HERE</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
 <li><p class="first">Download the Microcosm package:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">datawire</span><span class="o">/</span><span class="n">microcosm</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
@@ -188,17 +193,19 @@ a new <cite>virtualenv</cite> for this too.</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Launch the Microcosm:</p>
+<li><p class="first">Launch Microcosm:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">microcosm</span> <span class="n">run</span> <span class="n">scenarios</span><span class="o">/</span><span class="n">countdown</span><span class="o">.</span><span class="n">yml</span>
 </pre></div>
 </div>
 </li>
+<li><p class="first">Issue a request to the Microcosm front-end service, which will show the distributed request trace:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">5000</span><span class="o">/</span><span class="n">text</span>
+</pre></div>
+</div>
+</li>
 </ol>
-<p>This particular scenario runs a number of microservices, with multiple instances
-and versions of each.</p>
-<p>Now log on to your account on Mission Control, and you should see each of
-the microservices listed as Active and Healthy. You should also see new tracing
-messages from each of the services in the Logs section.</p>
+<p>This particular scenario runs a number of microservices, with multiple instances and versions of each.</p>
+<p>If you log in to Mission Control you should see each of the microservices listed as Active and Healthy. You should also see new tracing messages from each of the services in the Logs tab.</p>
 </div>
 <div class="section" id="digging-deeper">
 <h3>Digging Deeper<a class="headerlink" href="#digging-deeper" title="Permalink to this headline">¶</a></h3>

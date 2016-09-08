@@ -120,25 +120,30 @@ To install the Microcosm, open a new terminal window, and make sure you have
 the ``DATAWIRE_TOKEN`` environment variable set. You should consider using
 a new `virtualenv` for this too.
 
-1. Download the Microcosm package::
+1. Set the ``DATAWIRE_TOKEN`` environment variable if you haven't already. You can get the value for DATAWIRE_TOKEN from Mission Control::
+
+     export DATAWIRE_TOKEN=<PASTE TOKEN HERE>
+
+2. Download the Microcosm package::
 
     git clone https://github.com/datawire/microcosm.git
 
-2. Install the required Python packages needed to run the Microcosm::
+3. Install the required Python packages needed to run the Microcosm::
 
     cd microcosm
     pip install -r requirements.txt
 
-3. Launch the Microcosm::
+4. Launch Microcosm::
 
     ./microcosm run scenarios/countdown.yml
 
-This particular scenario runs a number of microservices, with multiple instances
-and versions of each.
+5. Issue a request to the Microcosm front-end service, which will show the distributed request trace::
 
-Now log on to your account on Mission Control, and you should see each of
-the microservices listed as Active and Healthy. You should also see new tracing
-messages from each of the services in the Logs section.
+    curl http://localhost:5000/text
+
+This particular scenario runs a number of microservices, with multiple instances and versions of each.
+
+If you log in to Mission Control you should see each of the microservices listed as Active and Healthy. You should also see new tracing messages from each of the services in the Logs tab.
 
 Digging Deeper
 --------------
