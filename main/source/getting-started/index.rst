@@ -24,20 +24,17 @@ The MDK supports multiple languages.
 
 Python::
 
-    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s -- --python
-
-Java::
-
-    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s -- --java
+    pip install datawire_mdk
 
 Ruby::
 
-    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s -- --ruby
-
+    gem install datawire_mdk
 
 Javascript::
 
-    curl -# -L https://raw.githubusercontent.com/datawire/mdk/master/install.sh | bash -s -- --javascript
+    npm install datawire_mdk
+
+For Java you add ``io.datawire.mdk`` as a Maven dependency.
 
 
 Quick Start
