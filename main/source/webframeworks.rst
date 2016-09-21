@@ -79,6 +79,7 @@ If a particular node causes errors it will end up being blacklisted and only oth
    from flask import g, Flask
 
    from mdk.flask import mdk_setup
+   from mdk import MDK
 
    app = Flask(__name__)
 
@@ -86,7 +87,12 @@ If a particular node causes errors it will end up being blacklisted and only oth
    def proxy():
        # Lookup backend server using MDK Discovery.
        node = g.mdk_session.resolve("backend_service", "1.0")
-       return get(node.address).text
+
+       # Pass on MDK session context via HTTP headers:
+       headers = {MDK.CONTEXT_HEADER: g.mdk_session.externalize()}
+
+       # Do HTTP request to resolved node and return the body:
+       return get(node.address, headers=headers).text
 
    if __name__ == '__main__':
        mdk_setup(app)
