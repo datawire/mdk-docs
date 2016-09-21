@@ -93,8 +93,113 @@ Repeated errors will cause the MDK to temporarily blacklist those nodes, ensurin
 This means logging via the MDK will be able to trace requests across multiple servers so long as the HTTP client includes the appropriate <code class="docutils literal"><span class="pre">X-MDK-CONTEXT</span></code> header.</li>
 <li>Provide access to a corresponding MDK <code class="docutils literal"><span class="pre">Session</span></code> object to enable logging, discovery and other MDK functionality form within your web application.</li>
 </ol>
+<div class="contents local topic" id="integrations">
+<p class="topic-title first">Integrations</p>
+<ul class="simple">
+<li><a class="reference internal" href="#javascript" id="id1">Javascript</a><ul>
+<li><a class="reference internal" href="#express-integration" id="id2">Express integration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python" id="id3">Python</a><ul>
+<li><a class="reference internal" href="#django-integration" id="id4">Django integration</a></li>
+<li><a class="reference internal" href="#flask-integration" id="id5">Flask integration</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="javascript">
+<h2><a class="toc-backref" href="#id1">Javascript</a><a class="headerlink" href="#javascript" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="express-integration">
+<h3><a class="toc-backref" href="#id2">Express integration</a><a class="headerlink" href="#express-integration" title="Permalink to this headline">¶</a></h3>
+<p>Express support requires adding an additional dependency:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">npm</span> <span class="n">install</span> <span class="n">datawire_mdk_express</span>
+</pre></div>
+</div>
+<p>You will then need to:</p>
+<ul class="simple">
+<li>Add a <code class="docutils literal"><span class="pre">mdkSessionStart</span></code> middleware at the beginning of your application configuration.
+This will ensure the MDK session is started and stopped appropriately.</li>
+<li>Add a <code class="docutils literal"><span class="pre">mdkErrorHandler</span></code> error-handling middleware at the end of your application configuration.
+This catches errors passed into Express and ensures the circuit breaker will be called in that case.</li>
+</ul>
+<p>Unfortunately not all errors end up being passed back to Express.
+For example, if an exception is thrown in a callback somewhere Express will have no way of knowing about it.</p>
+<p>To ensure that these cases also trigger the circuit breaker, and that some sort of response is sent even when unhandled errors occur, we highly recommend you add a timeout middleware.
+The <code class="docutils literal"><span class="pre">connect-timeout</span></code> package (<a class="reference external" href="https://www.npmjs.com/package/connect-timeout">https://www.npmjs.com/package/connect-timeout</a>) works well for this since it can be configured to trigger an Express error when the timeout occurs.</p>
+<p>Once you&#8217;ve configured the MDK as above you can access the session via <code class="docutils literal"><span class="pre">req.mdk_session</span></code>.
+Here&#8217;s an example showing the full configuration:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-timeout&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">mdk_express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;datawire_mdk_express&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="c1">// Configure a 5 second timeout which will cause an Express error on</span>
+<span class="c1">// timeouts:</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">timeout</span><span class="p">(</span><span class="s1">&#39;5s&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">respond</span><span class="o">:</span> <span class="kc">true</span><span class="p">}));</span>
+
+<span class="c1">// Start and stop the MDK session:</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">mdk_express</span><span class="p">.</span><span class="nx">mdkSessionStart</span><span class="p">);</span>
+
+
+<span class="c1">// Your application logic goes here:</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Log a message using the MDK:</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nx">mdk_session</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;logging some info&quot;</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// ... more application logic ...</span>
+
+
+<span class="c1">// Error handler which has to go at the end of your middleware:</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">mdk_express</span><span class="p">.</span><span class="nx">mdkErrorHandler</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="python">
+<h2><a class="toc-backref" href="#id3">Python</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="django-integration">
+<h3><a class="toc-backref" href="#id4">Django integration</a><a class="headerlink" href="#django-integration" title="Permalink to this headline">¶</a></h3>
+<p>To enable MDK integration you need to add the appropriate middleware to your <code class="docutils literal"><span class="pre">settings.py</span></code>.
+In Django 1.9 or earlier you add <code class="docutils literal"><span class="pre">mdk.django.MDKSessionMiddleware</span></code> to <code class="docutils literal"><span class="pre">MIDDLEWARE_CLASSES</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="o">...</span>
+ <span class="s1">&#39;django.middleware.csrf.CsrfViewMiddleware&#39;</span><span class="p">,</span>
+
+ <span class="c1"># MDK middleware:</span>
+ <span class="s1">&#39;mdk.django.MDKSessionMiddleware&#39;</span><span class="p">,</span>
+
+ <span class="s1">&#39;django.contrib.auth.middleware.AuthenticationMiddleware&#39;</span><span class="p">,</span>
+  <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>In Django 1.10 you add it to <code class="docutils literal"><span class="pre">MIDDLEWARE</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="o">...</span>
+ <span class="s1">&#39;django.middleware.csrf.CsrfViewMiddleware&#39;</span><span class="p">,</span>
+
+ <span class="c1"># MDK middleware:</span>
+ <span class="s1">&#39;mdk.django.MDKSessionMiddleware&#39;</span><span class="p">,</span>
+
+ <span class="s1">&#39;django.contrib.auth.middleware.AuthenticationMiddleware&#39;</span><span class="p">,</span>
+  <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>In order to access the MDK you can use <code class="docutils literal"><span class="pre">request.mdk_session</span></code> in your view.
+For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+<span class="k">def</span> <span class="nf">myview</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Log a message using the MDK:</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">mdk_session</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;djangoapp&quot;</span><span class="p">,</span> <span class="s2">&quot;myview was viewed&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;hello!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="flask-integration">
-<h2>Flask integration<a class="headerlink" href="#flask-integration" title="Permalink to this headline">¶</a></h2>
+<h3><a class="toc-backref" href="#id5">Flask integration</a><a class="headerlink" href="#flask-integration" title="Permalink to this headline">¶</a></h3>
 <p>To enable MDK integration with Flask simply call <code class="docutils literal"><span class="pre">mdk.flask.mdk_setup(app)</span></code> before <code class="docutils literal"><span class="pre">app.run()</span></code>.
 You can access the MDK session via <code class="docutils literal"><span class="pre">flask.g.mdk_session</span></code>.</p>
 <p>In the following example we use the MDK to resolve the address of a node and then return the result of querying the backend server at that address.
@@ -103,6 +208,7 @@ If a particular node causes errors it will end up being blacklisted and only oth
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">g</span><span class="p">,</span> <span class="n">Flask</span>
 
 <span class="kn">from</span> <span class="nn">mdk.flask</span> <span class="kn">import</span> <span class="n">mdk_setup</span>
+<span class="kn">from</span> <span class="nn">mdk</span> <span class="kn">import</span> <span class="n">MDK</span>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
@@ -110,12 +216,18 @@ If a particular node causes errors it will end up being blacklisted and only oth
 <span class="k">def</span> <span class="nf">proxy</span><span class="p">():</span>
     <span class="c1"># Lookup backend server using MDK Discovery.</span>
     <span class="n">node</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">mdk_session</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;backend_service&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+
+    <span class="c1"># Pass on MDK session context via HTTP headers:</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="n">MDK</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">mdk_session</span><span class="o">.</span><span class="n">externalize</span><span class="p">()}</span>
+
+    <span class="c1"># Do HTTP request to resolved node and return the body:</span>
+    <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">mdk_setup</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -129,7 +241,15 @@ If a particular node causes errors it will end up being blacklisted and only oth
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Web Framework Integration</a><ul>
+<li><a class="reference internal" href="#javascript">Javascript</a><ul>
+<li><a class="reference internal" href="#express-integration">Express integration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python">Python</a><ul>
+<li><a class="reference internal" href="#django-integration">Django integration</a></li>
 <li><a class="reference internal" href="#flask-integration">Flask integration</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

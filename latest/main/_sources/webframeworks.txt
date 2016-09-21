@@ -1,3 +1,4 @@
+=========================
 Web Framework Integration
 =========================
 
@@ -13,6 +14,112 @@ Hooking up the MDK will do the following:
 2. The MDK will parse the ``X-MDK-CONTEXT`` HTTP header, and either join the resulting trace session or start a new one if no header was present.
    This means logging via the MDK will be able to trace requests across multiple servers so long as the HTTP client includes the appropriate ``X-MDK-CONTEXT`` header.
 3. Provide access to a corresponding MDK ``Session`` object to enable logging, discovery and other MDK functionality form within your web application.
+
+.. contents:: Integrations
+   :local:
+
+Javascript
+==========
+
+Express integration
+-------------------
+
+Express support requires adding an additional dependency::
+
+  npm install datawire_mdk_express
+
+You will then need to:
+
+* Add a ``mdkSessionStart`` middleware at the beginning of your application configuration.
+  This will ensure the MDK session is started and stopped appropriately.
+* Add a ``mdkErrorHandler`` error-handling middleware at the end of your application configuration.
+  This catches errors passed into Express and ensures the circuit breaker will be called in that case.
+
+Unfortunately not all errors end up being passed back to Express.
+For example, if an exception is thrown in a callback somewhere Express will have no way of knowing about it.
+
+To ensure that these cases also trigger the circuit breaker, and that some sort of response is sent even when unhandled errors occur, we highly recommend you add a timeout middleware.
+The ``connect-timeout`` package (https://www.npmjs.com/package/connect-timeout) works well for this since it can be configured to trigger an Express error when the timeout occurs.
+
+Once you've configured the MDK as above you can access the session via ``req.mdk_session``.
+Here's an example showing the full configuration:
+
+.. code-block:: javascript
+
+   var express = require('express');
+   var timeout = require('connect-timeout');
+   var mdk_express = require('datawire_mdk_express');
+   var app = express();
+
+   // Configure a 5 second timeout which will cause an Express error on
+   // timeouts:
+   app.use(timeout('5s', {respond: true}));
+
+   // Start and stop the MDK session:
+   app.use(mdk_express.mdkSessionStart);
+
+
+   // Your application logic goes here:
+   app.get('/', function (req, res) {
+       // Log a message using the MDK:
+       req.mdk_session.info("myapp", "logging some info");
+       res.send("hello world");
+   });
+   // ... more application logic ...
+
+
+   // Error handler which has to go at the end of your middleware:
+   app.use(mdk_express.mdkErrorHandler);
+
+
+Python
+======
+
+Django integration
+------------------
+
+To enable MDK integration you need to add the appropriate middleware to your ``settings.py``.
+In Django 1.9 or earlier you add ``mdk.django.MDKSessionMiddleware`` to ``MIDDLEWARE_CLASSES``:
+
+.. code-block:: python
+
+   MIDDLEWARE_CLASSES = [
+    ...
+    'django.middleware.csrf.CsrfViewMiddleware',
+
+    # MDK middleware:
+    'mdk.django.MDKSessionMiddleware',
+
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+     ...
+   ]
+
+In Django 1.10 you add it to ``MIDDLEWARE``:
+
+.. code-block:: python
+
+   MIDDLEWARE = [
+    ...
+    'django.middleware.csrf.CsrfViewMiddleware',
+
+    # MDK middleware:
+    'mdk.django.MDKSessionMiddleware',
+
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+     ...
+   ]
+
+In order to access the MDK you can use ``request.mdk_session`` in your view.
+For example:
+
+.. code-block:: python
+
+   from django.http import HttpResponse
+
+   def myview(request):
+       # Log a message using the MDK:
+       request.mdk_session.info("djangoapp", "myview was viewed")
+       return HttpResponse("hello!")
 
 
 Flask integration
@@ -30,6 +137,7 @@ If a particular node causes errors it will end up being blacklisted and only oth
    from flask import g, Flask
 
    from mdk.flask import mdk_setup
+   from mdk import MDK
 
    app = Flask(__name__)
 
@@ -37,7 +145,12 @@ If a particular node causes errors it will end up being blacklisted and only oth
    def proxy():
        # Lookup backend server using MDK Discovery.
        node = g.mdk_session.resolve("backend_service", "1.0")
-       return get(node.address).text
+
+       # Pass on MDK session context via HTTP headers:
+       headers = {MDK.CONTEXT_HEADER: g.mdk_session.externalize()}
+
+       # Do HTTP request to resolved node and return the body:
+       return get(node.address, headers=headers).text
 
    if __name__ == '__main__':
        mdk_setup(app)
