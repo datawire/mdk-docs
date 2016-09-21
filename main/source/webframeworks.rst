@@ -18,6 +18,59 @@ Hooking up the MDK will do the following:
 .. contents:: Integrations
    :local:
 
+Javascript
+==========
+
+Express integration
+-------------------
+
+Express support requires adding an additional dependency::
+
+  npm install datawire_mdk_express
+
+You will then need to:
+
+* Add a ``mdkSessionStart`` middleware at the beginning of your application configuration.
+  This will ensure the MDK session is started and stopped appropriately.
+* Add a ``mdkErrorHandler`` error-handling middleware at the end of your application configuration.
+  This catches errors passed into Express and ensures the circuit breaker will be called in that case.
+
+Unfortunately not all errors end up being passed back to Express.
+For example, if an exception is thrown in a callback somewhere Express will have no way of knowing about it.
+
+To ensure that these cases also trigger the circuit breaker, and that some sort of response is sent even when unhandled errors occur, we highly recommend you add a timeout middleware.
+The ``connect-timeout`` package (https://www.npmjs.com/package/connect-timeout) works well for this since it can be configured to trigger an Express error when the timeout occurs.
+
+Once you've configured the MDK as above you can access the session via ``req.mdk_session``.
+Here's an example showing the full configuration:
+
+.. code-block:: javascript
+
+   var express = require('express');
+   var timeout = require('connect-timeout');
+   var mdk_express = require('datawire_mdk_express');
+   var app = express();
+
+   // Configure a 5 second timeout which will cause an Express error on
+   // timeouts:
+   app.use(timeout('5s', {respond: true}));
+
+   // Start and stop the MDK session:
+   app.use(mdk_express.mdkSessionStart);
+
+
+   // Your application logic goes here:
+   app.get('/', function (req, res) {
+       // Log a message using the MDK:
+       req.mdk_session.info("myapp", "logging some info");
+       res.send("hello world");
+   });
+   // ... more application logic ...
+
+
+   // Error handler which has to go at the end of your middleware:
+   app.use(mdk_express.mdkErrorHandler);
+
 
 Python
 ======
