@@ -1,3 +1,4 @@
+=========================
 Web Framework Integration
 =========================
 
@@ -14,12 +15,15 @@ Hooking up the MDK will do the following:
    This means logging via the MDK will be able to trace requests across multiple servers so long as the HTTP client includes the appropriate ``X-MDK-CONTEXT`` header.
 3. Provide access to a corresponding MDK ``Session`` object to enable logging, discovery and other MDK functionality form within your web application.
 
+.. contents:: Integrations
+   :local:
 
-.. toctree::
-   :maxdepth: 1
 
-Django integration (Python)
----------------------------
+Python
+======
+
+Django integration
+------------------
 
 To enable MDK integration you need to add the appropriate middleware to your ``settings.py``.
 In Django 1.9 or earlier you add ``mdk.django.MDKSessionMiddleware`` to ``MIDDLEWARE_CLASSES``:
@@ -64,8 +68,9 @@ For example:
        request.mdk_session.info("djangoapp", "myview was viewed")
        return HttpResponse("hello!")
 
-Flask integration (Python)
---------------------------
+
+Flask integration
+-----------------
 
 To enable MDK integration with Flask simply call ``mdk.flask.mdk_setup(app)`` before ``app.run()``.
 You can access the MDK session via ``flask.g.mdk_session``.
