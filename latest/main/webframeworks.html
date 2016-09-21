@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Web Framework Integration &mdash; Microservices Development Kit 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Microservices Development Kit 2.0 documentation" href="index.html" />
+    <link rel="next" title="Deep Dive" href="deep-dive/index.html" />
+    <link rel="prev" title="Getting Started" href="getting-started/index.html" />
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="index.html">
+                <img class="dw-logo" src="_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="deep-dive/index.html"
+            title="Deep Dive"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="getting-started/index.html"
+            title="Getting Started"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Microservices Development Kit 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="web-framework-integration">
+<h1>Web Framework Integration<a class="headerlink" href="#web-framework-integration" title="Permalink to this headline">¶</a></h1>
+<p>The MDK provide integration points for common web frameworks.
+The number of supported frameworks will grow over time.</p>
+<p>Hooking up the MDK will do the following:</p>
+<ol class="arabic simple">
+<li>Provide a catch-all error handler for your distributed system.
+If an internal server error occurs this will activate the circuit breaker.
+The circuit breaker affects any nodes resolved using MDK discovery while handling that particular request.
+Repeated errors will cause the MDK to temporarily blacklist those nodes, ensuring errors don&#8217;t take down the whole system.</li>
+<li>The MDK will parse the <code class="docutils literal"><span class="pre">X-MDK-CONTEXT</span></code> HTTP header, and either join the resulting trace session or start a new one if no header was present.
+This means logging via the MDK will be able to trace requests across multiple servers so long as the HTTP client includes the appropriate <code class="docutils literal"><span class="pre">X-MDK-CONTEXT</span></code> header.</li>
+<li>Provide access to a corresponding MDK <code class="docutils literal"><span class="pre">Session</span></code> object to enable logging, discovery and other MDK functionality form within your web application.</li>
+</ol>
+<div class="section" id="flask-integration">
+<h2>Flask integration<a class="headerlink" href="#flask-integration" title="Permalink to this headline">¶</a></h2>
+<p>To enable MDK integration with Flask simply call <code class="docutils literal"><span class="pre">mdk.flask.mdk_setup(app)</span></code> before <code class="docutils literal"><span class="pre">app.run()</span></code>.
+You can access the MDK session via <code class="docutils literal"><span class="pre">flask.g.mdk_session</span></code>.</p>
+<p>In the following example we use the MDK to resolve the address of a node and then return the result of querying the backend server at that address.
+If a particular node causes errors it will end up being blacklisted and only other nodes will be resolved by the discovery client.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">g</span><span class="p">,</span> <span class="n">Flask</span>
+
+<span class="kn">from</span> <span class="nn">mdk.flask</span> <span class="kn">import</span> <span class="n">mdk_setup</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">proxy</span><span class="p">():</span>
+    <span class="c1"># Lookup backend server using MDK Discovery.</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">mdk_session</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;backend_service&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">mdk_setup</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Web Framework Integration</a><ul>
+<li><a class="reference internal" href="#flask-integration">Flask integration</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="getting-started/index.html" title="previous chapter">Getting Started</a></li>
+      <li>Next: <a href="deep-dive/index.html" title="next chapter">Deep Dive</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/webframeworks.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="deep-dive/index.html"
+            title="Deep Dive"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="getting-started/index.html"
+            title="Getting Started"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Microservices Development Kit 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2016, Datawire.io.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
+
+    
+
+    
+
+    <script src="_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="_static/js/main.js" ></script>
+  </body>
+</html>
