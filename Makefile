@@ -22,16 +22,14 @@ apisetup:
 	npm install documentation@4.0.0-beta10
 	curl -L "https://raw.githubusercontent.com/datawire/quark/develop/install.sh" | bash -s -- ${QUARKINSTALLARGS} ${QUARKBRANCH}
 
-dist/latest:
-	mkdir -p dist/latest
-
-maindocs: dist/latest
+maindocs:
+	mkdir dist
+	mkdir dist/latest
 	# Static files
 	cp -r src/* dist
 	cp src/.??* dist
 	# Main prose documentation:
 	source venv/bin/activate && cd main && make spelling && make html
-	rm -rf dist/latest/main
 	mv main/build/html dist/latest/main
 
 apidocs:

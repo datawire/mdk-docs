@@ -1,7 +1,6 @@
 backend
 datawire
 datawire.io
-Django
 indices
 interoperate
 java
@@ -9,8 +8,6 @@ javascript
 JavaScript
 microservice
 microservices
-middleware
 navbar
 NodeJS
-unhandled
 
