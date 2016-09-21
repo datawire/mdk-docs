@@ -22,7 +22,7 @@ Installation
 To get started with the |mdk|, install the MDK on Linux or Mac OS X.
 The MDK supports multiple languages.
 
-Python::
+Python 2 and Python 3::
 
     pip install datawire_mdk
 
