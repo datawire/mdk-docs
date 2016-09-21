@@ -15,8 +15,57 @@ Hooking up the MDK will do the following:
 3. Provide access to a corresponding MDK ``Session`` object to enable logging, discovery and other MDK functionality form within your web application.
 
 
-Flask integration
------------------
+.. toctree::
+   :maxdepth: 1
+
+Django integration (Python)
+---------------------------
+
+To enable MDK integration you need to add the appropriate middleware to your ``settings.py``.
+In Django 1.9 or earlier you add ``mdk.django.MDKSessionMiddleware`` to ``MIDDLEWARE_CLASSES``:
+
+.. code-block:: python
+
+   MIDDLEWARE_CLASSES = [
+    ...
+    'django.middleware.csrf.CsrfViewMiddleware',
+
+    # MDK middleware:
+    'mdk.django.MDKSessionMiddleware',
+
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+     ...
+   ]
+
+In Django 1.10 you add it to ``MIDDLEWARE``:
+
+.. code-block:: python
+
+   MIDDLEWARE = [
+    ...
+    'django.middleware.csrf.CsrfViewMiddleware',
+
+    # MDK middleware:
+    'mdk.django.MDKSessionMiddleware',
+
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+     ...
+   ]
+
+In order to access the MDK you can use ``request.mdk_session`` in your view.
+For example:
+
+.. code-block:: python
+
+   from django.http import HttpResponse
+
+   def myview(request):
+       # Log a message using the MDK:
+       request.mdk_session.info("djangoapp", "myview was viewed")
+       return HttpResponse("hello!")
+
+Flask integration (Python)
+--------------------------
 
 To enable MDK integration with Flask simply call ``mdk.flask.mdk_setup(app)`` before ``app.run()``.
 You can access the MDK session via ``flask.g.mdk_session``.
