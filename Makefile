@@ -22,9 +22,10 @@ apisetup:
 	npm install documentation@4.0.0-beta10
 	curl -L "https://raw.githubusercontent.com/datawire/quark/develop/install.sh" | bash -s -- ${QUARKINSTALLARGS} ${QUARKBRANCH}
 
-maindocs:
-	mkdir dist
-	mkdir dist/latest
+dist/latest:
+	mkdir -p dist/latest
+
+maindocs: dist/latest
 	# Static files
 	cp -r src/* dist
 	cp src/.??* dist
