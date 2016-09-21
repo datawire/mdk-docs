@@ -31,6 +31,7 @@ maindocs: dist/latest
 	cp src/.??* dist
 	# Main prose documentation:
 	source venv/bin/activate && cd main && make spelling && make html
+	rm -rf dist/latest/main
 	mv main/build/html dist/latest/main
 
 apidocs:
