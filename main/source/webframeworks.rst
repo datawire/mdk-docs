@@ -155,3 +155,36 @@ If a particular node causes errors it will end up being blacklisted and only oth
    if __name__ == '__main__':
        mdk_setup(app)
        app.run()
+
+
+Ruby
+====
+
+Rack
+----
+
+Rack is the basis for many Ruby web frameworks, including Sinatra and Ruby on Rails.
+The MDK Rack middleware therefore allows integrating the MDK into all these web frameworks.
+
+You will need to install the ``rack-mdk`` gem, e.g.::
+
+  gem install rack-mdk
+
+Then register the ``Rack::MDK::Session`` middleware with your Rack configuration.
+You can access the current session from the Rack ``env`` via ``env[:mdk_session]``.
+
+For example, here's how you would do so in Sinatra:
+
+.. code-block:: ruby
+
+   require 'sinatra'
+   require 'rack-mdk'
+
+   # Register the MDK middleware using the Sinatra use API
+   use Rack::MDK::Session
+
+   get '/' do
+     # Log using the MDK
+     env[:mdk_session].info('myapp', 'Logging something')
+     'hello!'
+   end
