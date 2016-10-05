@@ -94,3 +94,4 @@ ENV/
 # mdk-docs
 node_modules
 output
+mdk
