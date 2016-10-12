@@ -14,6 +14,7 @@ Hooking up the MDK will do the following:
 2. The MDK will parse the ``X-MDK-CONTEXT`` HTTP header, and either join the resulting trace session or start a new one if no header was present.
    This means logging via the MDK will be able to trace requests across multiple servers so long as the HTTP client includes the appropriate ``X-MDK-CONTEXT`` header.
 3. Provide access to a corresponding MDK ``Session`` object to enable logging, discovery and other MDK functionality form within your web application.
+4. If appropriately configured, propagate a session timeout with the session context, allowing different servers to cooperate in enforcing a global timeout.
 
 .. contents:: Integrations
    :local:
@@ -34,6 +35,7 @@ You will then need to:
   This will ensure the MDK session is started and stopped appropriately.
 * Add a ``mdkErrorHandler`` error-handling middleware at the end of your application configuration.
   This catches errors passed into Express and ensures the circuit breaker will be called in that case.
+* You should also use ``configure`` to add a default timeout to MDK sessions.
 
 Unfortunately not all errors end up being passed back to Express.
 For example, if an exception is thrown in a callback somewhere Express will have no way of knowing about it.
@@ -49,10 +51,15 @@ Here's an example showing the full configuration:
    var express = require('express');
    var timeout = require('connect-timeout');
    var mdk_express = require('datawire_mdk_express');
+
+   // Configure a 5 second global timeout on MDK sessions passing through this
+   // process:
+   mdk_express.configure(5.0);
+
    var app = express();
 
    // Configure a 5 second timeout which will cause an Express error on
-   // timeouts:
+   // timeouts within this process:
    app.use(timeout('5s', {respond: true}));
 
    // Start and stop the MDK session:
@@ -109,6 +116,12 @@ In Django 1.10 you add it to ``MIDDLEWARE``:
      ...
    ]
 
+In either case you configure a default timeout by adding ``MDK_DEFAULT_TIMEOUT`` to ``settings.py``:
+
+.. code-block:: python
+
+   MDK_DEFAULT_TIMEOUT = 10.0
+
 In order to access the MDK you can use ``request.mdk_session`` in your view.
 For example:
 
@@ -149,11 +162,13 @@ If a particular node causes errors it will end up being blacklisted and only oth
        # Pass on MDK session context via HTTP headers:
        headers = {MDK.CONTEXT_HEADER: g.mdk_session.externalize()}
 
-       # Do HTTP request to resolved node and return the body:
-       return get(node.address, headers=headers).text
+       # Do HTTP request to resolved node and return the body, respecting the
+       # MDK session's remaining timeout:
+       return get(node.address, headers=headers,
+                  timeout=g.mdk_session.getSecondsToTimeout()).text
 
    if __name__ == '__main__':
-       mdk_setup(app)
+       mdk_setup(app, timeout=10.0)
        app.run()
 
 
@@ -181,7 +196,8 @@ For example, here's how you would do so in Sinatra:
    require 'rack-mdk'
 
    # Register the MDK middleware using the Sinatra use API
-   use Rack::MDK::Session
+   use Rack::MDK::Session,
+       timeout: 10.0
 
    get '/' do
      # Log using the MDK
