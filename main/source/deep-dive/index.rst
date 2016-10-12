@@ -356,7 +356,7 @@ For example:
 .. code-block:: python
 
    # Do a HTTP request with timeout extracted from the MDK session:
-   requests.get(url, timeout=ssn.getSecondsToTimeout())
+   requests.get(url, timeout=ssn.getRemainingTime())
 
 Servers should always set a default timeout which will be applied to both incoming and newly created sessions.
 If the incoming session already has a timeout set then the lower of the two timeouts will be used.

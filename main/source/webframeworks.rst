@@ -165,7 +165,7 @@ If a particular node causes errors it will end up being blacklisted and only oth
        # Do HTTP request to resolved node and return the body, respecting the
        # MDK session's remaining timeout:
        return get(node.address, headers=headers,
-                  timeout=g.mdk_session.getSecondsToTimeout()).text
+                  timeout=g.mdk_session.getRemainingTime()).text
 
    if __name__ == '__main__':
        mdk_setup(app, timeout=10.0)
