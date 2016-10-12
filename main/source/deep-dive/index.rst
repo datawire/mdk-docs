@@ -133,8 +133,7 @@ run the following code:
 .. code-block:: python
 
     import mdk
-    m = mdk.init()
-    m.start()
+    m = mdk.start()
     print(m.session().resolve("hello", "1.0").address)
     m.stop()
 
@@ -163,8 +162,7 @@ commands:
 .. code-block:: python
 
     import mdk
-    m = mdk.init()
-    m.start()
+    m = mdk.start()
     print(m.session().resolve("hello", "1.0").address)
     print(m.session().resolve("hello", "1.0").address)
     print(m.session().resolve("hello", "1.0").address)
