@@ -87,6 +87,12 @@
                       </a></li>
                       
                       <li><a
+                        href='#MDK#setDefaultTimeout'
+                        class='regular pre-open'>
+                        #setDefaultTimeout
+                      </a></li>
+                      
+                      <li><a
                         href='#MDK#session'
                         class='regular pre-open'>
                         #session
@@ -215,6 +221,18 @@
                         #interact
                       </a></li>
                       
+                      <li><a
+                        href='#Session#setTimeout'
+                        class='regular pre-open'>
+                        #setTimeout
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#getRemainingTime'
+                        class='regular pre-open'>
+                        #getRemainingTime
+                      </a></li>
+                      
                     </ul>
                   
                   
@@ -237,6 +255,16 @@
                   href='#getfailurepolicy'
                   class="">
                   getFailurePolicy
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getwsclient'
+                  class="">
+                  getWSClient
                   
                 </a>
                 
@@ -595,6 +623,65 @@ discovery system until the MDK is started.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>address</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='MDK#setDefaultTimeout'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setDefaultTimeout(seconds)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the default timeout for MDK sessions.</p>
+<p>This is the maximum timeout; if a joined session has a lower
+timeout that will be used.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setDefaultTimeout(seconds: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>seconds</span> <code class='quiet'>(any)</code> 
           </div>
           
         </div>
@@ -1376,6 +1463,7 @@ downstream services involved in the distributed session.</p>
   
 
   <p>Locate a compatible service instance.</p>
+<p>Uses a minimum of 10 seconds and the timeout set on the session.</p>
 
 
   <div class='pre p1 fill-light mt0'>resolve(service: any, version: any)</div>
@@ -1783,6 +1871,118 @@ finish_interaction().</p>
       </div>
     </div>
   
+    <div class='border-bottom' id='Session#setTimeout'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setTimeout(seconds)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set how many seconds the session is expected to live from this point.</p>
+<p>If a timeout has previously been set the new timeout will only be
+used if it is lower than the existing timeout.</p>
+<p>The MDK will not enforce the timeout. Rather, it provides the
+information to any process or server in the same session (even if
+they are on different machines). By passing this timeout to
+blocking APIs you can ensure timeouts are enforced across a whole
+distributed session.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setTimeout(seconds: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>seconds</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Session#getRemainingTime'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getRemainingTime()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Return how many seconds until the session ought to end.</p>
+<p>This will only be accurate across multiple servers insofar as their
+clocks are in sync.</p>
+<p>If a timeout has not been set the result will be null.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getRemainingTime()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
 </div>
 
   
@@ -1864,6 +2064,62 @@ finish_interaction().</p>
 
 
   <div class='pre p1 fill-light mt0'>getFailurePolicy(runtime: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>runtime</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    <h3 class='fl m0' id='getwsclient'>
+      getWSClient
+    </h3>
+    
+  </div>
+  
+
+  <p>Get a WSClient, unless env variables suggest the user doesn&#x27;t want one.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getWSClient(runtime: any)</div>
 
   
 

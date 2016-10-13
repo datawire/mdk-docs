@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Datawire MDK &mdash; datawire_mdk 2.0.15 documentation</title>
+    <title>Datawire MDK &mdash; datawire_mdk 2.0.16 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.15',
+        VERSION:     '2.0.16',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datawire_mdk 2.0.15 documentation" href="#" />
+    <link rel="top" title="datawire_mdk 2.0.16 documentation" href="#" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -97,6 +97,14 @@ traces.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mdk.MDK.setDefaultTimeout">
+<code class="descname">setDefaultTimeout</code><span class="sig-paren">(</span><em>seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.setDefaultTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default timeout for MDK sessions.</p>
+<p>This is the maximum timeout; if a joined session has a lower
+timeout that will be used.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="mdk.MDK.start">
 <code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDK.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the MDK. An MDK instance will not communicate with
@@ -136,6 +144,12 @@ to detect node departures.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mdk.MDKImpl.getWSClient">
+<code class="descname">getWSClient</code><span class="sig-paren">(</span><em>runtime</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.getWSClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a WSClient, unless env variables suggest the user doesn&#8217;t want one.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="mdk.MDKImpl.join">
 <code class="descname">join</code><span class="sig-paren">(</span><em>encodedContext</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.join" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -158,6 +172,11 @@ to detect node departures.</p>
 <dl class="method">
 <dt id="mdk.MDKImpl.session">
 <code class="descname">session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.MDKImpl.setDefaultTimeout">
+<code class="descname">setDefaultTimeout</code><span class="sig-paren">(</span><em>seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.MDKImpl.setDefaultTimeout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -252,6 +271,15 @@ tracing system.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mdk.Session.getRemainingTime">
+<code class="descname">getRemainingTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.getRemainingTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return how many seconds until the session ought to end.</p>
+<p>This will only be accurate across multiple servers insofar as their
+clocks are in sync.</p>
+<p>If a timeout has not been set the result will be null.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="mdk.Session.info">
 <code class="descname">info</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Record a log entry at the INFO logging level.</p>
@@ -280,6 +308,7 @@ finish_interaction().</p>
 <dt id="mdk.Session.resolve">
 <code class="descname">resolve</code><span class="sig-paren">(</span><em>service</em>, <em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.resolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Locate a compatible service instance.</p>
+<p>Uses a minimum of 10 seconds and the timeout set on the session.</p>
 </dd></dl>
 
 <dl class="method">
@@ -304,6 +333,19 @@ session. All attempts to resolve <em>service</em>, <em>version</em>
 will be replaced with an attempt to resolve <em>target</em>,
 <em>targetVersion</em>. This effect will be propogated to any
 downstream services involved in the distributed session.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.Session.setTimeout">
+<code class="descname">setTimeout</code><span class="sig-paren">(</span><em>seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.setTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set how many seconds the session is expected to live from this point.</p>
+<p>If a timeout has previously been set the new timeout will only be
+used if it is lower than the existing timeout.</p>
+<p>The MDK will not enforce the timeout. Rather, it provides the
+information to any process or server in the same session (even if
+they are on different machines). By passing this timeout to
+blocking APIs you can ensure timeouts are enforced across a whole
+distributed session.</p>
 </dd></dl>
 
 <dl class="method">
@@ -373,6 +415,11 @@ breakers to mitigate the impact of any such issues.</p>
 <dl class="method">
 <dt id="mdk.SessionImpl.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.SessionImpl.getRemainingTime">
+<code class="descname">getRemainingTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.getRemainingTime" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -458,6 +505,11 @@ breakers to mitigate the impact of any such issues.</p>
 <dl class="method">
 <dt id="mdk.SessionImpl.set">
 <code class="descname">set</code><span class="sig-paren">(</span><em>property</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.SessionImpl.setTimeout">
+<code class="descname">setTimeout</code><span class="sig-paren">(</span><em>timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.setTimeout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
