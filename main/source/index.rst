@@ -13,6 +13,7 @@ Contents:
 
    Getting Started <getting-started/index>
    Web Framework Integration <webframeworks>
+   HTTP Client Integration <webclients>
    Deep Dive <deep-dive/index>
    Python API Docs <https://datawire.github.io/mdk-docs/latest/python/>
    Java API Docs <https://datawire.github.io/mdk-docs/latest/java/>
