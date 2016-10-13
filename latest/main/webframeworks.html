@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Microservices Development Kit 2.0 documentation" href="index.html" />
-    <link rel="next" title="Deep Dive" href="deep-dive/index.html" />
+    <link rel="next" title="Web Client Integration" href="webclients.html" />
     <link rel="prev" title="Getting Started" href="getting-started/index.html" />
    
   
@@ -54,8 +54,8 @@
       <ul>
         <li class="right" style="margin-right: 10px">
           <a
-            href="deep-dive/index.html"
-            title="Deep Dive"
+            href="webclients.html"
+            title="Web Client Integration"
             accesskey="N">
               
               next
@@ -92,6 +92,7 @@ Repeated errors will cause the MDK to temporarily blacklist those nodes, ensurin
 <li>The MDK will parse the <code class="docutils literal"><span class="pre">X-MDK-CONTEXT</span></code> HTTP header, and either join the resulting trace session or start a new one if no header was present.
 This means logging via the MDK will be able to trace requests across multiple servers so long as the HTTP client includes the appropriate <code class="docutils literal"><span class="pre">X-MDK-CONTEXT</span></code> header.</li>
 <li>Provide access to a corresponding MDK <code class="docutils literal"><span class="pre">Session</span></code> object to enable logging, discovery and other MDK functionality form within your web application.</li>
+<li>If appropriately configured, propagate a session timeout with the session context, allowing different servers to cooperate in enforcing a global timeout.</li>
 </ol>
 <div class="contents local topic" id="integrations">
 <p class="topic-title first">Integrations</p>
@@ -125,6 +126,7 @@ This means logging via the MDK will be able to trace requests across multiple se
 This will ensure the MDK session is started and stopped appropriately.</li>
 <li>Add a <code class="docutils literal"><span class="pre">mdkErrorHandler</span></code> error-handling middleware at the end of your application configuration.
 This catches errors passed into Express and ensures the circuit breaker will be called in that case.</li>
+<li>You should also use <code class="docutils literal"><span class="pre">configure</span></code> to add a default timeout to MDK sessions.</li>
 </ul>
 <p>Unfortunately not all errors end up being passed back to Express.
 For example, if an exception is thrown in a callback somewhere Express will have no way of knowing about it.</p>
@@ -135,10 +137,15 @@ Here&#8217;s an example showing the full configuration:</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-timeout&#39;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">mdk_express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;datawire_mdk_express&#39;</span><span class="p">);</span>
+
+<span class="c1">// Configure a 5 second global timeout on MDK sessions passing through this</span>
+<span class="c1">// process:</span>
+<span class="nx">mdk_express</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="mf">5.0</span><span class="p">);</span>
+
 <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
 
 <span class="c1">// Configure a 5 second timeout which will cause an Express error on</span>
-<span class="c1">// timeouts:</span>
+<span class="c1">// timeouts within this process:</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">timeout</span><span class="p">(</span><span class="s1">&#39;5s&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">respond</span><span class="o">:</span> <span class="kc">true</span><span class="p">}));</span>
 
 <span class="c1">// Start and stop the MDK session:</span>
@@ -191,6 +198,10 @@ In Django 1.9 or earlier you add <code class="docutils literal"><span class="pre
 <span class="p">]</span>
 </pre></div>
 </div>
+<p>In either case you configure a default timeout by adding <code class="docutils literal"><span class="pre">MDK_DEFAULT_TIMEOUT</span></code> to <code class="docutils literal"><span class="pre">settings.py</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MDK_DEFAULT_TIMEOUT</span> <span class="o">=</span> <span class="mf">10.0</span>
+</pre></div>
+</div>
 <p>In order to access the MDK you can use <code class="docutils literal"><span class="pre">request.mdk_session</span></code> in your view.
 For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
@@ -224,11 +235,13 @@ If a particular node causes errors it will end up being blacklisted and only oth
     <span class="c1"># Pass on MDK session context via HTTP headers:</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="n">MDK</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">mdk_session</span><span class="o">.</span><span class="n">externalize</span><span class="p">()}</span>
 
-    <span class="c1"># Do HTTP request to resolved node and return the body:</span>
-    <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+    <span class="c1"># Do HTTP request to resolved node and return the body, respecting the</span>
+    <span class="c1"># MDK session&#39;s remaining timeout:</span>
+    <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+               <span class="n">timeout</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">mdk_session</span><span class="o">.</span><span class="n">getRemainingTime</span><span class="p">())</span><span class="o">.</span><span class="n">text</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">mdk_setup</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">mdk_setup</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -251,7 +264,8 @@ You can access the current session from the Rack <code class="docutils literal">
 <span class="nb">require</span> <span class="s1">&#39;rack-mdk&#39;</span>
 
 <span class="c1"># Register the MDK middleware using the Sinatra use API</span>
-<span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">MDK</span><span class="o">::</span><span class="no">Session</span>
+<span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">MDK</span><span class="o">::</span><span class="no">Session</span><span class="p">,</span>
+    <span class="ss">timeout</span><span class="p">:</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span>
 
 <span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
   <span class="c1"># Log using the MDK</span>
@@ -294,7 +308,7 @@ You can access the current session from the Rack <code class="docutils literal">
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="getting-started/index.html" title="previous chapter">Getting Started</a></li>
-      <li>Next: <a href="deep-dive/index.html" title="next chapter">Deep Dive</a></li>
+      <li>Next: <a href="webclients.html" title="next chapter">Web Client Integration</a></li>
   </ul></li>
 </ul>
 </div>
@@ -324,8 +338,8 @@ You can access the current session from the Rack <code class="docutils literal">
       <ul>
         <li class="right" style="margin-right: 10px">
           <a
-            href="deep-dive/index.html"
-            title="Deep Dive"
+            href="webclients.html"
+            title="Web Client Integration"
             >
               
               next

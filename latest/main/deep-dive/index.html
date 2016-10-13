@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Microservices Development Kit 2.0 documentation" href="../index.html" />
-    <link rel="prev" title="Web Framework Integration" href="../webframeworks.html" />
+    <link rel="prev" title="Web Client Integration" href="../webclients.html" />
    
   
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
@@ -53,8 +53,8 @@
       <ul>
         <li class="right" style="margin-right: 10px">
           <a
-            href="../webframeworks.html"
-            title="Web Framework Integration"
+            href="../webclients.html"
+            title="Web Client Integration"
             accesskey="P">
               &larr;
               previous
@@ -177,8 +177,7 @@ Discovery Service.</p>
 sure that the <code class="docutils literal"><span class="pre">DATAWIRE_TOKEN</span></code> environment variable is set correctly), and
 run the following code:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mdk</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-<span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 </pre></div>
@@ -201,8 +200,7 @@ the <code class="docutils literal"><span class="pre">hello</span></code> microse
 are active and healthy. Launch a <code class="docutils literal"><span class="pre">python</span></code> interpreter and run the following
 commands:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mdk</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-<span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
@@ -365,6 +363,27 @@ service B is trivial:</p>
 </div>
 <p>There are three methods used to wrap a remote call with a circuit breaker. To start a circuit breaker, use the <code class="docutils literal"><span class="pre">start_interaction</span></code> method. This method starts the interaction with a remote service, and tracks the different services that are invoked during the interaction. This could be a single service, or multiple services. When the interaction has successfully completed, the <code class="docutils literal"><span class="pre">finish_interaction</span></code> method is called, which will record the interaction as successfully completing. If an interaction fails, the <code class="docutils literal"><span class="pre">fail_interaction</span></code> method is called, which will record a failed interaction. With a failed interaction, the services that are invoked are blacklisted.  By default, three failures will trigger the circuit breaker to blacklist the services for 30 seconds.</p>
 </div>
+<div class="section" id="distributed-timeouts">
+<h2>Distributed Timeouts<a class="headerlink" href="#distributed-timeouts" title="Permalink to this headline">¶</a></h2>
+<p>In order to build a robust distributed system you need not only circuit breakers in case of errors, but also timeouts in case a request never returns a response.
+The MDK allows you to attach a timeout to an MDK session, and that timeout will be tracked across all the processes that use that particular session.
+At any time you can query the session for the remaining time and use that as a parameter to APIs that take a timeout argument.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Do a HTTP request with timeout extracted from the MDK session:</span>
+<span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">ssn</span><span class="o">.</span><span class="n">getRemainingTime</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Servers should always set a default timeout which will be applied to both incoming and newly created sessions.
+If the incoming session already has a timeout set then the lower of the two timeouts will be used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mdk</span><span class="o">.</span><span class="n">setDefaultTimeout</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also set a per-session timeout.
+Again, if a timeout was already set the lower of the two will be used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mdk</span><span class="o">.</span><span class="n">setTimeout</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="the-datawire-architecture">
 <h2>The Datawire Architecture<a class="headerlink" href="#the-datawire-architecture" title="Permalink to this headline">¶</a></h2>
 <p>The Datawire Discovery Service is a multi-tenant, cloud-based, eventually
@@ -422,6 +441,7 @@ Ruby). Broader language support is planned for the near future.</p>
 <li><a class="reference internal" href="#distributed-tracing">Distributed Tracing</a></li>
 <li><a class="reference internal" href="#cross-service-tracing">Cross-Service Tracing</a></li>
 <li><a class="reference internal" href="#circuit-breakers">Circuit Breakers</a></li>
+<li><a class="reference internal" href="#distributed-timeouts">Distributed Timeouts</a></li>
 <li><a class="reference internal" href="#the-datawire-architecture">The Datawire Architecture</a></li>
 </ul>
 </li>
@@ -430,7 +450,7 @@ Ruby). Broader language support is planned for the near future.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../webframeworks.html" title="previous chapter">Web Framework Integration</a></li>
+      <li>Previous: <a href="../webclients.html" title="previous chapter">Web Client Integration</a></li>
   </ul></li>
 </ul>
 </div>
@@ -460,8 +480,8 @@ Ruby). Broader language support is planned for the near future.</p>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a
-            href="../webframeworks.html"
-            title="Web Framework Integration"
+            href="../webclients.html"
+            title="Web Client Integration"
             >
               &larr;
               previous
