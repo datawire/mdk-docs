@@ -21,7 +21,7 @@ JavaScript
 Request
 -------
 
-To use MDK with the `Request <https://github.com/request/request>`_ library you can use the ``datawire_mdk_request`` NPM package.
+To use MDK with the `Request <https://github.com/request/request>`_ library you can ``npm install datawire_mdk_request``.
 In particular, ``forMDKSession`` creates an object that looks like a ``request`` object but has timeout and MDK session header support:
 
 .. code-block:: javascript
@@ -85,7 +85,7 @@ Ruby
 Faraday
 -------
 
-To use MDK with the `Faraday <https://github.com/lostisland/faraday>`_ library you can use the ``faraday_mdk`` gem.
+To use MDK with the `Faraday <https://github.com/lostisland/faraday>`_ library you can ``gem install faraday_mdk`` and then:
 
 .. code-block:: ruby
 
