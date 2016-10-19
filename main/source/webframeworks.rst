@@ -119,6 +119,7 @@ In Django 1.10 you add it to ``MIDDLEWARE``:
 
 You will also need to add either ``mdk.django.MDKAppConfig`` or a subclass to ``INSTALLED_APPS`` in your ``settings.py``.
 Subclassing and overriding the ``MDKAppConfig.mdk_ready`` method will allow you to run MDK setup on startup, e.g. registering your server with discovery or setting a default timeout.
+For example, if you have a Django project in package ``myproject``, you'd add a subclass to ``myproject/apps.py``:
 
 .. code-block:: python
 
@@ -129,12 +130,14 @@ Subclassing and overriding the ``MDKAppConfig.mdk_ready`` method will allow you 
            mdk.register("myapp", "1.0", "https://example.com")
            mdk.setDefaultTimeout(5.0)
 
+And then in ``settings.py`` you would do the following:
+
    INSTALLED_APPS = [
-       'LocalMDKAppConfig',
+       'myproject.apps.LocalMDKAppConfig',
        # ... default Django apps
    ]
 
-In order to access the MDK you can use ``request.mdk_session`` in your view.
+In order to access the MDK session you can use ``request.mdk_session`` in your view.
 For example:
 
 .. code-block:: python
