@@ -132,6 +132,8 @@ For example, if you have a Django project in package ``myproject``, you'd add a 
 
 And then in ``settings.py`` you would do the following:
 
+.. code-block:: python
+
    INSTALLED_APPS = [
        'myproject.apps.LocalMDKAppConfig',
        # ... default Django apps
