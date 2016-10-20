@@ -53,7 +53,7 @@ Here's an example showing the full configuration:
 
    // Configure a 5 second global timeout on MDK sessions passing through this
    // process:
-   mdk_express.mdk.setDefaultTimeout(5.0);
+   mdk_express.mdk.setDefaultDeadline(5.0);
    // Register the server with Discovery:
    mdk_express.mdk.register("myservice", "1.0", "http://localhost:8080/")
 
@@ -128,7 +128,7 @@ For example, if you have a Django project in package ``myproject``, you'd add a 
    class LocalMDKAppConfig(MDKAppConfig):
        def mdk_ready(self, mdk):
            mdk.register("myapp", "1.0", "https://example.com")
-           mdk.setDefaultTimeout(5.0)
+           mdk.setDefaultDeadline(5.0)
 
 And then in ``settings.py`` you would do the following:
 
@@ -173,7 +173,7 @@ You can access an automatically setup MDK session via ``flask.g.mdk_session``.
 
    if __name__ == '__main__':
        mdk = mdk_setup(app)
-       mdk.setDefaultTimeout(10.0)
+       mdk.setDefaultDeadline(10.0)
        mdk.register("helloservice", "1.0", "http://localhost:7070/")
        app.run(port=7070)
 
@@ -203,7 +203,7 @@ For example, here's how you would do so in Sinatra:
 
    # Register the MDK middleware using the Sinatra use API
    use Rack::MDK::Session do |mdk|
-     mdk.setDefaultTimeout(10)
+     mdk.setDefaultDeadline(10)
      mdk.register("myservice", "1.0", "http://localhost:8080")
    end
 
