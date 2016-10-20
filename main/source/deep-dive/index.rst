@@ -344,8 +344,8 @@ Circuit breakers are powerful abstractions that help limit the scope of failure.
 
 There are three methods used to wrap a remote call with a circuit breaker. To start a circuit breaker, use the ``start_interaction`` method. This method starts the interaction with a remote service, and tracks the different services that are invoked during the interaction. This could be a single service, or multiple services. When the interaction has successfully completed, the ``finish_interaction`` method is called, which will record the interaction as successfully completing. If an interaction fails, the ``fail_interaction`` method is called, which will record a failed interaction. With a failed interaction, the services that are invoked are blacklisted.  By default, three failures will trigger the circuit breaker to blacklist the services for 30 seconds.
 
-Deadlines: Distributed Timeouts
--------------------------------
+Distributed Timeouts
+--------------------
 
 In order to build a robust distributed system you need not only circuit breakers in case of errors, but also timeouts in case a request never returns a response.
 The MDK allows you to attach a deadline to an MDK session, and that deadline will be tracked across all the processes that use that particular session.
