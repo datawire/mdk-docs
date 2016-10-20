@@ -85,11 +85,15 @@
     
     <li ><a href="#method-i-__init_fields__">#__init_fields__</a>
     
+    <li ><a href="#method-i-derive">#derive</a>
+    
     <li ><a href="#method-i-join">#join</a>
     
     <li ><a href="#method-i-register">#register</a>
     
     <li ><a href="#method-i-session">#session</a>
+    
+    <li ><a href="#method-i-setDefaultDeadline">#setDefaultDeadline</a>
     
     <li ><a href="#method-i-setDefaultTimeout">#setDefaultTimeout</a>
     
@@ -209,9 +213,53 @@ framework of choice.</p>
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 164</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 198</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
+
+    <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-derive" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">derive</span><span
+            class="method-args">(encodedContext)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Create a new <a href="Session.html">Session</a>. The given encoded
+distributed session&#39;s properties will be used to configure the new <a
+href="Session.html">Session</a>, e.g. overrides will be preserved. However,
+because this is a new <a href="Session.html">Session</a> the timeout will
+not be copied from the encoded session.</p>
+
+<p>This is intended for use for encoded context received via a broadcast
+medium (pub/sub, message queues with multiple readers, etc.). If you know
+only you received the encoded context, e.g. you&#39;re coding a server that
+receives the context from a HTTP request, you should join() instead.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="derive-source">
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">derive</span>(<span class="ruby-identifier">encodedContext</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.derive` is an abstract method&#39;</span>
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -238,14 +286,19 @@ framework of choice.</p>
 
         <div class="method-description">
           
-          <p>Create a new <a href="Session.html">Session</a> and join it to a
-distributed trace.</p>
+          <p>Create a new <a href="Session.html">Session</a> and join it to an existing
+distributed sesion.</p>
+
+<p>This should only ever be done once per an encoded context. That means you
+should only use it for RPC or similar one-off calls. If you received the
+encoded context via a broadcast medium (pub/sub, message queues with
+multiple readers, etc.) you should use childSession() instead.</p>
           
           
 
           
           <div class="method-source-code" id="join-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 158</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 173</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">join</span>(<span class="ruby-identifier">encodedContext</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.join` is an abstract method&#39;</span>
 
@@ -321,9 +374,47 @@ join(encodedContext) in order to preserve distributed traces.</p>
 
           
           <div class="method-source-code" id="session-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 148</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 157</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">session</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.session` is an abstract method&#39;</span>
+
+    <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-setDefaultDeadline" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">setDefaultDeadline</span><span
+            class="method-args">(seconds)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Set the default timeout for <a href="MDK.html">MDK</a> sessions.</p>
+
+<p>This is the maximum timeout; if a joined session has a lower timeout that
+will be used.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="setDefaultDeadline-source">
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 133</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setDefaultDeadline</span>(<span class="ruby-identifier">seconds</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.setDefaultDeadline` is an abstract method&#39;</span>
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -350,16 +441,13 @@ join(encodedContext) in order to preserve distributed traces.</p>
 
         <div class="method-description">
           
-          <p>Set the default timeout for <a href="MDK.html">MDK</a> sessions.</p>
-
-<p>This is the maximum timeout; if a joined session has a lower timeout that
-will be used.</p>
+          <p>DEPRECATED, use setDefaultDeadline().</p>
           
           
 
           
           <div class="method-source-code" id="setDefaultTimeout-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 133</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setDefaultTimeout</span>(<span class="ruby-identifier">seconds</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.setDefaultTimeout` is an abstract method&#39;</span>
 

@@ -366,21 +366,21 @@ service B is trivial:</p>
 <div class="section" id="distributed-timeouts">
 <h2>Distributed Timeouts<a class="headerlink" href="#distributed-timeouts" title="Permalink to this headline">¶</a></h2>
 <p>In order to build a robust distributed system you need not only circuit breakers in case of errors, but also timeouts in case a request never returns a response.
-The MDK allows you to attach a timeout to an MDK session, and that timeout will be tracked across all the processes that use that particular session.
+The MDK allows you to attach a deadline to an MDK session, and that deadline will be tracked across all the processes that use that particular session.
 At any time you can query the session for the remaining time and use that as a parameter to APIs that take a timeout argument.</p>
 <p>For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Do a HTTP request with timeout extracted from the MDK session:</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Do a HTTP request with timeout based on the MDK session deadline:</span>
 <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">ssn</span><span class="o">.</span><span class="n">getRemainingTime</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>Servers should always set a default timeout which will be applied to both incoming and newly created sessions.
-If the incoming session already has a timeout set then the lower of the two timeouts will be used.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mdk</span><span class="o">.</span><span class="n">setDefaultTimeout</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span>
+<p>Servers should always set a default deadline which will be applied to both incoming and newly created sessions.
+If the incoming session already has a deadline set then the lower of the two deadlines will be used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mdk</span><span class="o">.</span><span class="n">setDefaultDeadline</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You can also set a per-session timeout.
-Again, if a timeout was already set the lower of the two will be used.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mdk</span><span class="o">.</span><span class="n">setTimeout</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+<p>You can also set a per-session deadline.
+Again, if a deadline was already set the lower of the two will be used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mdk</span><span class="o">.</span><span class="n">setDeadline</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

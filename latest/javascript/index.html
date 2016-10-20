@@ -87,6 +87,12 @@
                       </a></li>
                       
                       <li><a
+                        href='#MDK#setDefaultDeadline'
+                        class='regular pre-open'>
+                        #setDefaultDeadline
+                      </a></li>
+                      
+                      <li><a
                         href='#MDK#setDefaultTimeout'
                         class='regular pre-open'>
                         #setDefaultTimeout
@@ -102,6 +108,12 @@
                         href='#MDK#join'
                         class='regular pre-open'>
                         #join
+                      </a></li>
+                      
+                      <li><a
+                        href='#MDK#derive'
+                        class='regular pre-open'>
+                        #derive
                       </a></li>
                       
                     </ul>
@@ -219,6 +231,12 @@
                         href='#Session#interact'
                         class='regular pre-open'>
                         #interact
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#setDeadline'
+                        class='regular pre-open'>
+                        #setDeadline
                       </a></li>
                       
                       <li><a
@@ -648,6 +666,65 @@ discovery system until the MDK is started.</p>
       </div>
     </div>
   
+    <div class='border-bottom' id='MDK#setDefaultDeadline'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setDefaultDeadline(seconds)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the default timeout for MDK sessions.</p>
+<p>This is the maximum timeout; if a joined session has a lower
+timeout that will be used.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setDefaultDeadline(seconds: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>seconds</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
     <div class='border-bottom' id='MDK#setDefaultTimeout'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -660,9 +737,7 @@ discovery system until the MDK is started.</p>
 
   
 
-  <p>Set the default timeout for MDK sessions.</p>
-<p>This is the maximum timeout; if a joined session has a lower
-timeout that will be used.</p>
+  <p>DEPRECATED, use setDefaultDeadline().</p>
 
 
   <div class='pre p1 fill-light mt0'>setDefaultTimeout(seconds: any)</div>
@@ -769,10 +844,80 @@ traces.</p>
 
   
 
-  <p>Create a new Session and join it to a distributed trace.</p>
+  <p>Create a new Session and join it to an existing distributed sesion.</p>
+<p>This should only ever be done once per an encoded context. That
+means you should only use it for RPC or similar one-off calls. If
+you received the encoded context via a broadcast medium (pub/sub,
+message queues with multiple readers, etc.) you should use
+childSession() instead.</p>
 
 
   <div class='pre p1 fill-light mt0'>join(encodedContext: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>encodedContext</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='MDK#derive'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>derive(encodedContext)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Create a new Session. The given encoded distributed session&#x27;s
+properties will be used to configure the new Session,
+e.g. overrides will be preserved. However, because this is a new
+Session the timeout will not be copied from the encoded session.</p>
+<p>This is intended for use for encoded context received via a
+broadcast medium (pub/sub, message queues with multiple readers,
+etc.). If you know only you received the encoded context,
+e.g. you&#x27;re coding a server that receives the context from a HTTP
+request, you should join() instead.</p>
+
+
+  <div class='pre p1 fill-light mt0'>derive(encodedContext: any)</div>
 
   
 
@@ -1871,11 +2016,11 @@ finish_interaction().</p>
       </div>
     </div>
   
-    <div class='border-bottom' id='Session#setTimeout'>
+    <div class='border-bottom' id='Session#setDeadline'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>setTimeout(seconds)</span>
+            <span class='code strong strong truncate'>setDeadline(seconds)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1891,6 +2036,63 @@ information to any process or server in the same session (even if
 they are on different machines). By passing this timeout to
 blocking APIs you can ensure timeouts are enforced across a whole
 distributed session.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setDeadline(seconds: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>seconds</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Session#setTimeout'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setTimeout(seconds)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>DEPRECATED, use setDeadline().</p>
 
 
   <div class='pre p1 fill-light mt0'>setTimeout(seconds: any)</div>

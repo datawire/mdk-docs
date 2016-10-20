@@ -348,29 +348,29 @@ Distributed Timeouts
 --------------------
 
 In order to build a robust distributed system you need not only circuit breakers in case of errors, but also timeouts in case a request never returns a response.
-The MDK allows you to attach a timeout to an MDK session, and that timeout will be tracked across all the processes that use that particular session.
+The MDK allows you to attach a deadline to an MDK session, and that deadline will be tracked across all the processes that use that particular session.
 At any time you can query the session for the remaining time and use that as a parameter to APIs that take a timeout argument.
 
 For example:
 
 .. code-block:: python
 
-   # Do a HTTP request with timeout extracted from the MDK session:
+   # Do a HTTP request with timeout based on the MDK session deadline:
    requests.get(url, timeout=ssn.getRemainingTime())
 
-Servers should always set a default timeout which will be applied to both incoming and newly created sessions.
-If the incoming session already has a timeout set then the lower of the two timeouts will be used.
+Servers should always set a default deadline which will be applied to both incoming and newly created sessions.
+If the incoming session already has a deadline set then the lower of the two deadlines will be used.
 
 .. code-block:: python
 
-   mdk.setDefaultTimeout(10.0)
+   mdk.setDefaultDeadline(10.0)
 
-You can also set a per-session timeout.
-Again, if a timeout was already set the lower of the two will be used.
+You can also set a per-session deadline.
+Again, if a deadline was already set the lower of the two will be used.
 
 .. code-block:: python
 
-   mdk.setTimeout(5.0)
+   mdk.setDeadline(5.0)
 
 
 The Datawire Architecture
