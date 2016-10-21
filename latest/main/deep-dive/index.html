@@ -327,7 +327,7 @@ code in microservice A that makes that call simply needs to add a new HTTP heade
 <span class="n">url</span> <span class="o">=</span> <span class="n">ssn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">address</span>
 
 <span class="c1"># Make the request to service B with the context header added</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="n">mdk</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">:</span> <span class="n">ssn</span><span class="o">.</span><span class="n">inject</span><span class="p">()})</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="n">mdk</span><span class="o">.</span><span class="n">CONTEXT_HEADER</span><span class="p">:</span> <span class="n">ssn</span><span class="o">.</span><span class="n">externalize</span><span class="p">()})</span>
 </pre></div>
 </div>
 <p>Now, the outbound HTTP request to microservice B will include an extra
@@ -343,6 +343,18 @@ service B is trivial:</p>
     <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="derived-sessions">
+<h2>Derived Sessions<a class="headerlink" href="#derived-sessions" title="Permalink to this headline">¶</a></h2>
+<p>Tracing works with RPC or other remote API calls.
+In particular the result of <code class="docutils literal"><span class="pre">Session.externalize()</span></code> should only be used once.
+In other cases you might want to track the relationship between operations that result from 1-&gt;N broadcasts.
+For example, you might publish a message to a pub/sub system where multiple subscribers receive a message.</p>
+<p>For these cases the MDK provides &#8220;derived&#8221; sessions.
+Instead of calling <code class="docutils literal"><span class="pre">mdk.join(encoded_session)</span></code> use <code class="docutils literal"><span class="pre">mdk.derive(encoded_session)</span></code> instead.</p>
+<p>A derived session is a new session, but when it created it logs its relationship with the parent session.
+It also inherits almost all properties from the original session.
+The only property that isn&#8217;t inherited is the deadline (see below), because asynchronous systems like pub/sub can take an arbitrary amount of time before the subscriber gets messages.</p>
 </div>
 <div class="section" id="circuit-breakers">
 <h2>Circuit Breakers<a class="headerlink" href="#circuit-breakers" title="Permalink to this headline">¶</a></h2>
@@ -440,6 +452,7 @@ Ruby). Broader language support is planned for the near future.</p>
 <li><a class="reference internal" href="#microservices-calling-microservices">Microservices calling Microservices</a></li>
 <li><a class="reference internal" href="#distributed-tracing">Distributed Tracing</a></li>
 <li><a class="reference internal" href="#cross-service-tracing">Cross-Service Tracing</a></li>
+<li><a class="reference internal" href="#derived-sessions">Derived Sessions</a></li>
 <li><a class="reference internal" href="#circuit-breakers">Circuit Breakers</a></li>
 <li><a class="reference internal" href="#distributed-timeouts">Distributed Timeouts</a></li>
 <li><a class="reference internal" href="#the-datawire-architecture">The Datawire Architecture</a></li>
