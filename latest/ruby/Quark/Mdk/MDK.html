@@ -130,6 +130,14 @@ object per thread/channel/request depending on how the <a
 href="MDK.html">MDK</a> is integrated and used within the application
 framework of choice.</p>
 
+<p>A note on versions: service versions indicate API compatibility, not
+releases of the underlying code. They should be in the form
+&#39;&lt;major&gt;.&lt;minor&gt;&#39;, e.g. &#39;2.11&#39;. Major versions
+indicates incompatibility: &#39;1.0&#39; is incompatible with
+&#39;2.11&#39;. Minor versions indicate backwards compatibility with new
+features: a client that wants version &#39;1.1&#39; can talk to version
+&#39;1.1&#39; and &#39;1.2&#39; but not to version &#39;1.0&#39;.</p>
+
   </section>
 
   
@@ -170,7 +178,7 @@ framework of choice.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 79</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 87</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>()
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__init_fields__</span>
 
@@ -213,7 +221,7 @@ framework of choice.</p>
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 198</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 206</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
 
@@ -257,7 +265,7 @@ receives the context from a HTTP request, you should join() instead.</p>
 
           
           <div class="method-source-code" id="derive-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 192</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 200</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">derive</span>(<span class="ruby-identifier">encodedContext</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.derive` is an abstract method&#39;</span>
 
@@ -298,7 +306,7 @@ multiple readers, etc.) you should use childSession() instead.</p>
 
           
           <div class="method-source-code" id="join-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 173</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 181</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">join</span>(<span class="ruby-identifier">encodedContext</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.join` is an abstract method&#39;</span>
 
@@ -335,7 +343,7 @@ discovery system until the <a href="MDK.html">MDK</a> is started.</p>
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 120</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">address</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.register` is an abstract method&#39;</span>
 
@@ -374,7 +382,7 @@ join(encodedContext) in order to preserve distributed traces.</p>
 
           
           <div class="method-source-code" id="session-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 157</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 165</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">session</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.session` is an abstract method&#39;</span>
 
@@ -412,7 +420,7 @@ will be used.</p>
 
           
           <div class="method-source-code" id="setDefaultDeadline-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 133</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 141</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setDefaultDeadline</span>(<span class="ruby-identifier">seconds</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.setDefaultDeadline` is an abstract method&#39;</span>
 
@@ -447,7 +455,7 @@ will be used.</p>
 
           
           <div class="method-source-code" id="setDefaultTimeout-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 142</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 150</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setDefaultTimeout</span>(<span class="ruby-identifier">seconds</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.setDefaultTimeout` is an abstract method&#39;</span>
 
@@ -484,7 +492,7 @@ started.</p>
 
           
           <div class="method-source-code" id="start-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 93</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 101</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.start` is an abstract method&#39;</span>
 
@@ -523,7 +531,7 @@ departures.</p>
 
           
           <div class="method-source-code" id="stop-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 107</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`MDK.stop` is an abstract method&#39;</span>
 

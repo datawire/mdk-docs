@@ -251,6 +251,24 @@
                         #getRemainingTime
                       </a></li>
                       
+                      <li><a
+                        href='#Session#getProperty'
+                        class='regular pre-open'>
+                        #getProperty
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#setProperty'
+                        class='regular pre-open'>
+                        #setProperty
+                      </a></li>
+                      
+                      <li><a
+                        href='#Session#hasProperty'
+                        class='regular pre-open'>
+                        #hasProperty
+                      </a></li>
+                      
                     </ul>
                   
                   
@@ -418,6 +436,13 @@ foundational services like discovery and tracing.</p>
 process, and one instance of the Session object per
 thread/channel/request depending on how the MDK is integrated
 and used within the application framework of choice.</p>
+<p>A note on versions: service versions indicate API compatibility, not
+releases of the underlying code. They should be in the form
+&#x27;<major>.<minor>&#x27;, e.g. &#x27;2.11&#x27;. Major versions indicates
+incompatibility: &#x27;1.0&#x27; is incompatible with &#x27;2.11&#x27;. Minor versions
+indicate backwards compatibility with new features: a client that wants
+version &#x27;1.1&#x27; can talk to version &#x27;1.1&#x27; and &#x27;1.2&#x27; but not to version
+&#x27;1.0&#x27;.</p>
 
 
   <div class='pre p1 fill-light mt0'>new MDK()</div>
@@ -2165,6 +2190,188 @@ clocks are in sync.</p>
   
   
 
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Session#getProperty'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getProperty(property)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Return the value of a property from the distributed session.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getProperty(property: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>property</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Session#setProperty'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setProperty(property, value)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set a property on the distributed session.</p>
+<p>The key should be prefixed with a namespace so that it doesn&#x27;t conflict
+with built-in properties, e.g. &#x27;examplenamespace:myproperty&#x27; instead of
+&#x27;myproperty&#x27;.</p>
+<p>The value should be JSON serializable.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setProperty(property: any, value: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>property</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Session#hasProperty'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>hasProperty(property)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Return whether the distributed session has a property.</p>
+
+
+  <div class='pre p1 fill-light mt0'>hasProperty(property: any)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>property</span> <code class='quiet'>(any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   

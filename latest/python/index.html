@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Datawire MDK &mdash; datawire_mdk 2.0.18 documentation</title>
+    <title>Datawire MDK &mdash; datawire_mdk 2.0.19 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.18',
+        VERSION:     '2.0.19',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datawire_mdk 2.0.18 documentation" href="#" />
+    <link rel="top" title="datawire_mdk 2.0.19 documentation" href="#" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -60,6 +60,13 @@ foundational services like discovery and tracing.</p>
 process, and one instance of the Session object per
 thread/channel/request depending on how the MDK is integrated
 and used within the application framework of choice.</p>
+<p>A note on versions: service versions indicate API compatibility, not
+releases of the underlying code. They should be in the form
+&#8216;&lt;major&gt;.&lt;minor&gt;&#8217;, e.g. &#8216;2.11&#8217;. Major versions indicates
+incompatibility: &#8216;1.0&#8217; is incompatible with &#8216;2.11&#8217;. Minor versions
+indicate backwards compatibility with new features: a client that wants
+version &#8216;1.1&#8217; can talk to version &#8216;1.1&#8217; and &#8216;1.2&#8217; but not to version
+&#8216;1.0&#8217;.</p>
 <dl class="attribute">
 <dt id="mdk.MDK.CONTEXT_HEADER">
 <code class="descname">CONTEXT_HEADER</code><em class="property"> = u'X-MDK-Context'</em><a class="headerlink" href="#mdk.MDK.CONTEXT_HEADER" title="Permalink to this definition">¶</a></dt>
@@ -306,12 +313,24 @@ tracing system.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mdk.Session.getProperty">
+<code class="descname">getProperty</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.getProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value of a property from the distributed session.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="mdk.Session.getRemainingTime">
 <code class="descname">getRemainingTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.getRemainingTime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return how many seconds until the session ought to end.</p>
 <p>This will only be accurate across multiple servers insofar as their
 clocks are in sync.</p>
 <p>If a timeout has not been set the result will be null.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.Session.hasProperty">
+<code class="descname">hasProperty</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.hasProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether the distributed session has a property.</p>
 </dd></dl>
 
 <dl class="method">
@@ -381,6 +400,16 @@ information to any process or server in the same session (even if
 they are on different machines). By passing this timeout to
 blocking APIs you can ensure timeouts are enforced across a whole
 distributed session.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdk.Session.setProperty">
+<code class="descname">setProperty</code><span class="sig-paren">(</span><em>property</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.setProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a property on the distributed session.</p>
+<p>The key should be prefixed with a namespace so that it doesn&#8217;t conflict
+with built-in properties, e.g. &#8216;examplenamespace:myproperty&#8217; instead of
+&#8216;myproperty&#8217;.</p>
+<p>The value should be JSON serializable.</p>
 </dd></dl>
 
 <dl class="method">
@@ -454,8 +483,8 @@ breakers to mitigate the impact of any such issues.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="mdk.SessionImpl.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.get" title="Permalink to this definition">¶</a></dt>
+<dt id="mdk.SessionImpl.getProperty">
+<code class="descname">getProperty</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.getProperty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -464,8 +493,8 @@ breakers to mitigate the impact of any such issues.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="mdk.SessionImpl.has">
-<code class="descname">has</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.has" title="Permalink to this definition">¶</a></dt>
+<dt id="mdk.SessionImpl.hasProperty">
+<code class="descname">hasProperty</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.hasProperty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -544,13 +573,13 @@ breakers to mitigate the impact of any such issues.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="mdk.SessionImpl.set">
-<code class="descname">set</code><span class="sig-paren">(</span><em>property</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.set" title="Permalink to this definition">¶</a></dt>
+<dt id="mdk.SessionImpl.setDeadline">
+<code class="descname">setDeadline</code><span class="sig-paren">(</span><em>timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.setDeadline" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="mdk.SessionImpl.setDeadline">
-<code class="descname">setDeadline</code><span class="sig-paren">(</span><em>timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.setDeadline" title="Permalink to this definition">¶</a></dt>
+<dt id="mdk.SessionImpl.setProperty">
+<code class="descname">setProperty</code><span class="sig-paren">(</span><em>property</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.setProperty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
