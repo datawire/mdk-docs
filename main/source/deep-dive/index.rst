@@ -305,7 +305,7 @@ code in microservice A that makes that call simply needs to add a new HTTP heade
     url = ssn.resolve("B", "1.0").address
 
     # Make the request to service B with the context header added
-    r = requests.get(url, headers={mdk.CONTEXT_HEADER: ssn.inject()})
+    r = requests.get(url, headers={mdk.CONTEXT_HEADER: ssn.externalize()})
 
 Now, the outbound HTTP request to microservice B will include an extra
 Datawire-specific header that identifies the request flow with a unique ID.
@@ -321,6 +321,23 @@ service B is trivial:
         ssn = mdk.join(request.headers.get(mdk.CONTEXT_HEADER))
         ssn.info(app.service_name, "Received a request.")
         return "Hello World!"
+
+
+Derived Sessions
+----------------
+
+Tracing works with RPC or other remote API calls.
+In particular the result of ``Session.externalize()`` should only be used once.
+In other cases you might want to track the relationship between operations that result from 1->N broadcasts.
+For example, you might publish a message to a pub/sub system where multiple subscribers receive a message.
+
+For these cases the MDK provides "derived" sessions.
+Instead of calling ``mdk.join(encoded_session)`` use ``mdk.derive(encoded_session)`` instead.
+
+A derived session is a new session, but when it created it logs its relationship with the parent session.
+It also inherits almost all properties from the original session.
+The only property that isn't inherited is the deadline (see below), because asynchronous systems like pub/sub can take an arbitrary amount of time before the subscriber gets messages.
+
 
 Circuit Breakers
 ----------------
