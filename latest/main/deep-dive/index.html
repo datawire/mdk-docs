@@ -344,18 +344,6 @@ service B is trivial:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="derived-sessions">
-<h2>Derived Sessions<a class="headerlink" href="#derived-sessions" title="Permalink to this headline">¶</a></h2>
-<p>Tracing works with RPC or other remote API calls.
-In particular the result of <code class="docutils literal"><span class="pre">Session.externalize()</span></code> should only be used once.
-In other cases you might want to track the relationship between operations that result from 1-&gt;N broadcasts.
-For example, you might publish a message to a pub/sub system where multiple subscribers receive a message.</p>
-<p>For these cases the MDK provides &#8220;derived&#8221; sessions.
-Instead of calling <code class="docutils literal"><span class="pre">mdk.join(encoded_session)</span></code> use <code class="docutils literal"><span class="pre">mdk.derive(encoded_session)</span></code> instead.</p>
-<p>A derived session is a new session, but when it created it logs its relationship with the parent session.
-It also inherits almost all properties from the original session.
-The only property that isn&#8217;t inherited is the deadline (see below), because asynchronous systems like pub/sub can take an arbitrary amount of time before the subscriber gets messages.</p>
-</div>
 <div class="section" id="circuit-breakers">
 <h2>Circuit Breakers<a class="headerlink" href="#circuit-breakers" title="Permalink to this headline">¶</a></h2>
 <p>Circuit breakers are powerful abstractions that help limit the scope of failure. The MDK includes native support for circuit breakers that are integrated with service discovery. For example, imagine service A calls service B, and service B returns a result that triggers an exception in A. A can blacklist service B for a certain period of time, and fall back to an older version of B, periodically testing to see if the new version of B returns the proper result. Here is an example of a circuit breaker:</p>
@@ -395,6 +383,39 @@ Again, if a deadline was already set the lower of the two will be used.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mdk</span><span class="o">.</span><span class="n">setDeadline</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="custom-properties-on-distributed-sessions">
+<h2>Custom Properties on Distributed Sessions<a class="headerlink" href="#custom-properties-on-distributed-sessions" title="Permalink to this headline">¶</a></h2>
+<p>Besides deadlines you can also set arbitrary properties on a distributed session.
+Process P1 can set a property on the session and then sends it to process P2.
+Notice the use of a prefix <code class="docutils literal"><span class="pre">&quot;demoapp&quot;</span></code> added to the <code class="docutils literal"><span class="pre">&quot;items&quot;</span></code> key; this ensures the property doesn&#8217;t conflict with built-in properties or properties from other applications.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Create a session:</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+<span class="c1"># Set a property; any JSON-encodable value can be used:</span>
+<span class="n">session</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s2">&quot;demoapp:items&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Serialize the session for transmission to another process:</span>
+<span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">externalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Process P2 can then check and retrieve properties:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">mdk</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">encoded_session</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">hasProperty</span><span class="p">(</span><span class="s2">&quot;demoapp:items&quot;</span><span class="p">)</span>  <span class="c1"># returns True</span>
+<span class="n">session</span><span class="o">.</span><span class="n">getProperty</span><span class="p">(</span><span class="s2">&quot;demoapp:items&quot;</span><span class="p">)</span>  <span class="c1"># returns [1, 2]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="derived-sessions">
+<h2>Derived Sessions<a class="headerlink" href="#derived-sessions" title="Permalink to this headline">¶</a></h2>
+<p>The distributed session and tracing mechanism described in previous sections is intended for RPC or other remote API calls.
+In particular the result of <code class="docutils literal"><span class="pre">Session.externalize()</span></code> should only be used once.
+In other cases you might want to track the relationship between operations that result from 1-&gt;N broadcasts.
+For example, you might publish a message to a pub/sub system where multiple subscribers receive a message.</p>
+<p>For these cases the MDK provides &#8220;derived&#8221; sessions.
+Instead of calling <code class="docutils literal"><span class="pre">mdk.join(encoded_session)</span></code> use <code class="docutils literal"><span class="pre">mdk.derive(encoded_session)</span></code> instead.</p>
+<p>A derived session is a new session, but when it created it logs its relationship with the parent session.
+It also inherits almost all properties from the original session.
+The only property that isn&#8217;t inherited is the deadline, because asynchronous systems like pub/sub can take an arbitrary amount of time before the subscriber gets messages.</p>
 </div>
 <div class="section" id="the-datawire-architecture">
 <h2>The Datawire Architecture<a class="headerlink" href="#the-datawire-architecture" title="Permalink to this headline">¶</a></h2>
@@ -452,9 +473,10 @@ Ruby). Broader language support is planned for the near future.</p>
 <li><a class="reference internal" href="#microservices-calling-microservices">Microservices calling Microservices</a></li>
 <li><a class="reference internal" href="#distributed-tracing">Distributed Tracing</a></li>
 <li><a class="reference internal" href="#cross-service-tracing">Cross-Service Tracing</a></li>
-<li><a class="reference internal" href="#derived-sessions">Derived Sessions</a></li>
 <li><a class="reference internal" href="#circuit-breakers">Circuit Breakers</a></li>
 <li><a class="reference internal" href="#distributed-timeouts">Distributed Timeouts</a></li>
+<li><a class="reference internal" href="#custom-properties-on-distributed-sessions">Custom Properties on Distributed Sessions</a></li>
+<li><a class="reference internal" href="#derived-sessions">Derived Sessions</a></li>
 <li><a class="reference internal" href="#the-datawire-architecture">The Datawire Architecture</a></li>
 </ul>
 </li>

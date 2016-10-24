@@ -323,20 +323,6 @@ service B is trivial:
         return "Hello World!"
 
 
-Derived Sessions
-----------------
-
-Tracing works with RPC or other remote API calls.
-In particular the result of ``Session.externalize()`` should only be used once.
-In other cases you might want to track the relationship between operations that result from 1->N broadcasts.
-For example, you might publish a message to a pub/sub system where multiple subscribers receive a message.
-
-For these cases the MDK provides "derived" sessions.
-Instead of calling ``mdk.join(encoded_session)`` use ``mdk.derive(encoded_session)`` instead.
-
-A derived session is a new session, but when it created it logs its relationship with the parent session.
-It also inherits almost all properties from the original session.
-The only property that isn't inherited is the deadline (see below), because asynchronous systems like pub/sub can take an arbitrary amount of time before the subscriber gets messages.
 
 
 Circuit Breakers
@@ -389,6 +375,47 @@ Again, if a deadline was already set the lower of the two will be used.
 
    mdk.setDeadline(5.0)
 
+
+Custom Properties on Distributed Sessions
+------------------------------------------
+
+Besides deadlines you can also set arbitrary properties on a distributed session.
+Process P1 can set a property on the session and then sends it to process P2.
+Notice the use of a prefix ``"demoapp"`` added to the ``"items"`` key; this ensures the property doesn't conflict with built-in properties or properties from other applications.
+
+.. code-block:: python
+
+   # Create a session:
+   session = mdk.session()
+   # Set a property; any JSON-encodable value can be used:
+   session.setProperty("demoapp:items", [1, 2])
+
+   # Serialize the session for transmission to another process:
+   return session.externalize()
+
+Process P2 can then check and retrieve properties:
+
+.. code-block:: python
+
+   session = mdk.join(encoded_session)
+   session.hasProperty("demoapp:items")  # returns True
+   session.getProperty("demoapp:items")  # returns [1, 2]
+
+
+Derived Sessions
+----------------
+
+The distributed session and tracing mechanism described in previous sections is intended for RPC or other remote API calls.
+In particular the result of ``Session.externalize()`` should only be used once.
+In other cases you might want to track the relationship between operations that result from 1->N broadcasts.
+For example, you might publish a message to a pub/sub system where multiple subscribers receive a message.
+
+For these cases the MDK provides "derived" sessions.
+Instead of calling ``mdk.join(encoded_session)`` use ``mdk.derive(encoded_session)`` instead.
+
+A derived session is a new session, but when it created it logs its relationship with the parent session.
+It also inherits almost all properties from the original session.
+The only property that isn't inherited is the deadline, because asynchronous systems like pub/sub can take an arbitrary amount of time before the subscriber gets messages.
 
 The Datawire Architecture
 -------------------------
