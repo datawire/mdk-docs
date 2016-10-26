@@ -186,6 +186,19 @@
         </div>
       </div>
       
+      <div id="attribute-i-_metrics" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">_metrics</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-_openclose" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">_openclose</span><span
@@ -319,7 +332,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 560</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 561</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">runtime</span>)
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__init_fields__</span>
@@ -328,10 +341,13 @@
     <span class="ruby-keyword">if</span> (<span class="ruby-operator">!</span>((<span class="ruby-identifier">runtime</span>).<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">hasService</span>(<span class="ruby-string">&quot;failurepolicy_factory&quot;</span>)))
         (<span class="ruby-identifier">runtime</span>).<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">registerService</span>(<span class="ruby-string">&quot;failurepolicy_factory&quot;</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getFailurePolicy</span>(<span class="ruby-identifier">runtime</span>))
     <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">runtime</span>).<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">hasService</span>(<span class="ruby-string">&quot;tracer&quot;</span>))
+        <span class="ruby-ivar">@_tracer</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>((<span class="ruby-ivar">@_runtime</span>).<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">getService</span>(<span class="ruby-string">&quot;tracer&quot;</span>)) { <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_tracing</span>.<span class="ruby-constant">Tracer</span> }
+    <span class="ruby-keyword">end</span>
     <span class="ruby-ivar">@_disco</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_discovery</span>.<span class="ruby-constant">Discovery</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">runtime</span>)
     <span class="ruby-ivar">@_wsclient</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getWSClient</span>(<span class="ruby-identifier">runtime</span>)
     <span class="ruby-keyword">if</span> ((<span class="ruby-ivar">@_wsclient</span>) <span class="ruby-operator">!=</span> (<span class="ruby-keyword">nil</span>))
-        <span class="ruby-ivar">@_openclose</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_protocol</span>.<span class="ruby-constant">OpenCloseSubscriber</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@_wsclient</span>)
+        <span class="ruby-ivar">@_openclose</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_protocol</span>.<span class="ruby-constant">OpenCloseSubscriber</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@_wsclient</span>, <span class="ruby-ivar">@procUUID</span>)
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">env</span> = <span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">getEnvVarsService</span>()
     <span class="ruby-identifier">discoFactory</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getDiscoveryFactory</span>(<span class="ruby-identifier">env</span>)
@@ -340,8 +356,10 @@
         (<span class="ruby-identifier">runtime</span>).<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">registerService</span>(<span class="ruby-string">&quot;discovery_registrar&quot;</span>, <span class="ruby-ivar">@_discoSource</span>)
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-ivar">@_wsclient</span>) <span class="ruby-operator">!=</span> (<span class="ruby-keyword">nil</span>))
-        <span class="ruby-ivar">@_tracer</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_tracing</span>.<span class="ruby-constant">Tracer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">runtime</span>, <span class="ruby-ivar">@_wsclient</span>)
-        <span class="ruby-ivar">@_tracer</span>.<span class="ruby-identifier">initContext</span>()
+        <span class="ruby-keyword">if</span> ((<span class="ruby-ivar">@_tracer</span>) <span class="ruby-operator">==</span> (<span class="ruby-keyword">nil</span>))
+            <span class="ruby-ivar">@_tracer</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_tracing</span>.<span class="ruby-constant">Tracer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">runtime</span>, <span class="ruby-ivar">@_wsclient</span>)
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-ivar">@_metrics</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_metrics</span>.<span class="ruby-constant">MetricsClient</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@_wsclient</span>)
     <span class="ruby-keyword">end</span>
 
     <span class="ruby-keyword">nil</span>
@@ -383,7 +401,7 @@
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 843</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 856</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">logger</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">quark</span>.<span class="ruby-identifier">_getLogger</span>(<span class="ruby-string">&quot;mdk&quot;</span>)
@@ -394,6 +412,7 @@
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_disco</span> = <span class="ruby-keyword">nil</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_discoSource</span> = <span class="ruby-keyword">nil</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_tracer</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_metrics</span> = <span class="ruby-keyword">nil</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">procUUID</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">quark</span>.<span class="ruby-identifier">concurrent</span>.<span class="ruby-constant">Context</span>.<span class="ruby-identifier">runtime</span>().<span class="ruby-identifier">uuid</span>()
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_running</span> = <span class="ruby-keyword">false</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_defaultTimeout</span> = <span class="ruby-keyword">nil</span>
@@ -429,7 +448,7 @@
 
           
           <div class="method-source-code" id="_getClass-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 754</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 761</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_getClass</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;mdk.MDKImpl&quot;</span>
@@ -465,7 +484,7 @@
 
           
           <div class="method-source-code" id="_getField-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 761</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 768</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_getField</span>(<span class="ruby-identifier">name</span>)
     
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;CONTEXT_HEADER&quot;</span>))
@@ -494,6 +513,9 @@
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_tracer&quot;</span>))
         <span class="ruby-keyword">return</span> (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_tracer</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_metrics&quot;</span>))
+        <span class="ruby-keyword">return</span> (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_metrics</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;procUUID&quot;</span>))
         <span class="ruby-keyword">return</span> (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">procUUID</span>
@@ -537,7 +559,7 @@
 
           
           <div class="method-source-code" id="_setField-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 804</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 814</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_setField</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)
     
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;logger&quot;</span>))
@@ -563,6 +585,9 @@
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_tracer&quot;</span>))
         (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_tracer</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>(<span class="ruby-identifier">value</span>) { <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_tracing</span>.<span class="ruby-constant">Tracer</span> }
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_metrics&quot;</span>))
+        (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_metrics</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>(<span class="ruby-identifier">value</span>) { <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_metrics</span>.<span class="ruby-constant">MetricsClient</span> }
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;procUUID&quot;</span>))
         (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">procUUID</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>(<span class="ruby-identifier">value</span>) { <span class="ruby-operator">::</span><span class="ruby-constant">String</span> }
@@ -605,7 +630,7 @@
 
           
           <div class="method-source-code" id="_timeout-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 656</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 662</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_timeout</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-value">10.0</span>
@@ -641,7 +666,7 @@
 
           
           <div class="method-source-code" id="derive-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 729</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 736</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">derive</span>(<span class="ruby-identifier">encodedContext</span>)
     
     <span class="ruby-identifier">session</span> = <span class="ruby-operator">::</span><span class="ruby-constant">DatawireQuarkCore</span>.<span class="ruby-identifier">cast</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">session</span>()) { <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">SessionImpl</span> }
@@ -684,7 +709,7 @@
 
           
           <div class="method-source-code" id="getDiscoveryFactory-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 593</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 599</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">getDiscoveryFactory</span>(<span class="ruby-identifier">env</span>)
     
     <span class="ruby-identifier">config</span> = <span class="ruby-identifier">env</span>.<span class="ruby-identifier">var</span>(<span class="ruby-string">&quot;MDK_DISCOVERY_SOURCE&quot;</span>).<span class="ruby-identifier">orElseGet</span>(<span class="ruby-string">&quot;&quot;</span>)
@@ -739,7 +764,7 @@
 
           
           <div class="method-source-code" id="getFailurePolicy-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 622</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 628</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">getFailurePolicy</span>(<span class="ruby-identifier">runtime</span>)
     
     <span class="ruby-identifier">config</span> = <span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">getEnvVarsService</span>().<span class="ruby-identifier">var</span>(<span class="ruby-string">&quot;MDK_FAILURE_POLICY&quot;</span>).<span class="ruby-identifier">orElseGet</span>(<span class="ruby-string">&quot;&quot;</span>)
@@ -780,7 +805,7 @@
 
           
           <div class="method-source-code" id="getWSClient-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 637</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 643</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">getWSClient</span>(<span class="ruby-identifier">runtime</span>)
     
     <span class="ruby-identifier">env</span> = <span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">getEnvVarsService</span>()
@@ -828,7 +853,7 @@
 
           
           <div class="method-source-code" id="join-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 743</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 750</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">join</span>(<span class="ruby-identifier">encodedContext</span>)
     
     <span class="ruby-identifier">session</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">SessionImpl</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">encodedContext</span>)
@@ -868,7 +893,7 @@
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 692</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 699</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">address</span>)
     
     <span class="ruby-identifier">node</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk_discovery</span>.<span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>()
@@ -909,7 +934,7 @@
 
           
           <div class="method-source-code" id="session-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 718</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 725</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">session</span>()
     
     <span class="ruby-identifier">session</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Quark</span>.<span class="ruby-identifier">mdk</span>.<span class="ruby-constant">SessionImpl</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-keyword">nil</span>)
@@ -949,7 +974,7 @@
 
           
           <div class="method-source-code" id="setDefaultDeadline-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 704</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 711</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setDefaultDeadline</span>(<span class="ruby-identifier">seconds</span>)
     
     (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_defaultTimeout</span> = <span class="ruby-identifier">seconds</span>
@@ -985,7 +1010,7 @@
 
           
           <div class="method-source-code" id="setDefaultTimeout-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 711</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 718</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setDefaultTimeout</span>(<span class="ruby-identifier">seconds</span>)
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">setDefaultDeadline</span>(<span class="ruby-identifier">seconds</span>)
@@ -1021,7 +1046,7 @@
 
           
           <div class="method-source-code" id="start-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 663</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 669</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>()
     
     (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_running</span> = <span class="ruby-keyword">true</span>
@@ -1029,6 +1054,7 @@
         (<span class="ruby-ivar">@_runtime</span>).<span class="ruby-identifier">dispatcher</span>.<span class="ruby-identifier">startActor</span>(<span class="ruby-ivar">@_wsclient</span>)
         (<span class="ruby-ivar">@_runtime</span>).<span class="ruby-identifier">dispatcher</span>.<span class="ruby-identifier">startActor</span>(<span class="ruby-ivar">@_openclose</span>)
         (<span class="ruby-ivar">@_runtime</span>).<span class="ruby-identifier">dispatcher</span>.<span class="ruby-identifier">startActor</span>(<span class="ruby-ivar">@_tracer</span>)
+        (<span class="ruby-ivar">@_runtime</span>).<span class="ruby-identifier">dispatcher</span>.<span class="ruby-identifier">startActor</span>(<span class="ruby-ivar">@_metrics</span>)
     <span class="ruby-keyword">end</span>
     (<span class="ruby-ivar">@_runtime</span>).<span class="ruby-identifier">dispatcher</span>.<span class="ruby-identifier">startActor</span>(<span class="ruby-ivar">@_disco</span>)
     (<span class="ruby-ivar">@_runtime</span>).<span class="ruby-identifier">dispatcher</span>.<span class="ruby-identifier">startActor</span>(<span class="ruby-ivar">@_discoSource</span>)
@@ -1064,7 +1090,7 @@
 
           
           <div class="method-source-code" id="stop-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 677</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 684</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>()
     
     (<span class="ruby-keyword">self</span>).<span class="ruby-identifier">_running</span> = <span class="ruby-keyword">false</span>
