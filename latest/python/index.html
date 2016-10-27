@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Datawire MDK &mdash; datawire_mdk 2.0.23 documentation</title>
+    <title>Datawire MDK &mdash; datawire_mdk 2.0.24 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.23',
+        VERSION:     '2.0.24',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datawire_mdk 2.0.23 documentation" href="#" />
+    <link rel="top" title="datawire_mdk 2.0.24 documentation" href="#" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -313,6 +313,12 @@ tracing system.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mdk.Session.getEnvironment">
+<code class="descname">getEnvironment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.getEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the session&#8217;s Environment.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="mdk.Session.getProperty">
 <code class="descname">getProperty</code><span class="sig-paren">(</span><em>property</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.Session.getProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the value of a property from the distributed session.</p>
@@ -451,7 +457,7 @@ breakers to mitigate the impact of any such issues.</p>
 
 <dl class="class">
 <dt id="mdk.SessionImpl">
-<em class="property">class </em><code class="descclassname">mdk.</code><code class="descname">SessionImpl</code><span class="sig-paren">(</span><em>mdk</em>, <em>encodedContext</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mdk.</code><code class="descname">SessionImpl</code><span class="sig-paren">(</span><em>mdk</em>, <em>encodedContext</em>, <em>localEnvironment</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="mdk.SessionImpl.critical">
 <code class="descname">critical</code><span class="sig-paren">(</span><em>category</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.critical" title="Permalink to this definition">¶</a></dt>
@@ -480,6 +486,11 @@ breakers to mitigate the impact of any such issues.</p>
 <dl class="method">
 <dt id="mdk.SessionImpl.finish_interaction">
 <code class="descname">finish_interaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.finish_interaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdk.SessionImpl.getEnvironment">
+<code class="descname">getEnvironment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdk.SessionImpl.getEnvironment" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">

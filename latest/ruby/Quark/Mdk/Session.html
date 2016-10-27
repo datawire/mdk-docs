@@ -97,6 +97,8 @@
     
     <li ><a href="#method-i-finish_interaction">#finish_interaction</a>
     
+    <li ><a href="#method-i-getEnvironment">#getEnvironment</a>
+    
     <li ><a href="#method-i-getProperty">#getProperty</a>
     
     <li ><a href="#method-i-getRemainingTime">#getRemainingTime</a>
@@ -261,7 +263,7 @@ application framework of choice.</p>
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 540</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 549</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
 
@@ -479,6 +481,41 @@ reporting all nodes involved to the tracing system.</p>
             <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 444</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">finish_interaction</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.finish_interaction` is an abstract method&#39;</span>
+
+    <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-getEnvironment" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getEnvironment</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return the session&#39;s Environment.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="getEnvironment-source">
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 543</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getEnvironment</span>()
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.getEnvironment` is an abstract method&#39;</span>
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
