@@ -370,7 +370,7 @@
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1361</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1364</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_mdk</span> = <span class="ruby-keyword">nil</span>
@@ -486,7 +486,7 @@
 
           
           <div class="method-source-code" id="_getClass-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1299</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1302</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_getClass</span>()
     
     <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;mdk.SessionImpl&quot;</span>
@@ -522,7 +522,7 @@
 
           
           <div class="method-source-code" id="_getField-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1306</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1309</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_getField</span>(<span class="ruby-identifier">name</span>)
     
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_levels&quot;</span>))
@@ -711,7 +711,7 @@
 
           
           <div class="method-source-code" id="_setField-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1334</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1337</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_setField</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)
     
     <span class="ruby-keyword">if</span> ((<span class="ruby-identifier">name</span>) <span class="ruby-operator">==</span> (<span class="ruby-string">&quot;_levels&quot;</span>))
@@ -933,8 +933,11 @@
         <span class="ruby-identifier">node</span>.<span class="ruby-identifier">failure</span>()
         (<span class="ruby-ivar">@_interactionReports</span>)[((<span class="ruby-ivar">@_interactionReports</span>).<span class="ruby-identifier">size</span>) <span class="ruby-operator">-</span> (<span class="ruby-value">1</span>)].<span class="ruby-identifier">addNode</span>(<span class="ruby-identifier">node</span>, <span class="ruby-keyword">false</span>)
     <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">text</span> = (((<span class="ruby-string">&quot;involved: &quot;</span>) <span class="ruby-operator">+</span> ((<span class="ruby-identifier">involved</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;, &quot;</span>))) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;\n\n&quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">message</span>)
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">error</span>(<span class="ruby-string">&quot;interaction failure&quot;</span>, <span class="ruby-identifier">text</span>)
+    <span class="ruby-identifier">text</span> = <span class="ruby-string">&quot;no dependent services involved&quot;</span>
+    <span class="ruby-keyword">if</span> (((<span class="ruby-identifier">involved</span>).<span class="ruby-identifier">size</span>) <span class="ruby-operator">&gt;</span> (<span class="ruby-value">0</span>))
+        <span class="ruby-identifier">text</span> = (<span class="ruby-string">&quot;involved: &quot;</span>) <span class="ruby-operator">+</span> ((<span class="ruby-identifier">involved</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;, &quot;</span>))
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">error</span>(<span class="ruby-string">&quot;interaction failure&quot;</span>, ((<span class="ruby-identifier">text</span>) <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;\n\n&quot;</span>)) <span class="ruby-operator">+</span> (<span class="ruby-identifier">message</span>))
 
     <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -967,7 +970,7 @@
 
           
           <div class="method-source-code" id="finish_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1271</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1274</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">finish_interaction</span>()
     
     <span class="ruby-identifier">nodes</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">_current_interaction</span>()
@@ -1237,7 +1240,7 @@
 
           
           <div class="method-source-code" id="interact-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1290</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 1293</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">interact</span>(<span class="ruby-identifier">cmd</span>)
     
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">start_interaction</span>()
