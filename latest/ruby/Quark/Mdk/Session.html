@@ -220,7 +220,7 @@ application framework of choice.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 270</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 290</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>()
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__init_fields__</span>
 
@@ -263,7 +263,7 @@ application framework of choice.</p>
 
           
           <div class="method-source-code" id="__init_fields__-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 549</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 569</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">__init_fields__</span>()
     
 
@@ -298,7 +298,7 @@ application framework of choice.</p>
 
           
           <div class="method-source-code" id="critical-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 300</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 320</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">critical</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.critical` is an abstract method&#39;</span>
 
@@ -333,7 +333,7 @@ application framework of choice.</p>
 
           
           <div class="method-source-code" id="debug-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 336</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 356</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">debug</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.debug` is an abstract method&#39;</span>
 
@@ -368,7 +368,7 @@ application framework of choice.</p>
 
           
           <div class="method-source-code" id="error-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 309</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 329</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">error</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.error` is an abstract method&#39;</span>
 
@@ -403,7 +403,7 @@ application framework of choice.</p>
 
           
           <div class="method-source-code" id="externalize-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 291</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 311</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">externalize</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.externalize` is an abstract method&#39;</span>
 
@@ -441,7 +441,7 @@ reporting all nodes involved to the tracing system.</p>
 
           
           <div class="method-source-code" id="fail_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 432</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 452</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fail_interaction</span>(<span class="ruby-identifier">message</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.fail_interaction` is an abstract method&#39;</span>
 
@@ -478,7 +478,7 @@ reporting all nodes involved to the tracing system.</p>
 
           
           <div class="method-source-code" id="finish_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 444</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 464</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">finish_interaction</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.finish_interaction` is an abstract method&#39;</span>
 
@@ -513,7 +513,7 @@ reporting all nodes involved to the tracing system.</p>
 
           
           <div class="method-source-code" id="getEnvironment-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 543</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 563</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">getEnvironment</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.getEnvironment` is an abstract method&#39;</span>
 
@@ -548,7 +548,7 @@ reporting all nodes involved to the tracing system.</p>
 
           
           <div class="method-source-code" id="getProperty-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 509</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 529</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">getProperty</span>(<span class="ruby-identifier">property</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.getProperty` is an abstract method&#39;</span>
 
@@ -588,7 +588,7 @@ are in sync.</p>
 
           
           <div class="method-source-code" id="getRemainingTime-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 500</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 520</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">getRemainingTime</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.getRemainingTime` is an abstract method&#39;</span>
 
@@ -623,7 +623,7 @@ are in sync.</p>
 
           
           <div class="method-source-code" id="hasProperty-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 534</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 554</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">hasProperty</span>(<span class="ruby-identifier">property</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.hasProperty` is an abstract method&#39;</span>
 
@@ -658,7 +658,7 @@ are in sync.</p>
 
           
           <div class="method-source-code" id="info-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 327</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 347</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">info</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.info` is an abstract method&#39;</span>
 
@@ -693,7 +693,7 @@ are in sync.</p>
 
           
           <div class="method-source-code" id="inject-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 282</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 302</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inject</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.inject` is an abstract method&#39;</span>
 
@@ -731,7 +731,7 @@ href="Session.html#method-i-finish_interaction">#finish_interaction</a>().</p>
 
           
           <div class="method-source-code" id="interact-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 457</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 477</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">interact</span>(<span class="ruby-identifier">callable</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.interact` is an abstract method&#39;</span>
 
@@ -768,7 +768,7 @@ href="Session.html#method-i-finish_interaction">#finish_interaction</a>().</p>
 
           
           <div class="method-source-code" id="resolve-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 374</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 394</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.resolve` is an abstract method&#39;</span>
 
@@ -804,7 +804,7 @@ as a promise.</p>
 
           
           <div class="method-source-code" id="resolve_async-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 394</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 414</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_async</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.resolve_async` is an abstract method&#39;</span>
 
@@ -839,7 +839,7 @@ as a promise.</p>
 
           
           <div class="method-source-code" id="resolve_until-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 384</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 404</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_until</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">timeout</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.resolve_until` is an abstract method&#39;</span>
 
@@ -880,7 +880,7 @@ downstream services involved in the distributed session.</p>
 
           
           <div class="method-source-code" id="route-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 362</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 382</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">route</span>(<span class="ruby-identifier">service</span>, <span class="ruby-identifier">version</span>, <span class="ruby-identifier">target</span>, <span class="ruby-identifier">targetVersion</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.route` is an abstract method&#39;</span>
 
@@ -924,7 +924,7 @@ session.</p>
 
           
           <div class="method-source-code" id="setDeadline-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 476</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 496</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setDeadline</span>(<span class="ruby-identifier">seconds</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.setDeadline` is an abstract method&#39;</span>
 
@@ -965,7 +965,7 @@ instead of &#39;myproperty&#39;.</p>
 
           
           <div class="method-source-code" id="setProperty-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 525</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 545</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setProperty</span>(<span class="ruby-identifier">property</span>, <span class="ruby-identifier">value</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.setProperty` is an abstract method&#39;</span>
 
@@ -1000,7 +1000,7 @@ instead of &#39;myproperty&#39;.</p>
 
           
           <div class="method-source-code" id="setTimeout-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 485</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 505</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setTimeout</span>(<span class="ruby-identifier">seconds</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.setTimeout` is an abstract method&#39;</span>
 
@@ -1048,7 +1048,7 @@ such issues.</p>
 
           
           <div class="method-source-code" id="start_interaction-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 418</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 438</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start_interaction</span>()
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.start_interaction` is an abstract method&#39;</span>
 
@@ -1083,7 +1083,7 @@ such issues.</p>
 
           
           <div class="method-source-code" id="trace-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 345</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 365</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">trace</span>(<span class="ruby-identifier">level</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.trace` is an abstract method&#39;</span>
 
@@ -1118,7 +1118,7 @@ such issues.</p>
 
           
           <div class="method-source-code" id="warn-source">
-            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 318</span>
+            <pre><span class="ruby-comment"># File output/rb/mdk-2.0/lib/mdk.rb, line 338</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">warn</span>(<span class="ruby-identifier">category</span>, <span class="ruby-identifier">text</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;`Session.warn` is an abstract method&#39;</span>
 
