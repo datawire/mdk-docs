@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Deep Dive &mdash; Microservices Development Kit 2.0 documentation</title>
+    <title>MDK Features &mdash; Microservices Development Kit 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/css/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,6 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Microservices Development Kit 2.0 documentation" href="../index.html" />
+    <link rel="next" title="Architecture" href="../architecture/index.html" />
     <link rel="prev" title="Web Client Integration" href="../webclients.html" />
    
   
@@ -53,13 +54,22 @@
       <ul>
         <li class="right" style="margin-right: 10px">
           <a
+            href="../architecture/index.html"
+            title="Architecture"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
             href="../webclients.html"
             title="Web Client Integration"
             accesskey="P">
               &larr;
               previous
               
-          </a></li>
+          </a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Microservices Development Kit 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -69,8 +79,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="deep-dive">
-<h1>Deep Dive<a class="headerlink" href="#deep-dive" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="mdk-features">
+<h1>MDK Features<a class="headerlink" href="#mdk-features" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>The Datawire Microservices Development Kit (MDK) offers sophisticated capabilities for quickly creating
@@ -417,43 +427,6 @@ Instead of calling <code class="docutils literal"><span class="pre">mdk.join(enc
 It also inherits almost all properties from the original session.
 The only property that isn&#8217;t inherited is the deadline, because asynchronous systems like pub/sub can take an arbitrary amount of time before the subscriber gets messages.</p>
 </div>
-<div class="section" id="the-datawire-architecture">
-<h2>The Datawire Architecture<a class="headerlink" href="#the-datawire-architecture" title="Permalink to this headline">¶</a></h2>
-<p>The Datawire Discovery Service is a multi-tenant, cloud-based, eventually
-consistent data synchronization service, purpose-built for a microservices
-environment. It is very suitable for applications with very high scalability
-requirements, where new microservices appear (or are retired) regularly, and
-where existing microservices instances scale up or down rapidly.</p>
-<p>As microservices instrumented with the MDK are launched, they register
-themselves with the Discovery Service in the cloud over a Web Socket connection.
-The registration data includes the service name, the address (typically a URL)
-of that instance&#8217;s endpoint, and the version of that service. At that point,
-an efficient background heartbeat sequence begins over the Web Socket
-connection, with the service instance regularly informing the Discovery Service
-that it&#8217;s still alive and should not be removed from the service routing table
-that it maintains.</p>
-<p>If the service should terminate unexpectedly or become unresponsive, the
-Discovery service will quickly notice the lack of heartbeats and remove the
-service instance from its list of active endpoints. If the service terminates
-gracefully, it asks to be removed from the list of active endpoints immediately
-as part of the <code class="docutils literal"><span class="pre">stop()</span></code> function.</p>
-<p>On the client side, a Web Socket connection is also opened to the Discovery
-Service when the <code class="docutils literal"><span class="pre">start()</span></code> function is called. The MDK on the client side
-immediately receives a copy of the service routing table, and any changes
-to the service endpoint listings are instantly and automatically sent
-over the same Web Socket connection. This ensures that MDK clients will
-always have a local, in-process copy of the potential service instances
-which they could call.</p>
-<p>Should any component in the system temporarily lose contact with the Datawire
-Discovery Service, they will retain the last known copy of the service routing
-table, and will have it updated again once they reconnect.</p>
-<p>All of these protocol interactions are completely open, thanks to their being
-specified in <a class="reference external" href="https://github.com/datawire/quark">Quark</a>, a dedicated language
-that Datawire created to precisely specify protocol interactions. For example,
-the Discovery protocol is <a class="reference external" href="https://github.com/datawire/discovery/tree/master/quark">specified in Quark</a> and then compiled
-into the currently supported target languages (Python, Java, JavaScript, and
-Ruby). Broader language support is planned for the near future.</p>
-</div>
 </div>
 
 
@@ -464,7 +437,7 @@ Ruby). Broader language support is planned for the near future.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Deep Dive</a><ul>
+<li><a class="reference internal" href="#">MDK Features</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#setting-up-your-environment">Setting Up Your Environment</a></li>
 <li><a class="reference internal" href="#creating-a-microservice-with-the-mdk">Creating a Microservice with the MDK</a></li>
@@ -477,7 +450,6 @@ Ruby). Broader language support is planned for the near future.</p>
 <li><a class="reference internal" href="#distributed-timeouts">Distributed Timeouts</a></li>
 <li><a class="reference internal" href="#custom-properties-on-distributed-sessions">Custom Properties on Distributed Sessions</a></li>
 <li><a class="reference internal" href="#derived-sessions">Derived Sessions</a></li>
-<li><a class="reference internal" href="#the-datawire-architecture">The Datawire Architecture</a></li>
 </ul>
 </li>
 </ul>
@@ -486,6 +458,7 @@ Ruby). Broader language support is planned for the near future.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="../webclients.html" title="previous chapter">Web Client Integration</a></li>
+      <li>Next: <a href="../architecture/index.html" title="next chapter">Architecture</a></li>
   </ul></li>
 </ul>
 </div>
@@ -515,13 +488,22 @@ Ruby). Broader language support is planned for the near future.</p>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a
+            href="../architecture/index.html"
+            title="Architecture"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
             href="../webclients.html"
             title="Web Client Integration"
             >
               &larr;
               previous
               
-          </a></li>
+          </a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Microservices Development Kit 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
