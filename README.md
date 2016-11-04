@@ -12,6 +12,7 @@ Staging branch is `develop`.
 
 * Main documentation goes in `main/`.
 * API docs for each programming language are in `api/python/`, `api/ruby/`, etc.
+* Spelling wordlist is in `main/source/spelling_wordlist.txt`.
 
 ## Development
 
