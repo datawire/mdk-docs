@@ -178,6 +178,8 @@ You can access an automatically setup MDK session via ``flask.g.mdk_session``.
        mdk.register("helloservice", "1.0", "http://localhost:7070/")
        app.run(port=7070)
 
+.. _flask-logging:
+
 You can also integrate Python's standard library ``logging`` module.
 ``mdk.flask.MDKLoggingHandler`` is a ``logging.StreamHandler``.
 It routes messages from ``logging`` to the MDK and from there to Mission Control.

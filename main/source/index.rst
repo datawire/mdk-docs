@@ -12,9 +12,10 @@ Contents:
    :maxdepth: 1
 
    Getting Started <getting-started/index>
+   MDK Features <deep-dive/index>
    Web Framework Integration <webframeworks>
    HTTP Client Integration <webclients>
-   MDK Features <deep-dive/index>
+   Integrating Tracing with Existing Logging <logging>
    Architecture <architecture/index>
    Python API Docs <https://datawire.github.io/mdk-docs/latest/python/>
    Java API Docs <https://datawire.github.io/mdk-docs/latest/java/>
