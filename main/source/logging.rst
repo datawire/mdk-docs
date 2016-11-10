@@ -43,3 +43,4 @@ In the following example, utilizing the MDK's Flask integration for Python, you 
 
 
 You could use this for example to write a custom ``logging.Handler`` that accepts standard Python logging messages, writes them to the MDK, and then does additional storage of logging.
+None of this is Python-specific: you can do this in other MDK languages as well.
