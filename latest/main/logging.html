@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Integrating Tracing into Existing Logging &mdash; Microservices Development Kit 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Microservices Development Kit 2.0 documentation" href="index.html" />
+    <link rel="next" title="Architecture" href="architecture/index.html" />
+    <link rel="prev" title="Web Client Integration" href="webclients.html" />
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="index.html">
+                <img class="dw-logo" src="_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="architecture/index.html"
+            title="Architecture"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="webclients.html"
+            title="Web Client Integration"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Microservices Development Kit 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="integrating-tracing-into-existing-logging">
+<h1>Integrating Tracing into Existing Logging<a class="headerlink" href="#integrating-tracing-into-existing-logging" title="Permalink to this headline">¶</a></h1>
+<p>The MDK supports distributed tracing across and within processes.
+When you log a message via the MDK, the message is stored with a session-specific trace ID and a message-specific causal-clock level.
+You can, if you wish, include this information in a separate logging store that you use or operate (e.g. ElasticSearch).
+This will allow you to trace messages across various processes much like Datawire Mission Control does.</p>
+<div class="section" id="routing-logs-to-the-mdk">
+<h2>Routing logs to the MDK<a class="headerlink" href="#routing-logs-to-the-mdk" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s possible to route logs from your language or framework&#8217;s logging infrastructure to Mission Control via the MDK.
+For example, <a class="reference internal" href="webframeworks.html#flask-logging"><span class="std std-ref">see the built-in logging.Handler</span></a> for the Python web framework Flask.</p>
+</div>
+<div class="section" id="extracting-message-identifiers">
+<h2>Extracting message identifiers<a class="headerlink" href="#extracting-message-identifiers" title="Permalink to this headline">¶</a></h2>
+<p>Whenever you log a messages using <code class="docutils literal"><span class="pre">mdk.Session.info()/error()/etc.</span></code> it returns a <code class="docutils literal"><span class="pre">LoggedMessageId</span></code> object.
+It has two relevant attributes, the <code class="docutils literal"><span class="pre">traceId</span></code> (a string) and the <code class="docutils literal"><span class="pre">causalLevel</span></code> (a list of integers).</p>
+<p>In the following example, utilizing the MDK&#8217;s Flask integration for Python, you can see how you can use this information:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">mdk.flask</span> <span class="kn">import</span> <span class="n">mdk_setup</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="n">msg_id</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">mdk_session</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;myservice&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello world!&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;We just logged message {}:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg_id</span><span class="o">.</span><span class="n">traceId</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">.</span><span class="n">causalLevel</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s2">&quot;hello&quot;</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">mdk</span> <span class="o">=</span> <span class="n">mdk_setup</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">7070</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You could use this for example to write a custom <code class="docutils literal"><span class="pre">logging.Handler</span></code> that accepts standard Python logging messages, writes them to the MDK, and then does additional storage of logging.
+None of this is Python-specific: you can do this in other MDK languages as well.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Integrating Tracing into Existing Logging</a><ul>
+<li><a class="reference internal" href="#routing-logs-to-the-mdk">Routing logs to the MDK</a></li>
+<li><a class="reference internal" href="#extracting-message-identifiers">Extracting message identifiers</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="webclients.html" title="previous chapter">Web Client Integration</a></li>
+      <li>Next: <a href="architecture/index.html" title="next chapter">Architecture</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/logging.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="architecture/index.html"
+            title="Architecture"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="webclients.html"
+            title="Web Client Integration"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Microservices Development Kit 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2016, Datawire.io.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
+
+    
+
+    
+
+    <script src="_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="_static/js/main.js" ></script>
+  </body>
+</html>
