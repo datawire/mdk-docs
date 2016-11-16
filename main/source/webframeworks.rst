@@ -80,6 +80,35 @@ Here's an example showing the full configuration:
    app.use(mdk_express.mdkErrorHandler);
 
 
+.. _winston-logging:
+
+Using Winston logging with the MDK
+----------------------------------
+
+If you're using the Express integration you can also add [Winston](http://github.com/winstonjs/winston) integration, routing logs from Winston into Mission Control via the MDK.
+
+
+.. code-block:: javascript
+
+   var express = require('express');
+   var winston = require('winston');
+   var mdk_express = require('datawire_mdk_express');
+   var mdk_winston = require('datawire_mdk_winston');
+
+   // Route Winston logging to the MDK:
+   winston.add(mdk_winston.MDKTransport, {mdk: mdk_express.mdk,
+                                          name: 'myapp'});
+   // Start and stop the MDK session:
+   app.use(mdk_express.mdkSessionStart);
+
+   app.get('/', function (req, res) {
+       // Log a message using Winston; it will be sent to the MDK:
+       winston.info("logging some info");
+       res.send("hello world");
+   });
+
+   // etc.
+
 Python
 ======
 

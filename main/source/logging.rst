@@ -12,7 +12,10 @@ Routing logs to the MDK
 -----------------------
 
 It's possible to route logs from your language or framework's logging infrastructure to Mission Control via the MDK.
-For example, :ref:`see the built-in logging.Handler<flask-logging>` for the Python web framework Flask.
+The MDK includes built-in support for:
+
+* Python's :ref:`standard library logging<flask-logging>` when using Flask.
+* Javascript's :ref:`Winston<winston-logging>` when using Express.js.
 
 
 Extracting message identifiers
