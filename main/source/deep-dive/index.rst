@@ -120,6 +120,9 @@ original Flask-based microservice with the Datawire MDK. When we run this
 application, it registers itself with the Datawire Discovery Service, and
 will show up on the Datawire Mission Control UI when it's running.
 
+In practice you'll want to use the MDK's :doc:`web framework integration<../webframeworks>`, which reduce the amount of boilerplate you have to write.
+
+
 Service Discovery
 -----------------
 
@@ -140,6 +143,11 @@ run the following code:
 It should print the value ``http://127.0.0.1:7000``. That value was returned
 by the Datawire Discovery Service as the only available endpoint for the
 ``hello`` service.
+
+.. note::
+
+   If you're using a :doc:`web framework integration<../webframeworks>` you should use the session object that will be setup by your chosen integration.
+   E.g. Flask has a session on ``flask.g.mdk_session``.
 
 Load Balancing
 --------------
@@ -163,9 +171,10 @@ commands:
 
     import mdk
     m = mdk.start()
-    print(m.session().resolve("hello", "1.0").address)
-    print(m.session().resolve("hello", "1.0").address)
-    print(m.session().resolve("hello", "1.0").address)
+    session = m.session()
+    print(session.resolve("hello", "1.0").address)
+    print(session.resolve("hello", "1.0").address)
+    print(session.resolve("hello", "1.0").address)
     m.stop()
 
 You should see the ``resolve()`` calls returning different results each time
@@ -233,6 +242,8 @@ First, save the above code as ``client.py``. Then, run at least a couple of
 
 You should see a new address chosen each second as the load balancing logic
 in the MDK round-robins through the set of available service instance URLs.
+
+In practice you'll want to use the MDK :doc:`HTTP client integration<../webclients>` when possible, to reduce the amount of boilerplate you have to write.
 
 Distributed Tracing
 -------------------

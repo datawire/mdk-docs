@@ -64,7 +64,10 @@ Python environment by typing ``python``. Then, type the following:
 .. code-block:: python
 
     import mdk
-    m = mdk.init()
+    m = mdk.start()
+
+This will start the MDK.
+The MDK can be used as a singleton, so you you only need to do this once per process.
 
 In a microservices environment, microservices are constantly being
 created and destroyed: new versions may be rolled out, new instances
@@ -75,7 +78,8 @@ essential. So let's register a service:
 .. code-block:: python
 
     m.register("My First Service", "1.0", "http://127.0.0.1")
-    m.start()
+
+Again, you only need to do this once per process.
 
 In the Mission Control dashboard, you'll see a service appear named
 "My First Service" with a version of 1.0.
@@ -91,8 +95,7 @@ Then, type the following:
 .. code-block:: python
 
     import mdk
-    m = mdk.init()
-    m.start()
+    m = mdk.start()
     print(m.session().resolve("My First Service", "1.0").address)
     m.stop()
 
