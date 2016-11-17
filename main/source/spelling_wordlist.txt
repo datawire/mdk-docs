@@ -8,6 +8,7 @@ interoperate
 java
 javascript
 JavaScript
+js
 microservice
 microservices
 middleware
