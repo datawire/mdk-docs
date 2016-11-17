@@ -14,6 +14,7 @@ public class SampleServer {
         if (args.length > 1)
             port = Integer.valueOf(args[1]);
 
+        // Only need to start MDK once per process:
         MDK mdk = Functions.init();
         mdk.start();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> mdk.stop()));
@@ -27,5 +28,4 @@ public class SampleServer {
                 return "Hello World!\r\n";
             });
     }
-    
 }

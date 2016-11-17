@@ -13,6 +13,7 @@ public class ClientMain {
 
     public static void main(String[] args) throws java.io.IOException {
         MDK mdk = Functions.init();
+        // Only need to create MDK once per process:
         mdk.start();
         try {
             while (true) {
