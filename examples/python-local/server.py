@@ -11,27 +11,28 @@ access control token.
 import logging
 logging.basicConfig(level=logging.INFO)
 
-import mdk
-MDK = mdk.start()
+# Flask integration for the MDK:
+from mdk.flask import mdk_setup
 
-from flask import Flask, request
+from flask import Flask, g
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    # Join the logging context from the request, if possible:
-    ssn = MDK.join(request.headers.get(MDK.CONTEXT_HEADER))
-    ssn.info(app.service_name, "Received a request.")
+    # Log a message using the MDK session:
+    g.mdk_session.info("flask-server", "Received a request.")
     return "Hello World!"
 
 
 def main(service_name, host, port):
     """Run the server."""
-    # Save the service name into the Flask app for later logging and such.
-    app.service_name = service_name
-
-    MDK.register(app.service_name, "1.0.0", "http://%s:%d" % (host, port))
-    app.run(host=host, port=port)
+    mdk = mdk_setup(app)
+    # Register the server with Datawire Discovery service:
+    mdk.register(service_name, "1.0", "http://%s:%d" % (host, port))
+    try:
+        app.run(host=host, port=port)
+    finally:
+        mdk.stop()
 
 
 if __name__ == "__main__":
@@ -48,7 +49,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 2:
         port = int(sys.argv[2])
 
-    try:
-        main(service_name, host, port)
-    finally:
-        MDK.stop()
+    main(service_name, host, port)
