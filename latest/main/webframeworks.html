@@ -99,15 +99,16 @@ This means logging via the MDK will be able to trace requests across multiple se
 <ul class="simple">
 <li><a class="reference internal" href="#javascript" id="id1">Javascript</a><ul>
 <li><a class="reference internal" href="#express-integration" id="id2">Express integration</a></li>
+<li><a class="reference internal" href="#using-winston-logging-with-the-mdk" id="id3">Using Winston logging with the MDK</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#python" id="id3">Python</a><ul>
-<li><a class="reference internal" href="#django-integration" id="id4">Django integration</a></li>
-<li><a class="reference internal" href="#flask-integration" id="id5">Flask integration</a></li>
+<li><a class="reference internal" href="#python" id="id4">Python</a><ul>
+<li><a class="reference internal" href="#django-integration" id="id5">Django integration</a></li>
+<li><a class="reference internal" href="#flask-integration" id="id6">Flask integration</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ruby" id="id6">Ruby</a><ul>
-<li><a class="reference internal" href="#rack" id="id7">Rack</a></li>
+<li><a class="reference internal" href="#ruby" id="id7">Ruby</a><ul>
+<li><a class="reference internal" href="#rack" id="id8">Rack</a></li>
 </ul>
 </li>
 </ul>
@@ -167,11 +168,35 @@ Here&#8217;s an example showing the full configuration:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="using-winston-logging-with-the-mdk">
+<span id="winston-logging"></span><h3><a class="toc-backref" href="#id3">Using Winston logging with the MDK</a><a class="headerlink" href="#using-winston-logging-with-the-mdk" title="Permalink to this headline">¶</a></h3>
+<p>If you&#8217;re using the Express integration you can also add [Winston](<a class="reference external" href="http://github.com/winstonjs/winston">http://github.com/winstonjs/winston</a>) integration, routing logs from Winston into Mission Control via the MDK.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">winston</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;winston&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">mdk_express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;datawire_mdk_express&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">mdk_winston</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;datawire_mdk_winston&#39;</span><span class="p">);</span>
+
+<span class="c1">// Route Winston logging to the MDK:</span>
+<span class="nx">winston</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">mdk_winston</span><span class="p">.</span><span class="nx">MDKTransport</span><span class="p">,</span> <span class="p">{</span><span class="nx">mdk</span><span class="o">:</span> <span class="nx">mdk_express</span><span class="p">.</span><span class="nx">mdk</span><span class="p">,</span>
+                                       <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;myapp&#39;</span><span class="p">});</span>
+<span class="c1">// Start and stop the MDK session:</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">mdk_express</span><span class="p">.</span><span class="nx">mdkSessionStart</span><span class="p">);</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Log a message using Winston; it will be sent to the MDK:</span>
+    <span class="nx">winston</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s2">&quot;logging some info&quot;</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// etc.</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="python">
-<h2><a class="toc-backref" href="#id3">Python</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">Python</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="django-integration">
-<h3><a class="toc-backref" href="#id4">Django integration</a><a class="headerlink" href="#django-integration" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5">Django integration</a><a class="headerlink" href="#django-integration" title="Permalink to this headline">¶</a></h3>
 <p>To enable MDK integration you need to add the appropriate middleware to your <code class="docutils literal"><span class="pre">settings.py</span></code>.
 In Django 1.9 or earlier you add <code class="docutils literal"><span class="pre">mdk.django.MDKSessionMiddleware</span></code> to <code class="docutils literal"><span class="pre">MIDDLEWARE_CLASSES</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">[</span>
@@ -229,7 +254,7 @@ For example:</p>
 </div>
 </div>
 <div class="section" id="flask-integration">
-<h3><a class="toc-backref" href="#id5">Flask integration</a><a class="headerlink" href="#flask-integration" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6">Flask integration</a><a class="headerlink" href="#flask-integration" title="Permalink to this headline">¶</a></h3>
 <p>To enable MDK integration with Flask simply call <code class="docutils literal"><span class="pre">mdk.flask.mdk_setup(app)</span></code> before <code class="docutils literal"><span class="pre">app.run()</span></code>.
 This will return the <code class="docutils literal"><span class="pre">MDK</span></code> instance.
 You can access an automatically setup MDK session via <code class="docutils literal"><span class="pre">flask.g.mdk_session</span></code>.</p>
@@ -274,9 +299,9 @@ The messages will be part of the MDK session context set up by the Flask integra
 </div>
 </div>
 <div class="section" id="ruby">
-<h2><a class="toc-backref" href="#id6">Ruby</a><a class="headerlink" href="#ruby" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Ruby</a><a class="headerlink" href="#ruby" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="rack">
-<h3><a class="toc-backref" href="#id7">Rack</a><a class="headerlink" href="#rack" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">Rack</a><a class="headerlink" href="#rack" title="Permalink to this headline">¶</a></h3>
 <p>Rack is the basis for many Ruby web frameworks, including Sinatra and Ruby on Rails.
 The MDK Rack middleware therefore allows integrating the MDK into all these web frameworks.</p>
 <p>You will need to install the <code class="docutils literal"><span class="pre">rack-mdk</span></code> gem, e.g.:</p>
@@ -317,6 +342,7 @@ You can access the current session from the Rack <code class="docutils literal">
 <li><a class="reference internal" href="#">Web Framework Integration</a><ul>
 <li><a class="reference internal" href="#javascript">Javascript</a><ul>
 <li><a class="reference internal" href="#express-integration">Express integration</a></li>
+<li><a class="reference internal" href="#using-winston-logging-with-the-mdk">Using Winston logging with the MDK</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#python">Python</a><ul>

@@ -88,7 +88,11 @@ This will allow you to trace messages across various processes much like Datawir
 <div class="section" id="routing-logs-to-the-mdk">
 <h2>Routing logs to the MDK<a class="headerlink" href="#routing-logs-to-the-mdk" title="Permalink to this headline">¶</a></h2>
 <p>It&#8217;s possible to route logs from your language or framework&#8217;s logging infrastructure to Mission Control via the MDK.
-For example, <a class="reference internal" href="webframeworks.html#flask-logging"><span class="std std-ref">see the built-in logging.Handler</span></a> for the Python web framework Flask.</p>
+The MDK includes built-in support for:</p>
+<ul class="simple">
+<li>Python&#8217;s <a class="reference internal" href="webframeworks.html#flask-logging"><span class="std std-ref">standard library logging</span></a> when using Flask.</li>
+<li>Javascript&#8217;s <a class="reference internal" href="webframeworks.html#winston-logging"><span class="std std-ref">Winston</span></a> when using Express.js.</li>
+</ul>
 </div>
 <div class="section" id="extracting-message-identifiers">
 <h2>Extracting message identifiers<a class="headerlink" href="#extracting-message-identifiers" title="Permalink to this headline">¶</a></h2>
