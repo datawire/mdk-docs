@@ -9,6 +9,7 @@
 require 'rest-client'
 
 require 'mdk'
+# Only need to start MDK once per process:
 $mdk = ::Quark::Mdk.start()
 
 def main(service, version)
@@ -30,7 +31,7 @@ end
 
 if __FILE__ == $0
   begin
-    main(ARGV[0], "1.0.0")
+    main(ARGV[0], "1.0")
   ensure
     $mdk.stop
   end

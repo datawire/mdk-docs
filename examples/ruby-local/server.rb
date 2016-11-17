@@ -8,6 +8,7 @@
 
 require 'sinatra/base'
 
+# MDK only needs to be started once per process:
 require 'mdk'
 $mdk = ::Quark::Mdk.start()
 SERVICE_NAME = ARGV[0]
