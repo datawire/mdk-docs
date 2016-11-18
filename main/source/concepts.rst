@@ -32,11 +32,13 @@ In the following setup you see a Widgets 1.1 service instance, and two Widget 2.
 * A Widget 1.0 client will be able to talk to the Widgets 1.1 instance, but not the Widgets 2.0 instance.
 * A client requiring Widgets 1.2 will not be able to talk to any of the instances.
 
+
 Discovery
 ---------
 
-A service instance can register its address (e.g. its URL) with Datawire Discovery.
-Clients also talk to Discovery, and use that information to find the instances of the service they want to talk to:
+A service instance can **register** its address (e.g. its URL) with Datawire Discovery.
+Clients also talk to Discovery, and get the list of registered services.
+It can then use that information to **resolve** a service name and version to the address of an instance it wants to talk to:
 
 .. blockdiag::
 
@@ -56,6 +58,19 @@ Clients also talk to Discovery, and use that information to find the instances o
        Client -> C;
        Disco -> Client [style=dotted];
    }
+
+Logging
+-------
+
+The MDK also allows service instances to **log messages** to a central server.
+This functionality can be used both together and separately from tracing: you can use both or either.
+
+Sessions
+--------
+
+A **session** allows you to keep track of information that needs to span multiple service instances.
+For example, if a request comes in from an external user the session allows you to set an overall deadline for the user's request.
+It also lets Datawire Mission Control combine logs from different service instances into a single trace of the external user request, since all the logs are part of the same session.
 
 
 Digging Deeper
