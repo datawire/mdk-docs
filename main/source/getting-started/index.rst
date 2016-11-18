@@ -145,9 +145,7 @@ This particular scenario runs a number of microservices, with multiple instances
 
 If you log in to Mission Control you should see each of the microservices listed as Active and Healthy. You should also see new tracing messages from each of the services in the Logs tab.
 
-Digging Deeper
---------------
+Understanding how the MDK works
+-------------------------------
 
-Now that you've seen the |mdk| at a high level, it's time to dig
-into the API at a deeper level to learn how to write your
-own microservices using it with the :doc:`Deep Dive <../deep-dive/index>`.
+Now that you've seen some sample code, next we'll move on to a :doc:`conceptual overview <../concepts>`.

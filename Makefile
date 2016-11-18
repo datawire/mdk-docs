@@ -28,7 +28,7 @@ apisetup:
 dist/latest:
 	mkdir -p dist/latest
 
-maindocs: dist/latest
+maindocs: dist/latest mainsetup
 	# Static files
 	cp -r src/* dist
 	cp src/.??* dist
