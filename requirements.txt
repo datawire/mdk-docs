@@ -1,4 +1,6 @@
-Sphinx==1.4.4
+Sphinx==1.4.8
 sphinxcontrib-spelling==2.1.2
+sphinxcontrib-blockdiag==1.5.5
+blockdiag==1.5.3
 pyenchant==1.6.6
 

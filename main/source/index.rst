@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 1
 
    Getting Started <getting-started/index>
+   Conceptual Overview <concepts>
    MDK Features <deep-dive/index>
    Web Framework Integration <webframeworks>
    HTTP Client Integration <webclients>
