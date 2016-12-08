@@ -54,9 +54,7 @@ You should see something like ``export DATAWIRE_TOKEN=<long string here>``; this
 Registering a service
 ---------------------
 
-We're going to use Python as our example language here; the other
-languages supported by the MDK (Java, Ruby, JavaScript) are very
-similar.
+We're going to use Python as our example language here; the other languages supported by the MDK are very similar. Example code in `Java <https://github.com/datawire/mdk-docs/tree/master/examples/java-local>`_, `Ruby <https://github.com/datawire/mdk-docs/tree/master/examples/ruby-local>`_, `JavaScript <https://github.com/datawire/mdk-docs/tree/master/examples/javascript-local>`_, and `Python <https://github.com/datawire/mdk-docs/tree/master/examples/python-local>`_ are all available. We'll walk through a Python example in detail below.
 
 Let's start by initializing the MDK. In your terminal, enter your
 Python environment by typing ``python``. Then, type the following:
