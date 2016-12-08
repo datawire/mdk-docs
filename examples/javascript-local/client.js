@@ -18,10 +18,11 @@ if (args.length === 0) {
 }
 
 var service = args[0];
-
-var request = require("request");
+// Wrapper for the request.js library:
+var mdkRequest = require('datawire_mdk_request');
 
 var mdk = require("datawire_mdk").mdk;
+// Only need to start the MDK once per process:
 var MDK = mdk.start();
 
 function showResult(error, response, body) {
@@ -36,10 +37,10 @@ function loop() {
         var url = node.address;
 
         ssn.info("client", "Connecting to " + url);
-        var headers = {};
-        headers[mdk.MDK.CONTEXT_HEADER] = ssn.inject();
-        var options = {url: url, headers: headers};
-        request(options, showResult);
+        // Do HTTP request with request.js which will transmit the MDK session
+        // context:
+        var request = mdkRequest.forMDKSession(ssn);
+        request(url, showResult);
     });
 }
 
